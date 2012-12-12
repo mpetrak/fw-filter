@@ -8,6 +8,7 @@
 #include <QtGui/QApplication>
 
 #include "MainWindow.h"
+#include "../model/FilterRulesModel.h"
 
 int main(int argc, char *argv[]) {
     // initialize resources, if needed
@@ -16,6 +17,14 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     MainWindow main;
+    
+    FilterRulesModel *rulesModel = new FilterRulesModel();
+    
+    main.setRulesViewModel(rulesModel);
+    
+    //TODO load network interfaces
+    //TODO load configuration (interfaces aliases)
+    
     main.show();
     
 

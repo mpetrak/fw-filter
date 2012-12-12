@@ -15,6 +15,7 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow();
     virtual ~MainWindow();
+    void setRulesViewModel(QAbstractItemModel *model);
 private:
     Ui::MainWindow widget;
     

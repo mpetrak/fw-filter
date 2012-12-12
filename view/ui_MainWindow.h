@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Wed Nov 28 17:39:15 2012
+** Created: Wed Dec 12 10:58:22 2012
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,6 +16,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QHeaderView>
+#include <QtGui/QListView>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
@@ -32,6 +33,7 @@ public:
     QAction *actionReset;
     QAction *actionSettings;
     QWidget *centralwidget;
+    QListView *rulesView;
     QMenuBar *menubar;
     QMenu *menuApplication;
     QMenu *menuTools;
@@ -53,6 +55,9 @@ public:
         actionSettings->setObjectName(QString::fromUtf8("actionSettings"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        rulesView = new QListView(centralwidget);
+        rulesView->setObjectName(QString::fromUtf8("rulesView"));
+        rulesView->setGeometry(QRect(10, 10, 191, 531));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
