@@ -19,6 +19,14 @@ void FilterRule::setNumber(int number) {
 }
 
 int FilterRule::getNumber() {
-    return number;
+    return this->number;
+}
+
+void FilterRule::setName(QString name) {
+    this->name = name;
+}
+
+QString FilterRule::getName() {
+    return this->name;
 }
 

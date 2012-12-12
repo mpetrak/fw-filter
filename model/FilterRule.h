@@ -8,6 +8,8 @@
 #ifndef FILTERRULE_H
 #define	FILTERRULE_H
 
+#include <QString>
+
 class FilterRule {
 public:
     FilterRule(int number);
@@ -15,8 +17,11 @@ public:
     
     void setNumber(int number);
     int  getNumber();
+    void setName(QString name);
+    QString getName();
 private:
     int number;
+    QString name;
     
 };
 
