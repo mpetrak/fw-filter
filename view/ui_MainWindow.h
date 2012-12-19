@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Wed Dec 12 10:58:22 2012
+** Created: Wed Dec 19 14:31:31 2012
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -58,6 +58,11 @@ public:
         rulesView = new QListView(centralwidget);
         rulesView->setObjectName(QString::fromUtf8("rulesView"));
         rulesView->setGeometry(QRect(10, 10, 191, 531));
+        rulesView->setAcceptDrops(true);
+        rulesView->setDragEnabled(true);
+        rulesView->setDragDropMode(QAbstractItemView::InternalMove);
+        rulesView->setDefaultDropAction(Qt::MoveAction);
+        rulesView->setMovement(QListView::Free);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));

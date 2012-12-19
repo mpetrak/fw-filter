@@ -12,6 +12,13 @@ MainWindow::MainWindow() {
     /* after start disable some action - no change made */
     widget.actionApply_modifications->setEnabled(false);
     widget.actionReset->setEnabled(false);
+    
+    /* enable drag and drop for rules view */
+    widget.rulesView->setSelectionMode(QAbstractItemView::SingleSelection);
+    widget.rulesView->setDragEnabled(true);
+    widget.rulesView->setAcceptDrops(true);
+    widget.rulesView->setDropIndicatorShown(true);
+    widget.rulesView->setDragDropMode(QAbstractItemView::InternalMove);
 }
 
 MainWindow::~MainWindow() {
