@@ -5,6 +5,8 @@
  * Created on 28. listopad 2012, 19:10
  */
 
+#include <qt4/QtCore/qstringlist.h>
+
 #include "FilterRulesModel.h"
 
 FilterRulesModel::FilterRulesModel() {
@@ -32,11 +34,7 @@ int FilterRulesModel::rowCount(const QModelIndex& parent) const {
 
 QVariant FilterRulesModel::data(const QModelIndex& index, int role) const {
 
-    if (!index.isValid()) {
-        return QVariant();
-    }
-
-    if (index.row() >= rulesList.count()) {
+    if (!index.isValid() || index.row() >= rulesList.count()) {
         return QVariant();
     }
 
@@ -79,7 +77,7 @@ Qt::ItemFlags FilterRulesModel::flags(const QModelIndex& index) const {
 
 bool FilterRulesModel::setData(const QModelIndex& index, const QVariant& value, int role) {
 
-    /* enable to display role for drag and drop */
+    /* enabled for display role because of drag and drop */
     if (index.isValid() && role == Qt::DisplayRole) {      
         rulesList.replace(index.row(), value.toString());
         emit dataChanged(index, index);
@@ -115,3 +113,73 @@ bool FilterRulesModel::removeRows(int position, int rows, const QModelIndex &par
 Qt::DropActions FilterRulesModel::supportedDropActions() const {
     return Qt::CopyAction | Qt::MoveAction;
 }
+
+QMimeData *FilterRulesModel::mimeData(const QModelIndexList &indexes) const {
+    
+    QMimeData *mimeData = new QMimeData();
+    QByteArray encodedData;
+    
+    QDataStream writeStream(&encodedData, QIODevice::WriteOnly);
+    
+    foreach(const QModelIndex &index, indexes) {
+        if(index.isValid()) {
+            QString text = data(index, Qt::DisplayRole).toString();
+            writeStream << text;
+        }
+    }
+    
+    mimeData->setData("application/vnd.text.list", encodedData);
+    return mimeData; 
+}
+
+bool FilterRulesModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) {
+    
+    if(action == Qt::IgnoreAction) {
+        return true;
+    }   
+    if(!data->hasFormat("application/vnd.text.list")) {
+        return false;
+    }
+    if (column > 0) {
+        return false;
+    }
+    
+    int beginRow;
+    if(row != -1) {
+        beginRow = row;
+    }  
+    else if(parent.isValid()) {
+        beginRow = parent.row();
+    }
+    else {
+        beginRow = rowCount(QModelIndex());
+    }
+    
+    /* decoding imported data */
+    QByteArray encodedData = data->data("application/vnd.text.list");
+    QDataStream readStream(&encodedData, QIODevice::ReadOnly);
+    QStringList newItems;
+    int rows = 0;
+    
+    while(!readStream.atEnd()) {
+        QString text;
+        readStream >> text;
+        newItems << text;
+        rows++;
+    }
+    
+    insertRows(beginRow, rows, QModelIndex());
+    foreach(const QString &text, newItems) {
+        QModelIndex idx = index(beginRow, 0, QModelIndex());
+        setData(idx, text, Qt::DisplayRole);
+        beginRow++;
+    }
+    
+    return true;
+}
+
+QStringList FilterRulesModel::mimeTypes() const {
+     QStringList types;
+     types << "application/vnd.text.list";
+     return types;
+ }
