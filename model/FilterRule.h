@@ -13,16 +13,35 @@
 
 class FilterRule {
 public:
+    /* Constructors, destructor */
     FilterRule();
     FilterRule(int number);
     virtual ~FilterRule();
     
+    /* Other methods */
+    /**
+     * Write all rules parameters to given data stream.
+     * Using in model with manipulation.
+     * @param stream data stream to write to
+     */
+    void toStream(QDataStream *stream);
+    
+    /**
+     * Read all rules parameters from given data stream.
+     * Using in model with manipulation.
+     * @param stream data stream to read from
+     */
+    void fromStream(QDataStream *stream);
+    
+    /* Setters and getters */
     void setNumber(int number);
     int  getNumber();
     void setName(QString name);
     QString getName();
 private:
+    /** number of rule */
     int number;
+    /** name of rule */
     QString name;
     
 };
