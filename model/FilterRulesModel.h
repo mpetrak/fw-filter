@@ -16,9 +16,11 @@
 
 class FilterRulesModel : public QAbstractListModel {
 public:
+    /* constructors and destructors */
     FilterRulesModel();
     ~FilterRulesModel();
     
+    /* model API */
     int rowCount(const QModelIndex& parent) const;
     QVariant data(const QModelIndex& index, int role) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
@@ -31,8 +33,12 @@ public:
     QMimeData *mimeData(const QModelIndexList &indexes) const;
     bool dropMimeData(const QMimeData* data, Qt::DropAction action,
             int row, int column, const QModelIndex& parent);
+    
+    /* own method */
+    
 private:
-    QStringList rulesList;
+    /* list of rules */
+    QList<FilterRule> rulesList;
 
 };
 

@@ -7,6 +7,8 @@
 
 #include "FilterRule.h"
 
+FilterRule::FilterRule() {}
+
 FilterRule::FilterRule(int number) {
     this->number = number;
 }

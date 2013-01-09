@@ -10,19 +10,18 @@
 #include "FilterRulesModel.h"
 
 FilterRulesModel::FilterRulesModel() {
-    //this->rulesList = new QList<FilterRule>();
-//    FilterRule *rule = new FilterRule(1);
-//    rule->setName("jedna");
-//
-//    rulesList.append(*rule);
-//
-//    rule = new FilterRule(2);
-//    rule->setName("dva");
-//
-//    rulesList.append(*rule);
-    rulesList.append(QString("jedna"));
-    rulesList.append(QString("dva"));
-    rulesList.append(QString("tri"));
+
+    FilterRule *rule = new FilterRule(1);
+    rule->setName("jedna");
+    rulesList.append(*rule);
+
+    rule = new FilterRule(2);
+    rule->setName("dva");
+    rulesList.append(*rule);
+    
+    rule = new FilterRule(3);
+    rule->setName("tri");
+    rulesList.append(*rule);
 }
 
 FilterRulesModel::~FilterRulesModel() {
@@ -39,9 +38,9 @@ QVariant FilterRulesModel::data(const QModelIndex& index, int role) const {
     }
 
     if (role == Qt::DisplayRole) {
-        //FilterRule rule = rulesList.at(index.row());
+        FilterRule rule = rulesList.at(index.row());
         //return tr("#%1 %2").arg(QString::number(rule.getNumber()), rule.getName());
-        return rulesList.at(index.row());
+        return rule.getName();
     } else {
 
         return QVariant();
@@ -79,7 +78,9 @@ bool FilterRulesModel::setData(const QModelIndex& index, const QVariant& value, 
 
     /* enabled for display role because of drag and drop */
     if (index.isValid() && role == Qt::DisplayRole) {      
-        rulesList.replace(index.row(), value.toString());
+        //rulesList.replace(index.row(), value.toString());
+        FilterRule rule = value.value<FilterRule>();
+        rulesList.replace(index.row(), rule);
         emit dataChanged(index, index);
         return true;
     }
@@ -91,7 +92,10 @@ bool FilterRulesModel::insertRows(int position, int rows, const QModelIndex &par
 
      for (int row = 0; row < rows; ++row) {
          /* insert new rule */
-         rulesList.insert(position, "New " + row);
+         FilterRule *rule = new FilterRule(position);
+         rule->setName("New rule");
+         rulesList.insert(position, *rule);
+//         rulesList.insert(position, "New " + row);
      }
 
      endInsertRows();
@@ -116,34 +120,41 @@ Qt::DropActions FilterRulesModel::supportedDropActions() const {
 
 QMimeData *FilterRulesModel::mimeData(const QModelIndexList &indexes) const {
     
+    /* create mime data object, byte array and writing stream */
     QMimeData *mimeData = new QMimeData();
     QByteArray encodedData;
-    
     QDataStream writeStream(&encodedData, QIODevice::WriteOnly);
     
+    /* each rule from given indexes write to byte array */
     foreach(const QModelIndex &index, indexes) {
         if(index.isValid()) {
-            QString text = data(index, Qt::DisplayRole).toString();
-            writeStream << text;
+            FilterRule rule = rulesList.at(index.row());
+            writeStream << rule.getNumber();
+            writeStream << rule.getName();
         }
     }
     
-    mimeData->setData("application/vnd.text.list", encodedData);
+    /* set byte array as own mimetype data */
+    mimeData->setData("application/vnd.filterrule.list", encodedData);
     return mimeData; 
 }
 
 bool FilterRulesModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) {
     
+    /* on ignore action return success */
     if(action == Qt::IgnoreAction) {
         return true;
-    }   
-    if(!data->hasFormat("application/vnd.text.list")) {
+    }
+    /* accept only own mimetype */
+    if(!data->hasFormat("application/vnd.filterrule.list")) {
         return false;
     }
+    /* accept only valid column */
     if (column > 0) {
         return false;
     }
     
+    /* compute begin row */
     int beginRow;
     if(row != -1) {
         beginRow = row;
@@ -156,22 +167,26 @@ bool FilterRulesModel::dropMimeData(const QMimeData* data, Qt::DropAction action
     }
     
     /* decoding imported data */
-    QByteArray encodedData = data->data("application/vnd.text.list");
+    QByteArray encodedData = data->data("application/vnd.filterrule.list");
     QDataStream readStream(&encodedData, QIODevice::ReadOnly);
-    QStringList newItems;
+    QList<FilterRule> newRules;
     int rows = 0;
     
     while(!readStream.atEnd()) {
-        QString text;
-        readStream >> text;
-        newItems << text;
+        int id;
+        QString name;
+        readStream >> id;
+        readStream >> name;
+        FilterRule *rule = new FilterRule(id);
+        rule->setName(name);
+        newRules.append(*rule);
         rows++;
     }
     
     insertRows(beginRow, rows, QModelIndex());
-    foreach(const QString &text, newItems) {
+    foreach(const FilterRule &rule, newRules) {
         QModelIndex idx = index(beginRow, 0, QModelIndex());
-        setData(idx, text, Qt::DisplayRole);
+        setData(idx, QVariant::fromValue<FilterRule>(rule), Qt::DisplayRole);
         beginRow++;
     }
     
@@ -180,6 +195,6 @@ bool FilterRulesModel::dropMimeData(const QMimeData* data, Qt::DropAction action
 
 QStringList FilterRulesModel::mimeTypes() const {
      QStringList types;
-     types << "application/vnd.text.list";
+     types << "application/vnd.filterrule.list";
      return types;
  }

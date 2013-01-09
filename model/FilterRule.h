@@ -9,9 +9,11 @@
 #define	FILTERRULE_H
 
 #include <QString>
+#include <QMetaType>
 
 class FilterRule {
 public:
+    FilterRule();
     FilterRule(int number);
     virtual ~FilterRule();
     
@@ -24,6 +26,8 @@ private:
     QString name;
     
 };
+/* register class as metatype to be used in QVariant object */
+Q_DECLARE_METATYPE(FilterRule);
 
 #endif	/* FILTERRULE_H */
 
