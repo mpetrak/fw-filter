@@ -19,6 +19,8 @@ MainWindow::MainWindow() {
     widget.rulesView->setAcceptDrops(true);
     widget.rulesView->setDropIndicatorShown(true);
     widget.rulesView->setDragDropMode(QAbstractItemView::InternalMove);
+    
+    ruleEditWidget = new RuleEditWidget(widget.centralwidget);
 }
 
 MainWindow::~MainWindow() {

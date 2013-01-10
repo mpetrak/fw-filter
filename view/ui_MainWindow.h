@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Wed Jan 9 17:37:21 2013
+** Created: Thu Jan 10 14:06:27 2013
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -35,8 +35,8 @@ public:
     QWidget *centralwidget;
     QListView *rulesView;
     QMenuBar *menubar;
-    QMenu *menuApplication;
     QMenu *menuTools;
+    QMenu *menuApplication;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -67,10 +67,10 @@ public:
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
         menubar->setGeometry(QRect(0, 0, 763, 25));
-        menuApplication = new QMenu(menubar);
-        menuApplication->setObjectName(QString::fromUtf8("menuApplication"));
         menuTools = new QMenu(menubar);
         menuTools->setObjectName(QString::fromUtf8("menuTools"));
+        menuApplication = new QMenu(menubar);
+        menuApplication->setObjectName(QString::fromUtf8("menuApplication"));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -78,11 +78,11 @@ public:
 
         menubar->addAction(menuApplication->menuAction());
         menubar->addAction(menuTools->menuAction());
+        menuTools->addAction(actionSettings);
         menuApplication->addAction(actionApply_modifications);
         menuApplication->addAction(actionReset);
         menuApplication->addSeparator();
         menuApplication->addAction(actionClose);
-        menuTools->addAction(actionSettings);
 
         retranslateUi(MainWindow);
 
@@ -98,8 +98,8 @@ public:
         actionApply_modifications->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0, QApplication::UnicodeUTF8));
         actionReset->setText(QApplication::translate("MainWindow", "Reset", 0, QApplication::UnicodeUTF8));
         actionSettings->setText(QApplication::translate("MainWindow", "Settings", 0, QApplication::UnicodeUTF8));
-        menuApplication->setTitle(QApplication::translate("MainWindow", "Application", 0, QApplication::UnicodeUTF8));
         menuTools->setTitle(QApplication::translate("MainWindow", "Tools", 0, QApplication::UnicodeUTF8));
+        menuApplication->setTitle(QApplication::translate("MainWindow", "Application", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

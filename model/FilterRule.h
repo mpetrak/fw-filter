@@ -17,7 +17,7 @@ public:
     FilterRule();
     FilterRule(int number);
     virtual ~FilterRule();
-    
+
     /* Other methods */
     /**
      * Write all rules parameters to given data stream.
@@ -25,17 +25,17 @@ public:
      * @param stream data stream to write to
      */
     void toStream(QDataStream *stream);
-    
+
     /**
      * Read all rules parameters from given data stream.
      * Using in model with manipulation.
      * @param stream data stream to read from
      */
     void fromStream(QDataStream *stream);
-    
+
     /* Setters and getters */
     void setNumber(int number);
-    int  getNumber();
+    int getNumber();
     void setName(QString name);
     QString getName();
 private:
@@ -43,7 +43,7 @@ private:
     int number;
     /** name of rule */
     QString name;
-    
+
 };
 /* register class as metatype to be used in QVariant object */
 Q_DECLARE_METATYPE(FilterRule);

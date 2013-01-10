@@ -9,6 +9,7 @@
 #define	_MAINWINDOW_H
 
 #include "ui_MainWindow.h"
+#include "RuleEditWidget.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -18,6 +19,7 @@ public:
     void setRulesViewModel(QAbstractItemModel *model);
 private:
     Ui::MainWindow widget;
+    RuleEditWidget *ruleEditWidget;
     
 private slots:
     void on_actionClose_triggered();

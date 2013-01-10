@@ -11,7 +11,8 @@
 
 /* --- Constructors, destructor --- */
 
-FilterRule::FilterRule() {}
+FilterRule::FilterRule() {
+}
 
 FilterRule::FilterRule(int number) {
     this->number = number;
@@ -23,13 +24,13 @@ FilterRule::~FilterRule() {
 /* --- Other methods --- */
 
 void FilterRule::toStream(QDataStream *stream) {
-    
+
     *stream << this->number;
     *stream << this->name;
 }
 
 void FilterRule::fromStream(QDataStream *stream) {
-    
+
     *stream >> number;
     *stream >> name;
 }

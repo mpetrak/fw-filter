@@ -5,8 +5,6 @@
  * Created on 28. listopad 2012, 19:10
  */
 
-#include <qt4/QtCore/qstringlist.h>
-#include <qt4/QtGui/qdialog.h>
 
 #include "FilterRulesModel.h"
 
@@ -79,7 +77,6 @@ bool FilterRulesModel::setData(const QModelIndex& index, const QVariant& value, 
 
     /* enabled for display role because of drag and drop */
     if (index.isValid() && role == Qt::DisplayRole) {
-        //rulesList.replace(index.row(), value.toString());
         FilterRule rule = value.value<FilterRule > ();
         rulesList.replace(index.row(), rule);
         emit dataChanged(index, index);
@@ -96,7 +93,6 @@ bool FilterRulesModel::insertRows(int position, int rows, const QModelIndex &par
         FilterRule *rule = new FilterRule(position);
         rule->setName("New rule");
         rulesList.insert(position, *rule);
-        //         rulesList.insert(position, "New " + row);
     }
 
     endInsertRows();
@@ -157,8 +153,7 @@ bool FilterRulesModel::dropMimeData(const QMimeData* data, Qt::DropAction action
     int beginRow;
     if (row != -1) {
         beginRow = row;
-    }
-    else if (parent.isValid()) {
+    } else if (parent.isValid()) {
         beginRow = parent.row();
     } else {
         beginRow = rowCount(QModelIndex());
