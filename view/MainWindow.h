@@ -35,8 +35,25 @@ private slots:
     void on_actionClose_triggered();
 
 signals:
+
+    /**
+     * New rule at a given position
+     * @param position position
+     */
     void newRule(int position);
+
+    /**
+     * Delete rule from given position
+     * @param position position
+     */
     void deleteRule(int position);
+    
+    /**
+     * Selected rule at given index.
+     * Used in case of deleting rule. Deleted rule is not selected and
+     * we must emit signal, that different rule is now selected.
+     * @param index selected index
+     */
     void selectedRule(QModelIndex index);
 
 };
