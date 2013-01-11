@@ -27,7 +27,20 @@ FilterRulesModel::~FilterRulesModel() {
 }
 
 FilterRule FilterRulesModel::getRule(int index) {
-    return rulesList.at(index);
+    /* return only if index is valid */
+    if(index < rulesList.count()) {
+        return rulesList.at(index);
+    } else  {
+        return false;
+    }
+}
+
+void FilterRulesModel::newRule(int index) {
+    insertRows(index, 1, QModelIndex());
+}
+
+void FilterRulesModel::deleteRule(int index) {
+    removeRows(index, 1, QModelIndex());
 }
 
 int FilterRulesModel::rowCount(const QModelIndex& parent) const {

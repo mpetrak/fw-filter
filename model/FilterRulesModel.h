@@ -43,6 +43,20 @@ public:
      * @return rule object instance
      */
     FilterRule getRule(int index);
+
+public slots:
+    /**
+     * Insert one new rule onto given position
+     * @param index position
+     */
+    void newRule(int index);
+    
+    /**
+     * Delete one rule from given postion
+     * @param index position
+     */
+    void deleteRule(int index);
+    
 private:
     /** List of rules */
     QList<FilterRule> rulesList;

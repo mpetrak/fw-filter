@@ -35,10 +35,12 @@ RuleEditWidget::~RuleEditWidget() {
 }
 
 void RuleEditWidget::ruleSelected(QModelIndex index) {
-    FilterRule rule = this->rulesModel->getRule(index.row());
+    if (index.isValid()) {
+        FilterRule rule = this->rulesModel->getRule(index.row());
 
-    this->nameEdit->setText(rule.getName());
-    //this->numberLabel->setText() = rule.getNumber();
+        this->nameEdit->setText(rule.getName());
+        //this->numberLabel->setText() = rule.getNumber();
+    }
 }
 
 void RuleEditWidget::setRulesModel(FilterRulesModel* model) {

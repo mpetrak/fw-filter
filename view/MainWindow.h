@@ -30,7 +30,14 @@ private:
     RuleEditWidget *ruleEditWidget;
 
 private slots:
+    void on_newRuleButton_clicked();
+    void on_deleteRuleButton_clicked();
     void on_actionClose_triggered();
+
+signals:
+    void newRule(int position);
+    void deleteRule(int position);
+    void selectedRule(QModelIndex index);
 
 };
 

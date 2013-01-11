@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Fri Jan 11 10:34:10 2013
+** Created: Fri Jan 11 13:40:13 2013
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -20,6 +20,7 @@
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
+#include <QtGui/QPushButton>
 #include <QtGui/QStatusBar>
 #include <QtGui/QWidget>
 
@@ -34,6 +35,9 @@ public:
     QAction *actionSettings;
     QWidget *centralwidget;
     QListView *rulesView;
+    QPushButton *newRuleButton;
+    QPushButton *deleteRuleButton;
+    QPushButton *saveEditButton;
     QMenuBar *menubar;
     QMenu *menuTools;
     QMenu *menuApplication;
@@ -43,7 +47,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(763, 600);
+        MainWindow->resize(750, 644);
         MainWindow->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
         actionClose = new QAction(MainWindow);
         actionClose->setObjectName(QString::fromUtf8("actionClose"));
@@ -63,10 +67,20 @@ public:
         rulesView->setDragDropMode(QAbstractItemView::InternalMove);
         rulesView->setDefaultDropAction(Qt::MoveAction);
         rulesView->setMovement(QListView::Free);
+        newRuleButton = new QPushButton(centralwidget);
+        newRuleButton->setObjectName(QString::fromUtf8("newRuleButton"));
+        newRuleButton->setGeometry(QRect(10, 550, 92, 27));
+        newRuleButton->setFlat(false);
+        deleteRuleButton = new QPushButton(centralwidget);
+        deleteRuleButton->setObjectName(QString::fromUtf8("deleteRuleButton"));
+        deleteRuleButton->setGeometry(QRect(110, 550, 92, 27));
+        saveEditButton = new QPushButton(centralwidget);
+        saveEditButton->setObjectName(QString::fromUtf8("saveEditButton"));
+        saveEditButton->setGeometry(QRect(650, 550, 92, 27));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 763, 25));
+        menubar->setGeometry(QRect(0, 0, 750, 25));
         menuTools = new QMenu(menubar);
         menuTools->setObjectName(QString::fromUtf8("menuTools"));
         menuApplication = new QMenu(menubar);
@@ -98,6 +112,9 @@ public:
         actionApply_modifications->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0, QApplication::UnicodeUTF8));
         actionReset->setText(QApplication::translate("MainWindow", "Reset", 0, QApplication::UnicodeUTF8));
         actionSettings->setText(QApplication::translate("MainWindow", "Settings", 0, QApplication::UnicodeUTF8));
+        newRuleButton->setText(QApplication::translate("MainWindow", "New", 0, QApplication::UnicodeUTF8));
+        deleteRuleButton->setText(QApplication::translate("MainWindow", "Delete", 0, QApplication::UnicodeUTF8));
+        saveEditButton->setText(QApplication::translate("MainWindow", "Save", 0, QApplication::UnicodeUTF8));
         menuTools->setTitle(QApplication::translate("MainWindow", "Tools", 0, QApplication::UnicodeUTF8));
         menuApplication->setTitle(QApplication::translate("MainWindow", "Application", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
