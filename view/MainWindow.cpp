@@ -21,6 +21,11 @@ MainWindow::MainWindow() {
     widget.rulesView->setDragDropMode(QAbstractItemView::InternalMove);
     
     ruleEditWidget = new RuleEditWidget(widget.centralwidget);
+    ruleEditWidget->setObjectName(QString::fromUtf8("ruleEditWidget"));
+    
+    /* Connect selection signal from rules view to widget for editing rule */
+    QObject::connect(widget.rulesView, SIGNAL(clicked(QModelIndex)), 
+            ruleEditWidget, SLOT(ruleSelected(QModelIndex)));
 }
 
 MainWindow::~MainWindow() {
@@ -28,6 +33,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::setRulesViewModel(QAbstractItemModel* model) {
     widget.rulesView->setModel(model);
+    ruleEditWidget->setRulesModel((FilterRulesModel *) model);
 }
 
 void MainWindow::on_actionClose_triggered() {

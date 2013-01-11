@@ -16,14 +16,22 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow();
     virtual ~MainWindow();
+
+    /**
+     * Setter for list model of rules.
+     * @param model rules list model
+     */
     void setRulesViewModel(QAbstractItemModel *model);
+
 private:
     Ui::MainWindow widget;
+
+    /** Widget for rule editing */
     RuleEditWidget *ruleEditWidget;
-    
+
 private slots:
     void on_actionClose_triggered();
-        
+
 };
 
 #endif	/* _MAINWINDOW_H */

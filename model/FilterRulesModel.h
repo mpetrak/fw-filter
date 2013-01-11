@@ -15,6 +15,8 @@
 #include "FilterRule.h"
 
 class FilterRulesModel : public QAbstractListModel {
+    Q_OBJECT
+
 public:
     /* constructors and destructors */
     FilterRulesModel();
@@ -35,7 +37,12 @@ public:
             int row, int column, const QModelIndex& parent);
 
     /* own method */
-
+    /**
+     * Get instance of rule on given index.
+     * @param index index of rule
+     * @return rule object instance
+     */
+    FilterRule getRule(int index);
 private:
     /** List of rules */
     QList<FilterRule> rulesList;

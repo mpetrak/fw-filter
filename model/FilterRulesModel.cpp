@@ -26,6 +26,10 @@ FilterRulesModel::FilterRulesModel() {
 FilterRulesModel::~FilterRulesModel() {
 }
 
+FilterRule FilterRulesModel::getRule(int index) {
+    return rulesList.at(index);
+}
+
 int FilterRulesModel::rowCount(const QModelIndex& parent) const {
     return rulesList.count();
 }
