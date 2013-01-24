@@ -27,12 +27,16 @@ void FilterRule::toStream(QDataStream *stream) {
 
     *stream << this->number;
     *stream << this->name;
+    *stream << this->action;
+    *stream << this->description;
 }
 
 void FilterRule::fromStream(QDataStream *stream) {
 
-    *stream >> number;
-    *stream >> name;
+    *stream >> this->number;
+    *stream >> this->name;
+    *stream >> this->action;
+    *stream >> this->description;
 }
 
 /* --- Getters and setters --- */
@@ -41,7 +45,7 @@ void FilterRule::setNumber(int number) {
     this->number = number;
 }
 
-int FilterRule::getNumber() {
+int FilterRule::getNumber() const {
     return this->number;
 }
 
@@ -49,7 +53,22 @@ void FilterRule::setName(QString name) {
     this->name = name;
 }
 
-QString FilterRule::getName() {
+QString FilterRule::getName() const {
     return this->name;
 }
 
+QString FilterRule::getAction() const {
+    return this->action;
+}
+
+void FilterRule::setAction(QString action) {
+    this->action = action;
+}
+
+QString FilterRule::getDescription() const {
+    return this->description;
+}
+
+void FilterRule::setDescription(QString description) {
+    this->description = description;
+}

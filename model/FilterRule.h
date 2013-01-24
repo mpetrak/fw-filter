@@ -12,7 +12,8 @@
 #include <QMetaType>
 
 class FilterRule {
-public:    
+public:
+    /* Constants */
     /* Constructors, destructor */
     FilterRule();
     FilterRule(int number);
@@ -35,14 +36,22 @@ public:
 
     /* Setters and getters */
     void setNumber(int number);
-    int getNumber();
+    int getNumber() const;
     void setName(QString name);
-    QString getName();
+    QString getName() const;
+    QString getAction() const;
+    void setAction(QString action);
+    QString getDescription() const;
+    void setDescription(QString description);
+
 private:
     /** number of rule */
     int number;
     /** name of rule */
     QString name;
+    /** rule description */
+    QString description;
+
     /** Type of ip protocol */
     QString IpProtocol;
     /** IP source address */
@@ -53,10 +62,10 @@ private:
     QString IpDest;
     /** IP destination mask*/
     ushort IpDestMask;
-    
+
     /** action of matched packet */
     QString action;
-    
+
 
 };
 /* register class as metatype to be used in QVariant object */

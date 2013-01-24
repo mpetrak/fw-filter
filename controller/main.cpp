@@ -7,7 +7,7 @@
 
 #include <QtGui/QApplication>
 
-#include "MainWindow.h"
+#include "../view/MainWindow.h"
 #include "../model/FilterRulesModel.h"
 
 int main(int argc, char *argv[]) {

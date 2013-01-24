@@ -12,6 +12,7 @@
 #include <QtGui/QLineEdit>
 #include <QtGui/QLabel>
 #include <QtGui/QComboBox>
+#include <QtGui/QTextEdit>
 #include "../model/FilterRulesModel.h"
 
 class RuleEditWidget : public QTabWidget {
@@ -34,14 +35,17 @@ public slots:
      * @param index index of selected rule in list of rules
      */
     void ruleSelected(QModelIndex index);
-    
+
     void ruleSave(QModelIndex index);
 
 private:
     void setupEbWidget();
     void setupGeneralWidget();
-    
-    /** rules list model pointer */
+
+    /** List of rule actions */
+    QStringList actions;
+
+    /** Rules list model pointer */
     FilterRulesModel *rulesModel;
 
     /* Tabs */
@@ -55,13 +59,15 @@ private:
     /* General edits */
     QLineEdit *nameEdit;
     QLabel *numberLabel;
-    
+    QComboBox *actionSelect;
+    QTextEdit *descriptionEdit;
+
     /* EB edits */
     QLineEdit *macSourceEdit;
     QLineEdit *macDestEdit;
     QComboBox *inInterfaceSelect;
     QComboBox *outInterfaceSelect;
-    
+
 
 };
 
