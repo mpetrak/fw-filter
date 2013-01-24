@@ -11,6 +11,7 @@
 #include <QtGui/QTabWidget>
 #include <QtGui/QLineEdit>
 #include <QtGui/QLabel>
+#include <QtGui/QComboBox>
 #include "../model/FilterRulesModel.h"
 
 class RuleEditWidget : public QTabWidget {
@@ -37,6 +38,9 @@ public slots:
     void ruleSave(QModelIndex index);
 
 private:
+    void setupEbWidget();
+    void setupGeneralWidget();
+    
     /** rules list model pointer */
     FilterRulesModel *rulesModel;
 
@@ -45,10 +49,19 @@ private:
     QWidget *tabGeneral;
     /** Tab with filtering information about 3rd layer */
     QWidget *tabIp;
+    /** Tab with filtering information about 2nd layer */
+    QWidget *tabEb;
 
-    /* General components */
+    /* General edits */
     QLineEdit *nameEdit;
     QLabel *numberLabel;
+    
+    /* EB edits */
+    QLineEdit *macSourceEdit;
+    QLineEdit *macDestEdit;
+    QComboBox *inInterfaceSelect;
+    QComboBox *outInterfaceSelect;
+    
 
 };
 
