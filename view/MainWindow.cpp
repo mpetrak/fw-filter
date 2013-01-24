@@ -36,6 +36,9 @@ MainWindow::MainWindow() {
      */
     QObject::connect(this, SIGNAL(selectedRule(QModelIndex)),
             ruleEditWidget, SLOT(ruleSelected(QModelIndex)));
+
+    QObject::connect(this, SIGNAL(saveRule(QModelIndex)),
+            ruleEditWidget, SLOT(ruleSave(QModelIndex)));
 }
 
 MainWindow::~MainWindow() {
@@ -84,7 +87,21 @@ void MainWindow::on_deleteRuleButton_clicked() {
 
     /* Emit signal for edit widget about new rule is selected - not deleted one */
     indexes = widget.rulesView->selectionModel()->selectedIndexes();
-
     emit selectedRule(index);
 
+}
+
+void MainWindow::on_saveEditButton_clicked() {
+    QItemSelectionModel *selection = widget.rulesView->selectionModel();
+    QModelIndexList indexes = selection->selectedIndexes();
+
+    if (indexes.count() > 0) {
+
+        /* get last selected index and save rule on it */
+        QModelIndex index = indexes.at(indexes.count() - 1);
+        emit saveRule(index);
+    } else {
+        
+        //QMessageBox::critical(NULL, QObject::tr("Aditionals privileges needed"), QObject::tr("You must run TFTPinfo as a root."), QMessageBox::Ok, QMessageBox::Ok);
+    }
 }

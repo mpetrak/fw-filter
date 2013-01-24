@@ -33,6 +33,8 @@ public slots:
      * @param index index of selected rule in list of rules
      */
     void ruleSelected(QModelIndex index);
+    
+    void ruleSave(QModelIndex index);
 
 private:
     /** rules list model pointer */

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'RuleEditWidget.h'
 **
-** Created: Fri Jan 11 13:41:17 2013
+** Created: Thu Jan 24 12:04:44 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_RuleEditWidget[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,12 +32,14 @@ static const uint qt_meta_data_RuleEditWidget[] = {
 
  // slots: signature, parameters, type, tag, flags
       22,   16,   15,   15, 0x0a,
+      48,   16,   15,   15, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_RuleEditWidget[] = {
     "RuleEditWidget\0\0index\0ruleSelected(QModelIndex)\0"
+    "ruleSave(QModelIndex)\0"
 };
 
 const QMetaObject RuleEditWidget::staticMetaObject = {
@@ -70,9 +72,10 @@ int RuleEditWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: ruleSelected((*reinterpret_cast< QModelIndex(*)>(_a[1]))); break;
+        case 1: ruleSave((*reinterpret_cast< QModelIndex(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 1;
+        _id -= 2;
     }
     return _id;
 }

@@ -32,6 +32,7 @@ private:
 private slots:
     void on_newRuleButton_clicked();
     void on_deleteRuleButton_clicked();
+    void on_saveEditButton_clicked();
     void on_actionClose_triggered();
 
 signals:
@@ -55,6 +56,8 @@ signals:
      * @param index selected index
      */
     void selectedRule(QModelIndex index);
+    
+    void saveRule(QModelIndex index);
 
 };
 

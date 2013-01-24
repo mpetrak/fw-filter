@@ -36,7 +36,7 @@ public:
     bool dropMimeData(const QMimeData* data, Qt::DropAction action,
             int row, int column, const QModelIndex& parent);
 
-    /* own method */
+    /* own methods */
     /**
      * Get instance of rule on given index.
      * @param index index of rule

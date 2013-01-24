@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'MainWindow.h'
 **
-** Created: Fri Jan 11 14:15:14 2013
+** Created: Thu Jan 24 12:04:43 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,22 +23,24 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       3,       // signalCount
+       4,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       21,   12,   11,   11, 0x05,
       34,   12,   11,   11, 0x05,
       56,   50,   11,   11, 0x05,
+      82,   50,   11,   11, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      82,   11,   11,   11, 0x08,
-     109,   11,   11,   11, 0x08,
-     139,   11,   11,   11, 0x08,
+     104,   11,   11,   11, 0x08,
+     131,   11,   11,   11, 0x08,
+     161,   11,   11,   11, 0x08,
+     189,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -46,8 +48,9 @@ static const uint qt_meta_data_MainWindow[] = {
 static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0position\0newRule(int)\0"
     "deleteRule(int)\0index\0selectedRule(QModelIndex)\0"
-    "on_newRuleButton_clicked()\0"
+    "saveRule(QModelIndex)\0on_newRuleButton_clicked()\0"
     "on_deleteRuleButton_clicked()\0"
+    "on_saveEditButton_clicked()\0"
     "on_actionClose_triggered()\0"
 };
 
@@ -83,12 +86,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 0: newRule((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 1: deleteRule((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: selectedRule((*reinterpret_cast< QModelIndex(*)>(_a[1]))); break;
-        case 3: on_newRuleButton_clicked(); break;
-        case 4: on_deleteRuleButton_clicked(); break;
-        case 5: on_actionClose_triggered(); break;
+        case 3: saveRule((*reinterpret_cast< QModelIndex(*)>(_a[1]))); break;
+        case 4: on_newRuleButton_clicked(); break;
+        case 5: on_deleteRuleButton_clicked(); break;
+        case 6: on_saveEditButton_clicked(); break;
+        case 7: on_actionClose_triggered(); break;
         default: ;
         }
-        _id -= 6;
+        _id -= 8;
     }
     return _id;
 }
@@ -112,5 +117,12 @@ void MainWindow::selectedRule(QModelIndex _t1)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
+}
+
+// SIGNAL 3
+void MainWindow::saveRule(QModelIndex _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 3, _a);
 }
 QT_END_MOC_NAMESPACE

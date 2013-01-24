@@ -35,11 +35,24 @@ RuleEditWidget::~RuleEditWidget() {
 }
 
 void RuleEditWidget::ruleSelected(QModelIndex index) {
+    
     if (index.isValid()) {
         FilterRule rule = this->rulesModel->getRule(index.row());
 
         this->nameEdit->setText(rule.getName());
         //this->numberLabel->setText() = rule.getNumber();
+    }
+}
+
+void RuleEditWidget::ruleSave(QModelIndex index) {
+    
+    if(index.isValid()) {
+        FilterRule rule = this->rulesModel->getRule(index.row());
+        
+        rule.setName(this->nameEdit->text());
+        
+        /** save rule using qt model api */
+        this->rulesModel->setData(index, QVariant::fromValue<FilterRule > (rule), Qt::DisplayRole);
     }
 }
 
