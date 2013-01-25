@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     
     main.setRulesViewModel(rulesModel);
     
-    //TODO load network interfaces
+    //TODO control superuser
     //TODO load configuration (interfaces aliases)
     
     main.show();

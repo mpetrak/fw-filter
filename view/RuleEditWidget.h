@@ -13,7 +13,9 @@
 #include <QtGui/QLabel>
 #include <QtGui/QComboBox>
 #include <QtGui/QTextEdit>
+
 #include "../model/FilterRulesModel.h"
+#include "../lib/NetInterfaces.h"
 
 class RuleEditWidget : public QTabWidget {
     Q_OBJECT
@@ -44,6 +46,9 @@ private:
 
     /** List of rule actions */
     QStringList actions;
+    
+    /** List of system interfaces */
+    NetInterfaces *interfaces;
 
     /** Rules list model pointer */
     FilterRulesModel *rulesModel;

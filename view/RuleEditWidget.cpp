@@ -8,9 +8,9 @@
 #include <qt4/QtCore/qabstractitemmodel.h>
 #include <qt4/QtGui/qgridlayout.h>
 #include <qt4/QtGui/qcombobox.h>
+#include <QString>
 
 #include "RuleEditWidget.h"
-#include "qstring.h"
 
 RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
     /* set own tab widget */
@@ -19,6 +19,8 @@ RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
 
     this->actions.append(QString::fromUtf8("ACCEPT"));
     this->actions.append(QString::fromUtf8("DROP"));
+    
+    this->interfaces = new NetInterfaces();
 
     /* create tabs */
     this->setupGeneralWidget();
@@ -150,6 +152,7 @@ void RuleEditWidget::setupEbWidget() {
     this->inInterfaceSelect = new QComboBox(this->tabEb);
     this->inInterfaceSelect->setObjectName(QString::fromUtf8("inInterfaceSelect"));
     this->inInterfaceSelect->setSizePolicy(fixedSizePolicy);
+    this->inInterfaceSelect->addItems(this->interfaces->getIfList());
     gridLayout->addWidget(this->inInterfaceSelect, 1, 2, 1, 1);
 
     /* output interface */
@@ -161,6 +164,7 @@ void RuleEditWidget::setupEbWidget() {
     this->outInterfaceSelect = new QComboBox(this->tabEb);
     this->outInterfaceSelect->setObjectName(QString::fromUtf8("outInterfaceSelect"));
     this->outInterfaceSelect->setSizePolicy(fixedSizePolicy);
+    this->outInterfaceSelect->addItems(this->interfaces->getIfList());
     gridLayout->addWidget(this->outInterfaceSelect, 2, 2, 1, 1);
 
     /* source address */
