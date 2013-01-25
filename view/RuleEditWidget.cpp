@@ -20,7 +20,9 @@ RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
     this->actions.append(QString::fromUtf8("ACCEPT"));
     this->actions.append(QString::fromUtf8("DROP"));
     
-    this->interfaces = new NetInterfaces();
+    NetInterfaces *netIfs = new NetInterfaces();
+    this->interfaces = netIfs->getIfList();
+    free(netIfs);
 
     /* create tabs */
     this->setupGeneralWidget();
@@ -45,6 +47,8 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->nameEdit->setText(rule.getName());
         this->descriptionEdit->setText(rule.getDescription());
         this->actionSelect->setCurrentIndex(actions.indexOf(rule.getAction()));
+        this->inInterfaceSelect->setCurrentIndex(interfaces.indexOf(rule.getInInterface()));
+        this->outInterfaceSelect->setCurrentIndex(interfaces.indexOf(rule.getOutInterface()));
         this->macSourceEdit->setText(rule.getEbSource());
         this->macDestEdit->setText(rule.getEbDest());
     }
@@ -58,6 +62,8 @@ void RuleEditWidget::ruleSave(QModelIndex index) {
         rule.setName(this->nameEdit->text());
         rule.setDescription(this->descriptionEdit->toPlainText());
         rule.setAction(this->actionSelect->currentText());
+        rule.setInInterface(this->inInterfaceSelect->currentText());
+        rule.setOutInterface(this->outInterfaceSelect->currentText());
         rule.setEbSource(this->macSourceEdit->text());
         rule.setEbDest(this->macDestEdit->text());
 
@@ -152,7 +158,7 @@ void RuleEditWidget::setupEbWidget() {
     this->inInterfaceSelect = new QComboBox(this->tabEb);
     this->inInterfaceSelect->setObjectName(QString::fromUtf8("inInterfaceSelect"));
     this->inInterfaceSelect->setSizePolicy(fixedSizePolicy);
-    this->inInterfaceSelect->addItems(this->interfaces->getIfList());
+    this->inInterfaceSelect->addItems(this->interfaces);
     gridLayout->addWidget(this->inInterfaceSelect, 1, 2, 1, 1);
 
     /* output interface */
@@ -164,7 +170,7 @@ void RuleEditWidget::setupEbWidget() {
     this->outInterfaceSelect = new QComboBox(this->tabEb);
     this->outInterfaceSelect->setObjectName(QString::fromUtf8("outInterfaceSelect"));
     this->outInterfaceSelect->setSizePolicy(fixedSizePolicy);
-    this->outInterfaceSelect->addItems(this->interfaces->getIfList());
+    this->outInterfaceSelect->addItems(this->interfaces);
     gridLayout->addWidget(this->outInterfaceSelect, 2, 2, 1, 1);
 
     /* source address */

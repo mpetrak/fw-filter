@@ -29,6 +29,8 @@ void FilterRule::toStream(QDataStream *stream) {
     *stream << this->name;
     *stream << this->action;
     *stream << this->description;
+    *stream << this->inInterface;
+    *stream << this->outInterface;
     *stream << this->ebSource;
     *stream << this->ebDest;
 }
@@ -39,6 +41,8 @@ void FilterRule::fromStream(QDataStream *stream) {
     *stream >> this->name;
     *stream >> this->action;
     *stream >> this->description;
+    *stream >> this->inInterface;
+    *stream >> this->outInterface;
     *stream >> this->ebSource;
     *stream >> this->ebDest;
 }
@@ -91,4 +95,20 @@ QString FilterRule::getEbSource() const {
 
 void FilterRule::setEbSource(QString EbSource) {
     this->ebSource = EbSource;
+}
+
+QString FilterRule::getInInterface() const {
+    return this->inInterface;
+}
+
+void FilterRule::setInInterface(QString inInterface) {
+    this->inInterface = inInterface;
+}
+
+QString FilterRule::getOutInterface() const {
+    return this->outInterface;
+}
+
+void FilterRule::setOutInterface(QString outInterface) {
+    this->outInterface = outInterface;
 }

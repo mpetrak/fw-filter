@@ -47,6 +47,10 @@ public:
     void setEbDest(QString EbDest);
     QString getEbSource() const;
     void setEbSource(QString EbSource);
+    QString getInInterface() const;
+    void setInInterface(QString inInterface);
+    QString getOutInterface() const;
+    void setOutInterface(QString outInterface);
 
 private:
     /** number of rule */
@@ -56,6 +60,10 @@ private:
     /** Rule description */
     QString description;
     
+    /** Input interface */
+    QString inInterface;
+    /** Output interface */
+    QString outInterface;
     /** Link layer source address */
     QString ebSource;
     /** Link layer destination address */

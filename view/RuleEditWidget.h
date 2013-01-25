@@ -48,7 +48,7 @@ private:
     QStringList actions;
     
     /** List of system interfaces */
-    NetInterfaces *interfaces;
+    QStringList interfaces;
 
     /** Rules list model pointer */
     FilterRulesModel *rulesModel;
