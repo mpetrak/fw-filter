@@ -8,7 +8,7 @@
 #ifndef _MAINWINDOW_H
 #define	_MAINWINDOW_H
 
-#include "ui_MainWindow.h"
+#include "../qt/ui_MainWindow.h"
 #include "RuleEditWidget.h"
 
 class MainWindow : public QMainWindow {
@@ -34,6 +34,9 @@ private slots:
     void on_deleteRuleButton_clicked();
     void on_saveEditButton_clicked();
     void on_actionClose_triggered();
+    void on_actionSave_rule_triggered();
+    void on_actionNew_triggered();
+    void on_actionDelete_triggered();
 
 signals:
 

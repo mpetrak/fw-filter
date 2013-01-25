@@ -101,7 +101,22 @@ void MainWindow::on_saveEditButton_clicked() {
         QModelIndex index = indexes.at(indexes.count() - 1);
         emit saveRule(index);
     } else {
-        
+
         //QMessageBox::critical(NULL, QObject::tr("Aditionals privileges needed"), QObject::tr("You must run TFTPinfo as a root."), QMessageBox::Ok, QMessageBox::Ok);
     }
+}
+
+void MainWindow::on_actionSave_rule_triggered() {
+    /* same as save button clicked */
+    this->on_saveEditButton_clicked();
+}
+
+void MainWindow::on_actionNew_triggered() {
+    /* same as new rule button clicked */
+    this->on_newRuleButton_clicked();
+}
+
+void MainWindow::on_actionDelete_triggered() {
+    /* same as delete rule button clicked */
+    this->on_deleteRuleButton_clicked();
 }

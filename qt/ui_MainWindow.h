@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Thu Jan 24 17:07:26 2013
+** Created: Fri Jan 25 15:08:59 2013
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -33,6 +33,9 @@ public:
     QAction *actionApply_modifications;
     QAction *actionReset;
     QAction *actionSettings;
+    QAction *actionSave_rule;
+    QAction *actionNew;
+    QAction *actionDelete;
     QWidget *centralwidget;
     QListView *rulesView;
     QPushButton *newRuleButton;
@@ -41,6 +44,7 @@ public:
     QMenuBar *menubar;
     QMenu *menuTools;
     QMenu *menuApplication;
+    QMenu *menuRule;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -57,6 +61,12 @@ public:
         actionReset->setObjectName(QString::fromUtf8("actionReset"));
         actionSettings = new QAction(MainWindow);
         actionSettings->setObjectName(QString::fromUtf8("actionSettings"));
+        actionSave_rule = new QAction(MainWindow);
+        actionSave_rule->setObjectName(QString::fromUtf8("actionSave_rule"));
+        actionNew = new QAction(MainWindow);
+        actionNew->setObjectName(QString::fromUtf8("actionNew"));
+        actionDelete = new QAction(MainWindow);
+        actionDelete->setObjectName(QString::fromUtf8("actionDelete"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         rulesView = new QListView(centralwidget);
@@ -85,18 +95,24 @@ public:
         menuTools->setObjectName(QString::fromUtf8("menuTools"));
         menuApplication = new QMenu(menubar);
         menuApplication->setObjectName(QString::fromUtf8("menuApplication"));
+        menuRule = new QMenu(menubar);
+        menuRule->setObjectName(QString::fromUtf8("menuRule"));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         MainWindow->setStatusBar(statusbar);
 
         menubar->addAction(menuApplication->menuAction());
+        menubar->addAction(menuRule->menuAction());
         menubar->addAction(menuTools->menuAction());
         menuTools->addAction(actionSettings);
         menuApplication->addAction(actionApply_modifications);
         menuApplication->addAction(actionReset);
         menuApplication->addSeparator();
         menuApplication->addAction(actionClose);
+        menuRule->addAction(actionNew);
+        menuRule->addAction(actionDelete);
+        menuRule->addAction(actionSave_rule);
 
         retranslateUi(MainWindow);
 
@@ -109,14 +125,20 @@ public:
         actionClose->setText(QApplication::translate("MainWindow", "Close", 0, QApplication::UnicodeUTF8));
         actionClose->setShortcut(QApplication::translate("MainWindow", "Ctrl+X", 0, QApplication::UnicodeUTF8));
         actionApply_modifications->setText(QApplication::translate("MainWindow", "Apply modifications", 0, QApplication::UnicodeUTF8));
-        actionApply_modifications->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0, QApplication::UnicodeUTF8));
+        actionApply_modifications->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+S", 0, QApplication::UnicodeUTF8));
         actionReset->setText(QApplication::translate("MainWindow", "Reset", 0, QApplication::UnicodeUTF8));
         actionSettings->setText(QApplication::translate("MainWindow", "Settings", 0, QApplication::UnicodeUTF8));
+        actionSave_rule->setText(QApplication::translate("MainWindow", "Save rule", 0, QApplication::UnicodeUTF8));
+        actionSave_rule->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0, QApplication::UnicodeUTF8));
+        actionNew->setText(QApplication::translate("MainWindow", "New", 0, QApplication::UnicodeUTF8));
+        actionNew->setShortcut(QApplication::translate("MainWindow", "Ctrl+N", 0, QApplication::UnicodeUTF8));
+        actionDelete->setText(QApplication::translate("MainWindow", "Delete", 0, QApplication::UnicodeUTF8));
         newRuleButton->setText(QApplication::translate("MainWindow", "New", 0, QApplication::UnicodeUTF8));
         deleteRuleButton->setText(QApplication::translate("MainWindow", "Delete", 0, QApplication::UnicodeUTF8));
         saveEditButton->setText(QApplication::translate("MainWindow", "Save", 0, QApplication::UnicodeUTF8));
         menuTools->setTitle(QApplication::translate("MainWindow", "Tools", 0, QApplication::UnicodeUTF8));
         menuApplication->setTitle(QApplication::translate("MainWindow", "Application", 0, QApplication::UnicodeUTF8));
+        menuRule->setTitle(QApplication::translate("MainWindow", "Rule", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

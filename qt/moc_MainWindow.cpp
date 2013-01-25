@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'MainWindow.h'
 **
-** Created: Thu Jan 24 17:07:51 2013
+** Created: Fri Jan 25 15:09:11 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -41,6 +41,9 @@ static const uint qt_meta_data_MainWindow[] = {
      131,   11,   11,   11, 0x08,
      161,   11,   11,   11, 0x08,
      189,   11,   11,   11, 0x08,
+     216,   11,   11,   11, 0x08,
+     247,   11,   11,   11, 0x08,
+     272,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -52,6 +55,9 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_deleteRuleButton_clicked()\0"
     "on_saveEditButton_clicked()\0"
     "on_actionClose_triggered()\0"
+    "on_actionSave_rule_triggered()\0"
+    "on_actionNew_triggered()\0"
+    "on_actionDelete_triggered()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -91,9 +97,12 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 5: on_deleteRuleButton_clicked(); break;
         case 6: on_saveEditButton_clicked(); break;
         case 7: on_actionClose_triggered(); break;
+        case 8: on_actionSave_rule_triggered(); break;
+        case 9: on_actionNew_triggered(); break;
+        case 10: on_actionDelete_triggered(); break;
         default: ;
         }
-        _id -= 8;
+        _id -= 11;
     }
     return _id;
 }
