@@ -43,15 +43,24 @@ public:
     void setAction(QString action);
     QString getDescription() const;
     void setDescription(QString description);
+    QString getEbDest() const;
+    void setEbDest(QString EbDest);
+    QString getEbSource() const;
+    void setEbSource(QString EbSource);
 
 private:
     /** number of rule */
     int number;
-    /** name of rule */
+    /** Name of rule */
     QString name;
-    /** rule description */
+    /** Rule description */
     QString description;
-
+    
+    /** Link layer source address */
+    QString ebSource;
+    /** Link layer destination address */
+    QString ebDest;
+    
     /** Type of ip protocol */
     QString IpProtocol;
     /** IP source address */
@@ -63,7 +72,7 @@ private:
     /** IP destination mask*/
     ushort IpDestMask;
 
-    /** action of matched packet */
+    /** Action of matched packet */
     QString action;
 
 

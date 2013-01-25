@@ -29,6 +29,8 @@ void FilterRule::toStream(QDataStream *stream) {
     *stream << this->name;
     *stream << this->action;
     *stream << this->description;
+    *stream << this->ebSource;
+    *stream << this->ebDest;
 }
 
 void FilterRule::fromStream(QDataStream *stream) {
@@ -37,6 +39,8 @@ void FilterRule::fromStream(QDataStream *stream) {
     *stream >> this->name;
     *stream >> this->action;
     *stream >> this->description;
+    *stream >> this->ebSource;
+    *stream >> this->ebDest;
 }
 
 /* --- Getters and setters --- */
@@ -71,4 +75,20 @@ QString FilterRule::getDescription() const {
 
 void FilterRule::setDescription(QString description) {
     this->description = description;
+}
+
+QString FilterRule::getEbDest() const {
+    return this->ebDest;
+}
+
+void FilterRule::setEbDest(QString EbDest) {
+    this->ebDest = EbDest;
+}
+
+QString FilterRule::getEbSource() const {
+    return this->ebSource;
+}
+
+void FilterRule::setEbSource(QString EbSource) {
+    this->ebSource = EbSource;
 }

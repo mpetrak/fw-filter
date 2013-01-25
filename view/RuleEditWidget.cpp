@@ -43,6 +43,8 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->nameEdit->setText(rule.getName());
         this->descriptionEdit->setText(rule.getDescription());
         this->actionSelect->setCurrentIndex(actions.indexOf(rule.getAction()));
+        this->macSourceEdit->setText(rule.getEbSource());
+        this->macDestEdit->setText(rule.getEbDest());
     }
 }
 
@@ -54,6 +56,8 @@ void RuleEditWidget::ruleSave(QModelIndex index) {
         rule.setName(this->nameEdit->text());
         rule.setDescription(this->descriptionEdit->toPlainText());
         rule.setAction(this->actionSelect->currentText());
+        rule.setEbSource(this->macSourceEdit->text());
+        rule.setEbDest(this->macDestEdit->text());
 
         /** save rule using qt model api */
         this->rulesModel->setData(index, QVariant::fromValue<FilterRule > (rule), Qt::DisplayRole);
