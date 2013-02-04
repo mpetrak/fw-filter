@@ -26,6 +26,10 @@ FilterRulesModel::FilterRulesModel() {
 FilterRulesModel::~FilterRulesModel() {
 }
 
+QList<FilterRule> FilterRulesModel::getRulesList() {
+    return this->rulesList;
+}
+
 FilterRule FilterRulesModel::getRule(int index) {
     /* return only if index is valid */
     if(index < rulesList.count()) {

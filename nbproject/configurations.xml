@@ -9,6 +9,7 @@
       <itemPath>view/MainWindow.h</itemPath>
       <itemPath>lib/NetInterfaces.h</itemPath>
       <itemPath>view/RuleEditWidget.h</itemPath>
+      <itemPath>lib/RulesPusher.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -23,6 +24,7 @@
       <itemPath>view/MainWindow.cpp</itemPath>
       <itemPath>lib/NetInterfaces.cpp</itemPath>
       <itemPath>view/RuleEditWidget.cpp</itemPath>
+      <itemPath>lib/RulesPusher.cpp</itemPath>
       <itemPath>controller/main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"

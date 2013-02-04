@@ -43,6 +43,12 @@ public:
      * @return rule object instance
      */
     FilterRule getRule(int index);
+    
+    /**
+     * Get list of rules ordered by view component.
+     * @return ordered list of rules
+     */
+    QList<FilterRule> getRulesList();
 
 public slots:
     /**

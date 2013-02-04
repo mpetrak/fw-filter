@@ -12,7 +12,8 @@
 MainWindow::MainWindow() {
     widget.setupUi(this);
     /* after start disable some action - no change made */
-    widget.actionApply_modifications->setEnabled(false);
+    //TODO set enabled to false
+    //widget.actionApply_modifications->setEnabled(false);
     widget.actionReset->setEnabled(false);
 
     /* enable drag and drop for rules view */
@@ -45,6 +46,8 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::setRulesViewModel(QAbstractItemModel* model) {
+    this->rulesModel = (FilterRulesModel *) model;
+    
     widget.rulesView->setModel(model);
     ruleEditWidget->setRulesModel((FilterRulesModel *) model);
 
@@ -103,6 +106,20 @@ void MainWindow::on_saveEditButton_clicked() {
     } else {
 
         //QMessageBox::critical(NULL, QObject::tr("Aditionals privileges needed"), QObject::tr("You must run TFTPinfo as a root."), QMessageBox::Ok, QMessageBox::Ok);
+    }
+}
+
+void MainWindow::on_actionApply_modifications_triggered() {
+    
+    if(this->rulesModel != NULL) {
+
+        RulesPusher *pusher = new RulesPusher();
+
+        pusher->writeRules(this->rulesModel->getRulesList());
+
+        free(pusher);
+    } else {
+        //TODO error dialog
     }
 }
 

@@ -10,6 +10,7 @@
 
 #include "../qt/ui_MainWindow.h"
 #include "RuleEditWidget.h"
+#include "../lib/RulesPusher.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -25,6 +26,9 @@ public:
 
 private:
     Ui::MainWindow widget;
+    
+    /** Model of rules view */
+    FilterRulesModel *rulesModel;
 
     /** Widget for rule editing */
     RuleEditWidget *ruleEditWidget;
@@ -37,6 +41,7 @@ private slots:
     void on_actionSave_rule_triggered();
     void on_actionNew_triggered();
     void on_actionDelete_triggered();
+    void on_actionApply_modifications_triggered();
 
 signals:
 
