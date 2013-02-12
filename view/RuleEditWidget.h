@@ -73,7 +73,13 @@ private:
     QLineEdit *macDestEdit;
     QComboBox *inInterfaceSelect;
     QComboBox *outInterfaceSelect;
-
+    
+    /* IP edits */
+    QLineEdit *ipSourceEdit;
+    QLineEdit *ipSourceMaskEdit;
+    QLineEdit *ipDestEdit;
+    QLineEdit *ipDestMaskEdit;
+    QLineEdit *ipProtoEdit;
 
 };
 
