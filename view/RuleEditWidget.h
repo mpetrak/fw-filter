@@ -13,6 +13,7 @@
 #include <QtGui/QLabel>
 #include <QtGui/QComboBox>
 #include <QtGui/QTextEdit>
+#include <QtGui/QCheckBox>
 
 #include "../model/FilterRulesModel.h"
 #include "../lib/NetInterfaces.h"
@@ -69,19 +70,28 @@ private:
     QTextEdit *descriptionEdit;
 
     /* EB edits */
+    QCheckBox *macSourceNBox;
     QLineEdit *macSourceEdit;
     QLineEdit *macSourceMaskEdit;
+    QCheckBox *macDestNBox;
     QLineEdit *macDestEdit;
     QLineEdit *macDestMaskEdit;
+    QCheckBox *inInterfaceNBox;
     QComboBox *inInterfaceSelect;
+    QCheckBox *outInterfaceNBox;
     QComboBox *outInterfaceSelect;
+    QCheckBox *ebProtoNBox;
+    //QLineEdit *ebProtoEdit;
     
     /* IP edits */
+    QCheckBox *ipSourceNBox;
     QLineEdit *ipSourceEdit;
     QLineEdit *ipSourceMaskEdit;
+    QCheckBox *ipDestNBox;
     QLineEdit *ipDestEdit;
     QLineEdit *ipDestMaskEdit;
-    QLineEdit *ipProtoEdit;
+    QCheckBox *ipProtoNBox;
+    //QLineEdit *ipProtoEdit;
 
 };
 

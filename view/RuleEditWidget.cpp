@@ -155,6 +155,11 @@ void RuleEditWidget::setupEbWidget() {
     inInterfaceLabel->setObjectName(QString::fromUtf8("inInterfaceLabel"));
     inInterfaceLabel->setText(QString::fromUtf8("Input interface: "));
     gridLayout->addWidget(inInterfaceLabel, 1, 0, 1, 1);
+    
+    this->inInterfaceNBox = new QCheckBox(this->tabEb);
+    this->inInterfaceNBox->setObjectName(QString::fromUtf8("inInterfaceNBox"));
+    this->inInterfaceNBox->setText(QString::fromUtf8("!"));
+    gridLayout->addWidget(this->inInterfaceNBox, 1, 1, 1, 1);
 
     this->inInterfaceSelect = new QComboBox(this->tabEb);
     this->inInterfaceSelect->setObjectName(QString::fromUtf8("inInterfaceSelect"));
@@ -167,6 +172,11 @@ void RuleEditWidget::setupEbWidget() {
     outInterfaceLabel->setObjectName(QString::fromUtf8("outInterfaceLabel"));
     outInterfaceLabel->setText(QString::fromUtf8("Output interface: "));
     gridLayout->addWidget(outInterfaceLabel, 2, 0, 1, 1);
+    
+    this->outInterfaceNBox = new QCheckBox(this->tabEb);
+    this->outInterfaceNBox->setObjectName(QString::fromUtf8("outInterfaceNBox"));
+    this->outInterfaceNBox->setText(QString::fromUtf8("!"));
+    gridLayout->addWidget(this->outInterfaceNBox, 2, 1, 1, 1);
 
     this->outInterfaceSelect = new QComboBox(this->tabEb);
     this->outInterfaceSelect->setObjectName(QString::fromUtf8("outInterfaceSelect"));
@@ -179,6 +189,11 @@ void RuleEditWidget::setupEbWidget() {
     macSourceLabel->setObjectName(QString::fromUtf8("macSourceLabel"));
     macSourceLabel->setText(QString::fromUtf8("Source address: "));
     gridLayout->addWidget(macSourceLabel, 3, 0, 1, 1);
+    
+    this->macSourceNBox = new QCheckBox(this->tabEb);
+    this->macSourceNBox->setObjectName(QString::fromUtf8("macSourceNBox"));
+    this->macSourceNBox->setText(QString::fromUtf8("!"));
+    gridLayout->addWidget(this->macSourceNBox, 3, 1, 1, 1);
 
     this->macSourceEdit = new QLineEdit(this->tabEb);
     this->macSourceEdit->setObjectName(QString::fromUtf8("macSourceEdit"));
@@ -199,6 +214,11 @@ void RuleEditWidget::setupEbWidget() {
     macDestLabel->setObjectName(QString::fromUtf8("macDestLabel"));
     macDestLabel->setText(QString::fromUtf8("Destination address: "));
     gridLayout->addWidget(macDestLabel, 4, 0, 1, 1);
+    
+    this->macDestNBox = new QCheckBox(this->tabEb);
+    this->macDestNBox->setObjectName(QString::fromUtf8("macDestNBox"));
+    this->macDestNBox->setText(QString::fromUtf8("!"));
+    gridLayout->addWidget(this->macDestNBox, 4, 1, 1, 1);
 
     this->macDestEdit = new QLineEdit(this->tabEb);
     this->macDestEdit->setObjectName(QString::fromUtf8("macDestEdit"));
@@ -246,6 +266,11 @@ void RuleEditWidget::setupIpWidget() {
     ipSourceLabel->setObjectName(QString::fromUtf8("ipSourceLabel"));
     ipSourceLabel->setText(QString::fromUtf8("Source address: "));
     gridLayout->addWidget(ipSourceLabel, 1, 0, 1, 1);
+    
+    this->ipSourceNBox = new QCheckBox(this->tabIp);
+    this->ipSourceNBox->setObjectName(QString::fromUtf8("ipSourceNBox"));
+    this->ipSourceNBox->setText(QString::fromUtf8("!"));
+    gridLayout->addWidget(this->ipSourceNBox, 1, 1, 1, 1);
 
     this->ipSourceEdit = new QLineEdit(this->tabIp);
     this->ipSourceEdit->setObjectName(QString::fromUtf8("ipSourceEdit"));
@@ -268,6 +293,11 @@ void RuleEditWidget::setupIpWidget() {
     ipDestLabel->setObjectName(QString::fromUtf8("ipDestLabel"));
     ipDestLabel->setText(QString::fromUtf8("Destination address: "));
     gridLayout->addWidget(ipDestLabel, 2, 0, 1, 1);
+    
+    this->ipDestNBox = new QCheckBox(this->tabIp);
+    this->ipDestNBox->setObjectName(QString::fromUtf8("ipDestNBox"));
+    this->ipDestNBox->setText(QString::fromUtf8("!"));
+    gridLayout->addWidget(this->ipDestNBox, 2, 1, 1, 1);
 
     this->ipDestEdit = new QLineEdit(this->tabIp);
     this->ipDestEdit->setObjectName(QString::fromUtf8("ipDestEdit"));
