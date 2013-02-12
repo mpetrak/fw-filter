@@ -23,7 +23,8 @@ int main(int argc, char *argv[]) {
     {
         QMessageBox::critical(NULL, QObject::tr("Aditionals privileges needed"), QObject::tr("You must run application as a root."), QMessageBox::Ok, QMessageBox::Ok);
         fprintf(stderr, "You must run application as a root.\n");
-        exit(1);
+        //TODO uncomment exit
+        //exit(1);
     }
     
     FilterRulesModel *rulesModel = new FilterRulesModel();    
