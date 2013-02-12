@@ -183,6 +183,16 @@ void RuleEditWidget::setupEbWidget() {
     this->macSourceEdit = new QLineEdit(this->tabEb);
     this->macSourceEdit->setObjectName(QString::fromUtf8("macSourceEdit"));
     gridLayout->addWidget(this->macSourceEdit, 3, 2, 1, 1);
+    
+    /* source mask */
+    QLabel *macSourceMaskLabel = new QLabel(this->tabEb);
+    macSourceMaskLabel->setObjectName(QString::fromUtf8("macSourceMaskLabel"));
+    macSourceMaskLabel->setText(QString::fromUtf8("/"));
+    gridLayout->addWidget(macSourceMaskLabel, 3, 3, 1, 1);
+    
+    this->macSourceMaskEdit = new QLineEdit(this->tabEb);
+    this->macSourceMaskEdit->setObjectName(QString::fromUtf8("macSourceMaskEdit"));
+    gridLayout->addWidget(this->macSourceMaskEdit, 3, 4, 1, 1);
 
     /* destination address */
     QLabel *macDestLabel = new QLabel(this->tabEb);
@@ -193,6 +203,16 @@ void RuleEditWidget::setupEbWidget() {
     this->macDestEdit = new QLineEdit(this->tabEb);
     this->macDestEdit->setObjectName(QString::fromUtf8("macDestEdit"));
     gridLayout->addWidget(this->macDestEdit, 4, 2, 1, 1);
+    
+    /* destination mask */
+    QLabel *macDestMaskLabel = new QLabel(this->tabEb);
+    macDestMaskLabel->setObjectName(QString::fromUtf8("macDestMaskLabel"));
+    macDestMaskLabel->setText(QString::fromUtf8("/"));
+    gridLayout->addWidget(macDestMaskLabel, 4, 3, 1, 1);
+    
+    this->macDestMaskEdit = new QLineEdit(this->tabEb);
+    this->macDestMaskEdit->setObjectName(QString::fromUtf8("macDestMaskEdit"));
+    gridLayout->addWidget(this->macDestMaskEdit, 4, 4, 1, 1);
 
     /* Vertical spacer to the end */
     QSpacerItem *verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);

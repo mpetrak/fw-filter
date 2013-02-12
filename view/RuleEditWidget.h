@@ -70,7 +70,9 @@ private:
 
     /* EB edits */
     QLineEdit *macSourceEdit;
+    QLineEdit *macSourceMaskEdit;
     QLineEdit *macDestEdit;
+    QLineEdit *macDestMaskEdit;
     QComboBox *inInterfaceSelect;
     QComboBox *outInterfaceSelect;
     
