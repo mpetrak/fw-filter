@@ -6,6 +6,7 @@
  */
 
 #include <QtGui/QApplication>
+#include <QtGui/QMessageBox>
 
 #include "../view/MainWindow.h"
 #include "../model/FilterRulesModel.h"
@@ -18,11 +19,17 @@ int main(int argc, char *argv[]) {
 
     MainWindow main;
     
-    FilterRulesModel *rulesModel = new FilterRulesModel();
+    if(getuid() != 0)
+    {
+        QMessageBox::critical(NULL, QObject::tr("Aditionals privileges needed"), QObject::tr("You must run application as a root."), QMessageBox::Ok, QMessageBox::Ok);
+        fprintf(stderr, "You must run application as a root.\n");
+        exit(1);
+    }
     
+    FilterRulesModel *rulesModel = new FilterRulesModel();    
     main.setRulesViewModel(rulesModel);
     
-    //TODO control superuser
+    
     //TODO load configuration (interfaces aliases)
     
     main.show();
