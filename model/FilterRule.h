@@ -58,6 +58,8 @@ public:
     void setInInterface(QString inInterface);
     QString getOutInterface() const;
     void setOutInterface(QString outInterface);
+    QString getEbProtocol() const ;
+    void setEbProtocol(QString ebProtocol);
 
 private:
     /** number of rule */
@@ -71,6 +73,8 @@ private:
     QString inInterface;
     /** Output interface */
     QString outInterface;
+    /** Protocol or length */
+    QString ebProtocol;
     /** Link layer source address */
     QString ebSource;
     /** Link layer destination address */
@@ -86,6 +90,8 @@ private:
     QString IpDest;
     /** IP destination mask*/
     ushort IpDestMask;
+    /** Fragmented packet */
+    bool IpFragment;
 
     /** Action of matched packet */
     QString action;

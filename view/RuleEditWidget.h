@@ -43,6 +43,7 @@ public slots:
 private:
     void setupEbWidget();
     void setupGeneralWidget();
+    void setupIpWidget();
 
     /** List of rule actions */
     QStringList actions;

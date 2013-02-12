@@ -34,6 +34,7 @@ void FilterRule::toStream(QDataStream *stream) {
     *stream << this->description;
     *stream << this->inInterface;
     *stream << this->outInterface;
+    *stream << this->ebProtocol;
     *stream << this->ebSource;
     *stream << this->ebDest;
 }
@@ -46,42 +47,47 @@ void FilterRule::fromStream(QDataStream *stream) {
     *stream >> this->description;
     *stream >> this->inInterface;
     *stream >> this->outInterface;
+    *stream >> this->ebProtocol;
     *stream >> this->ebSource;
     *stream >> this->ebDest;
 }
 
 QString FilterRule::toEbString() {
     QString out;
-    
+
     /* append rule command */
     out.append(QString("%1 ").arg(EB_COMMAND_APPEND));
-    
+
     /* chain */
     out.append(QString("%1 %2 ").arg(EB_COMMAND_CHAIN, EB_CHAIN));
-    
+
     /* input interface if it is set */
-    if(getInInterface().length() > 0)
+    if (getInInterface().length() > 0)
         out.append(QString("%1 %2 ").arg(EB_COMMAND_INPUT_IFACE, getInInterface().toAscii().data()));
-    
+
     /* output interface if it is set */
-    if(getOutInterface().length() > 0)
+    if (getOutInterface().length() > 0)
         out.append(QString("%1 %2 ").arg(EB_COMMAND_OUTPUT_IFACE, getOutInterface().toAscii().data()));
+
+    /* link protocol */
+    if(getEbProtocol().length() > 0)
+        out.append((QString("%1 %2 ").arg(EB_COMMAND_PROTOCOL, getEbProtocol().toAscii().data())));
     
     /* source link address */
-    if(getEbSource().length() > 0)
+    if (getEbSource().length() > 0)
         out.append(QString("%1 %2 ").arg(EB_COMMAND_SOURCE_ADDR, getEbSource().toAscii().data()));
-    
+
     /* destination link address */
-    if(getEbDest().length() > 0)
+    if (getEbDest().length() > 0)
         out.append(QString("%1 %2 ").arg(EB_COMMAND_DEST_ADDR, getEbDest().toAscii().data()));
-    
+
     /* action */
-    if(getAction().length() > 0)
+    if (getAction().length() > 0)
         out.append(QString("%1 %2 ").arg(EB_COMMAND_ACTION, getAction().toAscii().data()));
-    
+
     /* finally line end */
     out.append(QString::fromUtf8("\n"));
-    
+
     return out;
 }
 
@@ -149,4 +155,12 @@ QString FilterRule::getOutInterface() const {
 
 void FilterRule::setOutInterface(QString outInterface) {
     this->outInterface = outInterface;
+}
+
+QString FilterRule::getEbProtocol() const {
+    return ebProtocol;
+}
+
+void FilterRule::setEbProtocol(QString ebProtocol) {
+    this->ebProtocol = ebProtocol;
 }
