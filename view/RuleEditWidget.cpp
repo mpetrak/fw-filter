@@ -15,6 +15,9 @@
 
 #define MASK_EDIT_WIDTH 50
 
+/* constant definitions */
+const QString RuleEditWidget::COMBO_UNSPECIFIED = QString::fromUtf8("");
+
 RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
     /* set own tab widget */
     this->setGeometry(QRect(230, 10, 511, 531));
@@ -26,7 +29,11 @@ RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
 
     NetInterfaces *netIfs = new NetInterfaces();
     this->interfaces = netIfs->getIfList();
+    this->interfaces.insert(0, RuleEditWidget::COMBO_UNSPECIFIED);
     free(netIfs);
+    
+    this->ipProtocols.insert(0, RuleEditWidget::COMBO_UNSPECIFIED);
+    this->ebProtocols.insert(0, RuleEditWidget::COMBO_UNSPECIFIED);
 
     /* create tabs */
     this->setupGeneralWidget();
