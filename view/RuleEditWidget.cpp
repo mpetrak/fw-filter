@@ -23,7 +23,7 @@ RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
     this->actions.append(QString::fromUtf8("ACCEPT"));
     this->actions.append(QString::fromUtf8("DROP"));
     //this->actions.append(QString::fromUtf8("CONTINUE"));
-    
+
     NetInterfaces *netIfs = new NetInterfaces();
     this->interfaces = netIfs->getIfList();
     free(netIfs);
@@ -155,7 +155,7 @@ void RuleEditWidget::setupEbWidget() {
     inInterfaceLabel->setObjectName(QString::fromUtf8("inInterfaceLabel"));
     inInterfaceLabel->setText(QString::fromUtf8("Input interface: "));
     gridLayout->addWidget(inInterfaceLabel, 1, 0, 1, 1);
-    
+
     this->inInterfaceNBox = new QCheckBox(this->tabEb);
     this->inInterfaceNBox->setObjectName(QString::fromUtf8("inInterfaceNBox"));
     this->inInterfaceNBox->setText(QString::fromUtf8("!"));
@@ -172,7 +172,7 @@ void RuleEditWidget::setupEbWidget() {
     outInterfaceLabel->setObjectName(QString::fromUtf8("outInterfaceLabel"));
     outInterfaceLabel->setText(QString::fromUtf8("Output interface: "));
     gridLayout->addWidget(outInterfaceLabel, 2, 0, 1, 1);
-    
+
     this->outInterfaceNBox = new QCheckBox(this->tabEb);
     this->outInterfaceNBox->setObjectName(QString::fromUtf8("outInterfaceNBox"));
     this->outInterfaceNBox->setText(QString::fromUtf8("!"));
@@ -184,59 +184,76 @@ void RuleEditWidget::setupEbWidget() {
     this->outInterfaceSelect->addItems(this->interfaces);
     gridLayout->addWidget(this->outInterfaceSelect, 2, 2, 1, 1);
 
+    /* protocol */
+    QLabel *ebProtoLabel = new QLabel(this->tabEb);
+    ebProtoLabel->setObjectName(QString::fromUtf8("ebProtoLabel"));
+    ebProtoLabel->setText(QString::fromUtf8("Protocol: "));
+    gridLayout->addWidget(ebProtoLabel, 3, 0, 1, 1);
+
+    this->ebProtoNBox = new QCheckBox(this->tabEb);
+    this->ebProtoNBox->setObjectName(QString::fromUtf8("ebProtoNBox"));
+    this->ebProtoNBox->setText(QString::fromUtf8("!"));
+    gridLayout->addWidget(this->ebProtoNBox, 3, 1, 1, 1);
+
+    this->ebProtoSelect = new QComboBox(this->tabEb);
+    this->ebProtoSelect->setObjectName(QString::fromUtf8("ebProtoSelect"));
+    this->ebProtoSelect->setSizePolicy(fixedSizePolicy);
+    this->ebProtoSelect->addItems(this->ebProtocols);
+    gridLayout->addWidget(ebProtoSelect, 3, 2, 1, 1);
+
     /* source address */
     QLabel *macSourceLabel = new QLabel(this->tabEb);
     macSourceLabel->setObjectName(QString::fromUtf8("macSourceLabel"));
     macSourceLabel->setText(QString::fromUtf8("Source address: "));
-    gridLayout->addWidget(macSourceLabel, 3, 0, 1, 1);
-    
+    gridLayout->addWidget(macSourceLabel, 4, 0, 1, 1);
+
     this->macSourceNBox = new QCheckBox(this->tabEb);
     this->macSourceNBox->setObjectName(QString::fromUtf8("macSourceNBox"));
     this->macSourceNBox->setText(QString::fromUtf8("!"));
-    gridLayout->addWidget(this->macSourceNBox, 3, 1, 1, 1);
+    gridLayout->addWidget(this->macSourceNBox, 4, 1, 1, 1);
 
     this->macSourceEdit = new QLineEdit(this->tabEb);
     this->macSourceEdit->setObjectName(QString::fromUtf8("macSourceEdit"));
-    gridLayout->addWidget(this->macSourceEdit, 3, 2, 1, 1);
-    
+    gridLayout->addWidget(this->macSourceEdit, 4, 2, 1, 1);
+
     /* source mask */
     QLabel *macSourceMaskLabel = new QLabel(this->tabEb);
     macSourceMaskLabel->setObjectName(QString::fromUtf8("macSourceMaskLabel"));
     macSourceMaskLabel->setText(QString::fromUtf8("/"));
-    gridLayout->addWidget(macSourceMaskLabel, 3, 3, 1, 1);
-    
+    gridLayout->addWidget(macSourceMaskLabel, 4, 3, 1, 1);
+
     this->macSourceMaskEdit = new QLineEdit(this->tabEb);
     this->macSourceMaskEdit->setObjectName(QString::fromUtf8("macSourceMaskEdit"));
-    gridLayout->addWidget(this->macSourceMaskEdit, 3, 4, 1, 1);
+    gridLayout->addWidget(this->macSourceMaskEdit, 4, 4, 1, 1);
 
     /* destination address */
     QLabel *macDestLabel = new QLabel(this->tabEb);
     macDestLabel->setObjectName(QString::fromUtf8("macDestLabel"));
     macDestLabel->setText(QString::fromUtf8("Destination address: "));
-    gridLayout->addWidget(macDestLabel, 4, 0, 1, 1);
-    
+    gridLayout->addWidget(macDestLabel, 5, 0, 1, 1);
+
     this->macDestNBox = new QCheckBox(this->tabEb);
     this->macDestNBox->setObjectName(QString::fromUtf8("macDestNBox"));
     this->macDestNBox->setText(QString::fromUtf8("!"));
-    gridLayout->addWidget(this->macDestNBox, 4, 1, 1, 1);
+    gridLayout->addWidget(this->macDestNBox, 5, 1, 1, 1);
 
     this->macDestEdit = new QLineEdit(this->tabEb);
     this->macDestEdit->setObjectName(QString::fromUtf8("macDestEdit"));
-    gridLayout->addWidget(this->macDestEdit, 4, 2, 1, 1);
-    
+    gridLayout->addWidget(this->macDestEdit, 5, 2, 1, 1);
+
     /* destination mask */
     QLabel *macDestMaskLabel = new QLabel(this->tabEb);
     macDestMaskLabel->setObjectName(QString::fromUtf8("macDestMaskLabel"));
     macDestMaskLabel->setText(QString::fromUtf8("/"));
-    gridLayout->addWidget(macDestMaskLabel, 4, 3, 1, 1);
-    
+    gridLayout->addWidget(macDestMaskLabel, 5, 3, 1, 1);
+
     this->macDestMaskEdit = new QLineEdit(this->tabEb);
     this->macDestMaskEdit->setObjectName(QString::fromUtf8("macDestMaskEdit"));
-    gridLayout->addWidget(this->macDestMaskEdit, 4, 4, 1, 1);
+    gridLayout->addWidget(this->macDestMaskEdit, 5, 4, 1, 1);
 
     /* Vertical spacer to the end */
     QSpacerItem *verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    gridLayout->addItem(verticalSpacer, 5, 2, 1, 1);
+    gridLayout->addItem(verticalSpacer, 6, 2, 1, 1);
 
     /* add widget as a tab */
     this->addTab(this->tabEb, QString::fromUtf8("Link layer"));
@@ -246,79 +263,96 @@ void RuleEditWidget::setupIpWidget() {
     /* create new widget */
     this->tabIp = new QWidget();
     this->tabIp->setObjectName(QString::fromUtf8("tabIp"));
-    
+
     /* setup grid layout */
     QGridLayout *gridLayout = new QGridLayout(this->tabIp);
     gridLayout->setObjectName(QString::fromUtf8("tabIpGrid"));
     gridLayout->setContentsMargins(10, 10, 10, 10);
 
     /* fixed size policy object */
-//    QSizePolicy fixedSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-//    fixedSizePolicy.setHorizontalStretch(0);
-//    fixedSizePolicy.setVerticalStretch(0);
-    
+    QSizePolicy fixedSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    fixedSizePolicy.setHorizontalStretch(0);
+    fixedSizePolicy.setVerticalStretch(0);
+
     /* validator for mask fields */
     QIntValidator *maskValidator = new QIntValidator(this->tabIp);
     maskValidator->setRange(0, 64);
+
+    /* protocol */
+    QLabel *ipProtoLabel = new QLabel(this->tabIp);
+    ipProtoLabel->setObjectName(QString::fromUtf8("ipProtoLabel"));
+    ipProtoLabel->setText(QString::fromUtf8("Protocol: "));
+    gridLayout->addWidget(ipProtoLabel, 1, 0, 1, 1);
+
+    this->ipProtoNBox = new QCheckBox(this->tabIp);
+    this->ipProtoNBox->setObjectName(QString::fromUtf8("ipProtoNBox"));
+    this->ipProtoNBox->setText(QString::fromUtf8("!"));
+    gridLayout->addWidget(this->ipProtoNBox, 1, 1, 1, 1);
+
+    this->ipProtoSelect = new QComboBox(this->tabIp);
+    this->ipProtoSelect->setObjectName(QString::fromUtf8("ipProtoSelect"));
+    this->ipProtoSelect->setSizePolicy(fixedSizePolicy);
+    this->ipProtoSelect->addItems(this->ipProtocols);
+    gridLayout->addWidget(ipProtoSelect, 1, 2, 1, 1);
 
     /* source address */
     QLabel *ipSourceLabel = new QLabel(this->tabIp);
     ipSourceLabel->setObjectName(QString::fromUtf8("ipSourceLabel"));
     ipSourceLabel->setText(QString::fromUtf8("Source address: "));
-    gridLayout->addWidget(ipSourceLabel, 1, 0, 1, 1);
-    
+    gridLayout->addWidget(ipSourceLabel, 2, 0, 1, 1);
+
     this->ipSourceNBox = new QCheckBox(this->tabIp);
     this->ipSourceNBox->setObjectName(QString::fromUtf8("ipSourceNBox"));
     this->ipSourceNBox->setText(QString::fromUtf8("!"));
-    gridLayout->addWidget(this->ipSourceNBox, 1, 1, 1, 1);
+    gridLayout->addWidget(this->ipSourceNBox, 2, 1, 1, 1);
 
     this->ipSourceEdit = new QLineEdit(this->tabIp);
     this->ipSourceEdit->setObjectName(QString::fromUtf8("ipSourceEdit"));
-    gridLayout->addWidget(this->ipSourceEdit, 1, 2, 1, 1);
-    
+    gridLayout->addWidget(this->ipSourceEdit, 2, 2, 1, 1);
+
     /* source mask */
     QLabel *ipSourceMaskLabel = new QLabel(this->tabIp);
     ipSourceMaskLabel->setObjectName(QString::fromUtf8("ipSourceMaskLabel"));
     ipSourceMaskLabel->setText(QString::fromUtf8("/"));
-    gridLayout->addWidget(ipSourceMaskLabel, 1, 3, 1, 1);
-    
+    gridLayout->addWidget(ipSourceMaskLabel, 2, 3, 1, 1);
+
     this->ipSourceMaskEdit = new QLineEdit(this->tabIp);
     this->ipSourceMaskEdit->setObjectName(QString::fromUtf8("ipSourceMaskEdit"));
     this->ipSourceMaskEdit->setValidator(maskValidator);
     this->ipSourceMaskEdit->setFixedWidth(MASK_EDIT_WIDTH);
-    gridLayout->addWidget(this->ipSourceMaskEdit, 1, 4, 1, 1);
+    gridLayout->addWidget(this->ipSourceMaskEdit, 2, 4, 1, 1);
 
     /* destination address */
     QLabel *ipDestLabel = new QLabel(this->tabIp);
     ipDestLabel->setObjectName(QString::fromUtf8("ipDestLabel"));
     ipDestLabel->setText(QString::fromUtf8("Destination address: "));
-    gridLayout->addWidget(ipDestLabel, 2, 0, 1, 1);
-    
+    gridLayout->addWidget(ipDestLabel, 3, 0, 1, 1);
+
     this->ipDestNBox = new QCheckBox(this->tabIp);
     this->ipDestNBox->setObjectName(QString::fromUtf8("ipDestNBox"));
     this->ipDestNBox->setText(QString::fromUtf8("!"));
-    gridLayout->addWidget(this->ipDestNBox, 2, 1, 1, 1);
+    gridLayout->addWidget(this->ipDestNBox, 3, 1, 1, 1);
 
     this->ipDestEdit = new QLineEdit(this->tabIp);
     this->ipDestEdit->setObjectName(QString::fromUtf8("ipDestEdit"));
-    gridLayout->addWidget(this->ipDestEdit, 2, 2, 1, 1);
-    
+    gridLayout->addWidget(this->ipDestEdit, 3, 2, 1, 1);
+
     /* destination mask */
     QLabel *ipDestMaskLabel = new QLabel(this->tabIp);
     ipDestMaskLabel->setObjectName(QString::fromUtf8("ipDestMaskLabel"));
     ipDestMaskLabel->setText(QString::fromUtf8("/"));
-    gridLayout->addWidget(ipDestMaskLabel, 2, 3, 1, 1);
-    
+    gridLayout->addWidget(ipDestMaskLabel, 3, 3, 1, 1);
+
     this->ipDestMaskEdit = new QLineEdit(this->tabIp);
     this->ipDestMaskEdit->setObjectName(QString::fromUtf8("ipDestMaskEdit"));
     this->ipDestMaskEdit->setValidator(maskValidator);
     this->ipDestMaskEdit->setFixedWidth(MASK_EDIT_WIDTH);
-    gridLayout->addWidget(this->ipDestMaskEdit, 2, 4, 1, 1);
+    gridLayout->addWidget(this->ipDestMaskEdit, 3, 4, 1, 1);
 
     /* Vertical spacer to the end */
     QSpacerItem *verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    gridLayout->addItem(verticalSpacer, 3, 2, 1, 1);
-    
+    gridLayout->addItem(verticalSpacer, 4, 2, 1, 1);
+
     this->addTab(this->tabIp, QString::fromUtf8("Net layer"));
 }
 

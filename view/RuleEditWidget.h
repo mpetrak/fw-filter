@@ -51,6 +51,12 @@ private:
     
     /** List of system interfaces */
     QStringList interfaces;
+    
+    /** List of possible link protocols */
+    QStringList ebProtocols;
+    
+    /** List of possible net protocols */
+    QStringList ipProtocols;
 
     /** Rules list model pointer */
     FilterRulesModel *rulesModel;
@@ -81,7 +87,7 @@ private:
     QCheckBox *outInterfaceNBox;
     QComboBox *outInterfaceSelect;
     QCheckBox *ebProtoNBox;
-    //QLineEdit *ebProtoEdit;
+    QComboBox *ebProtoSelect;
     
     /* IP edits */
     QCheckBox *ipSourceNBox;
@@ -91,7 +97,7 @@ private:
     QLineEdit *ipDestEdit;
     QLineEdit *ipDestMaskEdit;
     QCheckBox *ipProtoNBox;
-    //QLineEdit *ipProtoEdit;
+    QComboBox *ipProtoSelect;
 
 };
 
