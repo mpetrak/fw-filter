@@ -2,9 +2,6 @@
 #ifndef RULESPUSHER_H
 #define	RULESPUSHER_H
 
-#define EB_OUTUP_FILE "data/ebfile"
-#define EB_OUTPUT_COMMAND "ebtables-restore"
-
 #include <iostream>
 #include <fstream>
 

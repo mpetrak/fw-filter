@@ -6,6 +6,9 @@
  */
 
 #include <qt4/QtCore/qdatastream.h>
+#include <QString>
+#include <qt4/QtCore/qbytearray.h>
+#include <qt4/QtCore/qstring.h>
 
 #include "FilterRule.h"
 
@@ -45,6 +48,41 @@ void FilterRule::fromStream(QDataStream *stream) {
     *stream >> this->outInterface;
     *stream >> this->ebSource;
     *stream >> this->ebDest;
+}
+
+QString FilterRule::toEbString() {
+    QString out;
+    
+    /* append rule command */
+    out.append(QString("%1 ").arg(EB_COMMAND_APPEND));
+    
+    /* chain */
+    out.append(QString("%1 %2 ").arg(EB_COMMAND_CHAIN, EB_CHAIN));
+    
+    /* input interface if it is set */
+    if(getInInterface().length() > 0)
+        out.append(QString("%1 %2 ").arg(EB_COMMAND_INPUT_IFACE, getInInterface().toAscii().data()));
+    
+    /* output interface if it is set */
+    if(getOutInterface().length() > 0)
+        out.append(QString("%1 %2 ").arg(EB_COMMAND_OUTPUT_IFACE, getOutInterface().toAscii().data()));
+    
+    /* source link address */
+    if(getEbSource().length() > 0)
+        out.append(QString("%1 %2 ").arg(EB_COMMAND_SOURCE_ADDR, getEbSource().toAscii().data()));
+    
+    /* destination link address */
+    if(getEbDest().length() > 0)
+        out.append(QString("%1 %2 ").arg(EB_COMMAND_DEST_ADDR, getEbDest().toAscii().data()));
+    
+    /* action */
+    if(getAction().length() > 0)
+        out.append(QString("%1 %2 ").arg(EB_COMMAND_ACTION, getAction().toAscii().data()));
+    
+    /* finally line end */
+    out.append(QString::fromUtf8("\n"));
+    
+    return out;
 }
 
 /* --- Getters and setters --- */

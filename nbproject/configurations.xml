@@ -8,6 +8,7 @@
       <itemPath>model/FilterRulesModel.h</itemPath>
       <itemPath>view/MainWindow.h</itemPath>
       <itemPath>lib/NetInterfaces.h</itemPath>
+      <itemPath>lib/Netfilter.h</itemPath>
       <itemPath>view/RuleEditWidget.h</itemPath>
       <itemPath>lib/RulesPusher.h</itemPath>
     </logicalFolder>

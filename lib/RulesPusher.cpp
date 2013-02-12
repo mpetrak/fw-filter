@@ -1,6 +1,7 @@
 
 #include <QString>
 #include <QByteArray>
+#include <stdlib.h>
 
 #include "RulesPusher.h"
 
@@ -10,10 +11,19 @@ RulesPusher::RulesPusher() {
 RulesPusher::~RulesPusher() {
 }
 
-bool RulesPusher::writeRules(QList<FilterRule> rules) {
+bool RulesPusher::writeRules(QList<FilterRule> rules) {    
     ebFile.open(EB_OUTUP_FILE);
     ebFile << this->ebFileHeader().toAscii().data();
+    
+    /* iterate each rule and write ebtables string */
+    FilterRule rule;
+    foreach(rule, rules) {
+        ebFile << rule.toEbString().toAscii().data();
+    }
+    
     ebFile.close();
+    
+    system(QString(EB_COMMAND).arg(EB_OUTUP_FILE).toAscii().data());
     
     return true;
 }

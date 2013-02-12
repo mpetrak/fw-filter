@@ -10,6 +10,7 @@
 
 #include <QString>
 #include <QMetaType>
+#include "../lib/Netfilter.h"
 
 class FilterRule {
 public:
@@ -33,6 +34,12 @@ public:
      * @param stream data stream to read from
      */
     void fromStream(QDataStream *stream);
+    
+    /**
+     * Print rule to string in a format used by ebtables.
+     * @return rule specification printed into inline string
+     */
+    QString toEbString();
 
     /* Setters and getters */
     void setNumber(int number);
