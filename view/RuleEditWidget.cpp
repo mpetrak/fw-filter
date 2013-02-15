@@ -67,8 +67,16 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->actionSelect->setCurrentIndex(actions.indexOf(rule.getAction()));
         this->inInterfaceSelect->setCurrentIndex(interfaces.indexOf(rule.getInInterface()));
         this->outInterfaceSelect->setCurrentIndex(interfaces.indexOf(rule.getOutInterface()));
+        this->ebProtoSelect->setCurrentIndex(ebProtocols.indexOf(rule.getEbProtocol()));
         this->macSourceEdit->setText(rule.getEbSource());
+        this->macSourceMaskEdit->setText(rule.getEbSourceMask());
         this->macDestEdit->setText(rule.getEbDest());
+        this->macDestMaskEdit->setText(rule.getEbDestMask());
+        this->ipProtoSelect->setCurrentIndex(ipProtocols.indexOf(rule.getIpProtocol()));
+        this->ipSourceEdit->setText(rule.getIpSource());
+        this->ipSourceMaskEdit->setText(QString::number(rule.getIpSourceMask()));
+        this->ipDestEdit->setText(rule.getIpDest());
+        this->ipDestMaskEdit->setText(QString::number(rule.getIpDestMask()));
     }
 }
 
@@ -82,8 +90,16 @@ void RuleEditWidget::ruleSave(QModelIndex index) {
         rule.setAction(this->actionSelect->currentText());
         rule.setInInterface(this->inInterfaceSelect->currentText());
         rule.setOutInterface(this->outInterfaceSelect->currentText());
+        rule.setEbProtocol(this->ebProtoSelect->currentText());
         rule.setEbSource(this->macSourceEdit->text());
+        rule.setEbSourceMask(this->macDestMaskEdit->text());
         rule.setEbDest(this->macDestEdit->text());
+        rule.setEbDestMask(this->macDestMaskEdit->text());
+        rule.setIpProtocol(this->ipProtoSelect->currentText());
+        rule.setIpSource(this->ipSourceEdit->text());
+        rule.setIpSourceMask(this->ipSourceMaskEdit->text().toUShort());
+        rule.setIpDest(this->ipDestEdit->text());
+        rule.setIpDestMask(this->ipDestMaskEdit->text().toUShort());
 
         /** save rule using qt model api */
         this->rulesModel->setData(index, QVariant::fromValue<FilterRule > (rule), Qt::DisplayRole);

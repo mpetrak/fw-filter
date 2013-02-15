@@ -34,7 +34,7 @@ public:
      * @param stream data stream to read from
      */
     void fromStream(QDataStream *stream);
-    
+
     /**
      * Print rule to string in a format used by ebtables.
      * @return rule specification printed into inline string
@@ -58,8 +58,24 @@ public:
     void setInInterface(QString inInterface);
     QString getOutInterface() const;
     void setOutInterface(QString outInterface);
-    QString getEbProtocol() const ;
+    QString getEbProtocol() const;
     void setEbProtocol(QString ebProtocol);
+    QString getEbDestMask() const;
+    void setEbDestMask(QString ebDestMask);
+    QString getEbSourceMask() const;
+    void setEbSourceMask(QString ebSourceMask);
+    QString getIpDest() const;
+    void setIpDest(QString ipDest);
+    ushort getIpDestMask() const;
+    void setIpDestMask(ushort ipDestMask);
+    bool isIpFragment() const;
+    void setIpFragment(bool ipFragment);
+    QString getIpProtocol() const;
+    void setIpProtocol(QString ipProtocol);
+    QString getIpSource() const;
+    void setIpSource(QString ipSource);
+    ushort getIpSourceMask() const;
+    void setIpSourceMask(ushort ipSourceMask);
 
 private:
     /** number of rule */
@@ -68,7 +84,7 @@ private:
     QString name;
     /** Rule description */
     QString description;
-    
+
     /** Input interface */
     QString inInterface;
     /** Output interface */
@@ -77,21 +93,25 @@ private:
     QString ebProtocol;
     /** Link layer source address */
     QString ebSource;
+    /** Link layer source address mask */
+    QString ebSourceMask;
     /** Link layer destination address */
     QString ebDest;
-    
+    /** Link layer destination address mask */
+    QString ebDestMask;
+
     /** Type of ip protocol */
-    QString IpProtocol;
+    QString ipProtocol;
     /** IP source address */
-    QString IpSource;
+    QString ipSource;
     /** IP source mask */
-    ushort IpSourceMask;
+    ushort ipSourceMask;
     /** IP destination address */
-    QString IpDest;
+    QString ipDest;
     /** IP destination mask*/
-    ushort IpDestMask;
+    ushort ipDestMask;
     /** Fragmented packet */
-    bool IpFragment;
+    bool ipFragment;
 
     /** Action of matched packet */
     QString action;
