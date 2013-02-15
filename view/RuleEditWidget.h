@@ -17,6 +17,7 @@
 
 #include "../model/FilterRulesModel.h"
 #include "../lib/NetInterfaces.h"
+#include "../lib/OptionsLoader.h"
 
 class RuleEditWidget : public QTabWidget {
     Q_OBJECT

@@ -32,6 +32,14 @@ RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
     this->interfaces.insert(0, RuleEditWidget::COMBO_UNSPECIFIED);
     free(netIfs);
     
+    OptionsLoader *optionsLoader = new OptionsLoader(OptionsLoader::LINK_PROTOCOLS_OPTIONS);
+    this->ebProtocols.append(optionsLoader->getOptions());
+    free(optionsLoader);
+    
+    optionsLoader = new OptionsLoader(OptionsLoader::NET_PROTOCOLS_OPTIONS);
+    this->ipProtocols.append(optionsLoader->getOptions());
+    free(optionsLoader);
+    
     this->ipProtocols.insert(0, RuleEditWidget::COMBO_UNSPECIFIED);
     this->ebProtocols.insert(0, RuleEditWidget::COMBO_UNSPECIFIED);
 

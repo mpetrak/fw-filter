@@ -9,6 +9,7 @@
       <itemPath>view/MainWindow.h</itemPath>
       <itemPath>lib/NetInterfaces.h</itemPath>
       <itemPath>lib/Netfilter.h</itemPath>
+      <itemPath>lib/OptionsLoader.h</itemPath>
       <itemPath>view/RuleEditWidget.h</itemPath>
       <itemPath>lib/RulesPusher.h</itemPath>
     </logicalFolder>
@@ -24,6 +25,7 @@
       <itemPath>model/FilterRulesModel.cpp</itemPath>
       <itemPath>view/MainWindow.cpp</itemPath>
       <itemPath>lib/NetInterfaces.cpp</itemPath>
+      <itemPath>lib/OptionsLoader.cpp</itemPath>
       <itemPath>view/RuleEditWidget.cpp</itemPath>
       <itemPath>lib/RulesPusher.cpp</itemPath>
       <itemPath>controller/main.cpp</itemPath>
