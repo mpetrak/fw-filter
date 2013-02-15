@@ -65,18 +65,34 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->nameEdit->setText(rule.getName());
         this->descriptionEdit->setText(rule.getDescription());
         this->actionSelect->setCurrentIndex(actions.indexOf(rule.getAction()));
+        
         this->inInterfaceSelect->setCurrentIndex(interfaces.indexOf(rule.getInInterface()));
+        this->inInterfaceNBox->setChecked(rule.isInInterfaceNeg());
+        
         this->outInterfaceSelect->setCurrentIndex(interfaces.indexOf(rule.getOutInterface()));
+        this->outInterfaceNBox->setChecked(rule.isOutInterfaceNeg());
+        
         this->ebProtoSelect->setCurrentIndex(ebProtocols.indexOf(rule.getEbProtocol()));
+        this->ebProtoNBox->setChecked(rule.isEbProtocolNeg());
+        
         this->macSourceEdit->setText(rule.getEbSource());
         this->macSourceMaskEdit->setText(rule.getEbSourceMask());
+        this->macSourceNBox->setChecked(rule.isEbSourceNeg());
+        
         this->macDestEdit->setText(rule.getEbDest());
         this->macDestMaskEdit->setText(rule.getEbDestMask());
+        this->macDestNBox->setChecked(rule.isEbDestNeg());
+        
         this->ipProtoSelect->setCurrentIndex(ipProtocols.indexOf(rule.getIpProtocol()));
+        this->ipProtoNBox->setChecked(rule.isIpProtocolNeg());
+        
         this->ipSourceEdit->setText(rule.getIpSource());
         this->ipSourceMaskEdit->setText(QString::number(rule.getIpSourceMask()));
+        this->ipSourceNBox->setChecked(rule.isIpSourceNeg());
+        
         this->ipDestEdit->setText(rule.getIpDest());
         this->ipDestMaskEdit->setText(QString::number(rule.getIpDestMask()));
+        this->ipDestNBox->setChecked(rule.isIpDestNeg());
     }
 }
 
@@ -88,18 +104,34 @@ void RuleEditWidget::ruleSave(QModelIndex index) {
         rule.setName(this->nameEdit->text());
         rule.setDescription(this->descriptionEdit->toPlainText());
         rule.setAction(this->actionSelect->currentText());
+        
         rule.setInInterface(this->inInterfaceSelect->currentText());
+        rule.setInInterfaceNeg(this->inInterfaceNBox->isChecked());
+        
         rule.setOutInterface(this->outInterfaceSelect->currentText());
+        rule.setOutInterfaceNeg(this->outInterfaceNBox->isChecked());
+        
         rule.setEbProtocol(this->ebProtoSelect->currentText());
+        rule.setEbProtocolNeg(this->ebProtoNBox->isChecked());
+        
         rule.setEbSource(this->macSourceEdit->text());
         rule.setEbSourceMask(this->macDestMaskEdit->text());
+        rule.setEbSourceNeg(this->macSourceNBox->isChecked());
+        
         rule.setEbDest(this->macDestEdit->text());
         rule.setEbDestMask(this->macDestMaskEdit->text());
+        rule.setEbDestNeg(this->macDestNBox->isChecked());
+        
         rule.setIpProtocol(this->ipProtoSelect->currentText());
+        rule.setIpProtocolNeg(this->ipProtoNBox->isChecked());
+        
         rule.setIpSource(this->ipSourceEdit->text());
         rule.setIpSourceMask(this->ipSourceMaskEdit->text().toUShort());
+        rule.setIpSourceNeg(this->ipSourceNBox->isChecked());
+        
         rule.setIpDest(this->ipDestEdit->text());
         rule.setIpDestMask(this->ipDestMaskEdit->text().toUShort());
+        rule.setIpDestNeg(this->ipDestNBox->isChecked());
 
         /** save rule using qt model api */
         this->rulesModel->setData(index, QVariant::fromValue<FilterRule > (rule), Qt::DisplayRole);

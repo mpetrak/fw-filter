@@ -32,18 +32,34 @@ void FilterRule::toStream(QDataStream *stream) {
     *stream << this->name;
     *stream << this->action;
     *stream << this->description;
+    
     *stream << this->inInterface;
+    *stream << this->inInterfaceNeg;
+    
     *stream << this->outInterface;
+    *stream << this->outInterfaceNeg;
+    
     *stream << this->ebProtocol;
+    *stream << this->ebProtocolNeg;
+    
     *stream << this->ebSource;
     *stream << this->ebSourceMask;
+    *stream << this->ebSourceNeg;
+    
     *stream << this->ebDest;
     *stream << this->ebDestMask;
+    *stream << this->ebDestNeg;
+    
     *stream << this->ipProtocol;
+    *stream << this->ipProtocolNeg;
+    
     *stream << this->ipSource;
     *stream << this->ipSourceMask;
+    *stream << this->ipSourceNeg;
+    
     *stream << this->ipDest;
     *stream << this->ipDestMask;
+    *stream << this->ipDestNeg;
 }
 
 void FilterRule::fromStream(QDataStream *stream) {
@@ -52,18 +68,34 @@ void FilterRule::fromStream(QDataStream *stream) {
     *stream >> this->name;
     *stream >> this->action;
     *stream >> this->description;
+    
     *stream >> this->inInterface;
+    *stream >> this->inInterfaceNeg;
+    
     *stream >> this->outInterface;
+    *stream >> this->outInterfaceNeg;
+    
     *stream >> this->ebProtocol;
+    *stream >> this->ebProtocolNeg;
+    
     *stream >> this->ebSource;
     *stream >> this->ebSourceMask;
+    *stream >> this->ebSourceNeg;
+    
     *stream >> this->ebDest;
     *stream >> this->ebDestMask;
+    *stream >> this->ebDestNeg;
+    
     *stream >> this->ipProtocol;
+    *stream >> this->ipProtocolNeg;
+    
     *stream >> this->ipSource;
     *stream >> this->ipSourceMask;
+    *stream >> this->ipSourceNeg;
+    
     *stream >> this->ipDest;
     *stream >> this->ipDestMask;
+    *stream >> this->ipDestNeg;
 }
 
 QString FilterRule::toEbString() {
@@ -155,6 +187,14 @@ void FilterRule::setEbDestMask(QString ebDestMask) {
     this->ebDestMask = ebDestMask;
 }
 
+bool FilterRule::isEbDestNeg() const {
+    return ebDestNeg;
+}
+
+void FilterRule::setEbDestNeg(bool ebDestNeg) {
+    this->ebDestNeg = ebDestNeg;
+}
+
 QString FilterRule::getEbSource() const {
     return this->ebSource;
 }
@@ -171,12 +211,28 @@ void FilterRule::setEbSourceMask(QString ebSourceMask) {
     this->ebSourceMask = ebSourceMask;
 }
 
+bool FilterRule::isEbSourceNeg() const {
+    return ebSourceNeg;
+}
+
+void FilterRule::setEbSourceNeg(bool ebSourceNeg) {
+    this->ebSourceNeg = ebSourceNeg;
+}
+
 QString FilterRule::getInInterface() const {
     return this->inInterface;
 }
 
 void FilterRule::setInInterface(QString inInterface) {
     this->inInterface = inInterface;
+}
+
+bool FilterRule::isInInterfaceNeg() const {
+    return inInterfaceNeg;
+}
+
+void FilterRule::setInInterfaceNeg(bool inInterfaceNeg) {
+    this->inInterfaceNeg = inInterfaceNeg;
 }
 
 QString FilterRule::getOutInterface() const {
@@ -187,12 +243,28 @@ void FilterRule::setOutInterface(QString outInterface) {
     this->outInterface = outInterface;
 }
 
+bool FilterRule::isOutInterfaceNeg() const {
+    return outInterfaceNeg;
+}
+
+void FilterRule::setOutInterfaceNeg(bool outInterfaceNeg) {
+    this->outInterfaceNeg = outInterfaceNeg;
+}
+
 QString FilterRule::getEbProtocol() const {
     return ebProtocol;
 }
 
 void FilterRule::setEbProtocol(QString ebProtocol) {
     this->ebProtocol = ebProtocol;
+}
+
+bool FilterRule::isEbProtocolNeg() const {
+    return ebProtocolNeg;
+}
+
+void FilterRule::setEbProtocolNeg(bool ebProtocolNeg) {
+    this->ebProtocolNeg = ebProtocolNeg;
 }
 
 QString FilterRule::getIpDest() const {
@@ -211,6 +283,14 @@ void FilterRule::setIpDestMask(ushort ipDestMask) {
     this->ipDestMask = ipDestMask;
 }
 
+bool FilterRule::isIpDestNeg() const {
+    return ipDestNeg;
+}
+
+void FilterRule::setIpDestNeg(bool ipDestNeg) {
+    this->ipDestNeg = ipDestNeg;
+}
+
 bool FilterRule::isIpFragment() const {
     return ipFragment;
 }
@@ -227,12 +307,28 @@ void FilterRule::setIpProtocol(QString ipProtocol) {
     this->ipProtocol = ipProtocol;
 }
 
+bool FilterRule::isIpProtocolNeg() const {
+    return ipProtocolNeg;
+}
+
+void FilterRule::setIpProtocolNeg(bool ipProtocolNeg) {
+    this->ipProtocolNeg = ipProtocolNeg;
+}
+
 QString FilterRule::getIpSource() const {
     return ipSource;
 }
 
 void FilterRule::setIpSource(QString ipSource) {
     this->ipSource = ipSource;
+}
+
+bool FilterRule::isIpSourceNeg() const {
+    return ipSourceNeg;
+}
+
+void FilterRule::setIpSourceNeg(bool ipSourceNeg) {
+    this->ipSourceNeg = ipSourceNeg;
 }
 
 ushort FilterRule::getIpSourceMask() const {

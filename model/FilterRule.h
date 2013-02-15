@@ -52,30 +52,46 @@ public:
     void setDescription(QString description);
     QString getEbDest() const;
     void setEbDest(QString EbDest);
-    QString getEbSource() const;
-    void setEbSource(QString EbSource);
-    QString getInInterface() const;
-    void setInInterface(QString inInterface);
-    QString getOutInterface() const;
-    void setOutInterface(QString outInterface);
-    QString getEbProtocol() const;
-    void setEbProtocol(QString ebProtocol);
     QString getEbDestMask() const;
     void setEbDestMask(QString ebDestMask);
+    bool isEbDestNeg() const;
+    void setEbDestNeg(bool ebDestNeg);
+    QString getEbSource() const;
+    void setEbSource(QString EbSource);
     QString getEbSourceMask() const;
     void setEbSourceMask(QString ebSourceMask);
+    bool isEbSourceNeg() const;
+    void setEbSourceNeg(bool ebSourceNeg);
+    QString getInInterface() const;
+    void setInInterface(QString inInterface);
+    bool isInInterfaceNeg() const;
+    void setInInterfaceNeg(bool inInterfaceNeg);
+    QString getOutInterface() const;
+    void setOutInterface(QString outInterface);
+     bool isOutInterfaceNeg() const;
+    void setOutInterfaceNeg(bool outInterfaceNeg);
+    QString getEbProtocol() const;
+    void setEbProtocol(QString ebProtocol);
+    bool isEbProtocolNeg() const;
+    void setEbProtocolNeg(bool ebProtocolNeg);
+    QString getIpProtocol() const;
+    void setIpProtocol(QString ipProtocol);
+    bool isIpProtocolNeg() const;
+    void setIpProtocolNeg(bool ipProtocolNeg);
     QString getIpDest() const;
     void setIpDest(QString ipDest);
     ushort getIpDestMask() const;
     void setIpDestMask(ushort ipDestMask);
-    bool isIpFragment() const;
-    void setIpFragment(bool ipFragment);
-    QString getIpProtocol() const;
-    void setIpProtocol(QString ipProtocol);
+    bool isIpDestNeg() const;
+    void setIpDestNeg(bool ipDestNeg);
     QString getIpSource() const;
     void setIpSource(QString ipSource);
     ushort getIpSourceMask() const;
     void setIpSourceMask(ushort ipSourceMask);
+    bool isIpSourceNeg() const;
+    void setIpSourceNeg(bool ipSourceNeg);
+    bool isIpFragment() const;
+    void setIpFragment(bool ipFragment);
 
 private:
     /** number of rule */
@@ -87,29 +103,45 @@ private:
 
     /** Input interface */
     QString inInterface;
+    /** Input interface negation */
+    bool inInterfaceNeg;
     /** Output interface */
     QString outInterface;
-    /** Protocol or length */
+    /** Output interface negation */
+    bool outInterfaceNeg;
+    /** Link layer protocol or length */
     QString ebProtocol;
+    /** Link layer rotocol negation */
+    bool ebProtocolNeg;
     /** Link layer source address */
     QString ebSource;
     /** Link layer source address mask */
     QString ebSourceMask;
+    /** Link layer source address negation */
+    bool ebSourceNeg;
     /** Link layer destination address */
     QString ebDest;
     /** Link layer destination address mask */
     QString ebDestMask;
+    /** Link layer destination address negation */
+    bool ebDestNeg;
 
     /** Type of ip protocol */
     QString ipProtocol;
+    /** Ip protocol negation */
+    bool ipProtocolNeg;
     /** IP source address */
     QString ipSource;
     /** IP source mask */
     ushort ipSourceMask;
+    /** IP source address negation */
+    bool ipSourceNeg;
     /** IP destination address */
     QString ipDest;
     /** IP destination mask*/
     ushort ipDestMask;
+    /** IP destintation address negation */
+    bool ipDestNeg;
     /** Fragmented packet */
     bool ipFragment;
 
