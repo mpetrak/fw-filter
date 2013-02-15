@@ -10,11 +10,15 @@
 
 #include <QString>
 #include <QMetaType>
+
 #include "../lib/Netfilter.h"
 
 class FilterRule {
 public:
     /* Constants */
+    static const QString OPTION_VALUE_UNSPECIFIED;
+    static const int INT_VALUE_UNSPECIFIED;
+    
     /* Constructors, destructor */
     FilterRule();
     FilterRule(int number);
@@ -36,10 +40,16 @@ public:
     void fromStream(QDataStream *stream);
 
     /**
-     * Print rule to string in a format used by ebtables.
+     * Print rule to string in a format used by ebtables-restore.
      * @return rule specification printed into inline string
      */
     QString toEbString();
+    
+    /**
+     * Print rule to string in a fromat used by iptables-restore
+     * @return rule specification printed into inline string
+     */
+    QString toIpString();
 
     /* Setters and getters */
     void setNumber(int number);
@@ -80,14 +90,14 @@ public:
     void setIpProtocolNeg(bool ipProtocolNeg);
     QString getIpDest() const;
     void setIpDest(QString ipDest);
-    ushort getIpDestMask() const;
-    void setIpDestMask(ushort ipDestMask);
+    short getIpDestMask() const;
+    void setIpDestMask(short ipDestMask);
     bool isIpDestNeg() const;
     void setIpDestNeg(bool ipDestNeg);
     QString getIpSource() const;
     void setIpSource(QString ipSource);
-    ushort getIpSourceMask() const;
-    void setIpSourceMask(ushort ipSourceMask);
+    short getIpSourceMask() const;
+    void setIpSourceMask(short ipSourceMask);
     bool isIpSourceNeg() const;
     void setIpSourceNeg(bool ipSourceNeg);
     bool isIpFragment() const;
@@ -133,13 +143,13 @@ private:
     /** IP source address */
     QString ipSource;
     /** IP source mask */
-    ushort ipSourceMask;
+    short ipSourceMask;
     /** IP source address negation */
     bool ipSourceNeg;
     /** IP destination address */
     QString ipDest;
     /** IP destination mask*/
-    ushort ipDestMask;
+    short ipDestMask;
     /** IP destintation address negation */
     bool ipDestNeg;
     /** Fragmented packet */

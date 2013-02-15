@@ -22,10 +22,7 @@
 class RuleEditWidget : public QTabWidget {
     Q_OBJECT
 
-public:
-    
-    static const QString COMBO_UNSPECIFIED;
-    
+public:    
     RuleEditWidget(QWidget *parent);
     virtual ~RuleEditWidget();
 

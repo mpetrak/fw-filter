@@ -29,8 +29,28 @@ private:
      */
     QString ebFileHeader();
     
-    /* output file stream for ebtables */
+    /**
+     * Make footer of file for ebtables.
+     * @return footer of file
+     */
+    QString ebFileFooter();
+    
+    /**
+     * Make header of file for iptables
+     * @return header of file
+     */
+    QString ipFileHeader();
+    
+    /**
+     * Make footer of file for iptables.
+     * @return footer of file
+     */
+    QString ipFileFooter();
+    
+    /** output file stream for ebtables */
     ofstream ebFile;
+    /** output file stream for iptables */
+    ofstream ipFile;
 
 };
 

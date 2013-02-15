@@ -15,9 +15,6 @@
 
 #define MASK_EDIT_WIDTH 50
 
-/* constant definitions */
-const QString RuleEditWidget::COMBO_UNSPECIFIED = QString::fromUtf8("");
-
 RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
     /* set own tab widget */
     this->setGeometry(QRect(230, 10, 511, 531));
@@ -29,21 +26,21 @@ RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
 
     NetInterfaces *netIfs = new NetInterfaces();
     this->interfaces = netIfs->getIfList();
-    this->interfaces.insert(0, RuleEditWidget::COMBO_UNSPECIFIED);
+    this->interfaces.insert(0, FilterRule::OPTION_VALUE_UNSPECIFIED);
     free(netIfs);
-    
+
     /* Load options of protocols */
     OptionsLoader *optionsLoader = new OptionsLoader(OptionsLoader::LINK_PROTOCOLS_OPTIONS);
     this->ebProtocols.append(optionsLoader->getOptions());
     free(optionsLoader);
-    
+
     optionsLoader = new OptionsLoader(OptionsLoader::NET_PROTOCOLS_OPTIONS);
     this->ipProtocols.append(optionsLoader->getOptions());
     free(optionsLoader);
-    
+
     /* Insert unspecified option*/
-    this->ipProtocols.insert(0, RuleEditWidget::COMBO_UNSPECIFIED);
-    this->ebProtocols.insert(0, RuleEditWidget::COMBO_UNSPECIFIED);
+    this->ipProtocols.insert(0, FilterRule::OPTION_VALUE_UNSPECIFIED);
+    this->ebProtocols.insert(0, FilterRule::OPTION_VALUE_UNSPECIFIED);
 
     /* create tabs */
     this->setupGeneralWidget();
@@ -65,33 +62,39 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->nameEdit->setText(rule.getName());
         this->descriptionEdit->setText(rule.getDescription());
         this->actionSelect->setCurrentIndex(actions.indexOf(rule.getAction()));
-        
+
         this->inInterfaceSelect->setCurrentIndex(interfaces.indexOf(rule.getInInterface()));
         this->inInterfaceNBox->setChecked(rule.isInInterfaceNeg());
-        
+
         this->outInterfaceSelect->setCurrentIndex(interfaces.indexOf(rule.getOutInterface()));
         this->outInterfaceNBox->setChecked(rule.isOutInterfaceNeg());
-        
+
         this->ebProtoSelect->setCurrentIndex(ebProtocols.indexOf(rule.getEbProtocol()));
         this->ebProtoNBox->setChecked(rule.isEbProtocolNeg());
-        
+
         this->macSourceEdit->setText(rule.getEbSource());
         this->macSourceMaskEdit->setText(rule.getEbSourceMask());
         this->macSourceNBox->setChecked(rule.isEbSourceNeg());
-        
+
         this->macDestEdit->setText(rule.getEbDest());
         this->macDestMaskEdit->setText(rule.getEbDestMask());
         this->macDestNBox->setChecked(rule.isEbDestNeg());
-        
+
         this->ipProtoSelect->setCurrentIndex(ipProtocols.indexOf(rule.getIpProtocol()));
         this->ipProtoNBox->setChecked(rule.isIpProtocolNeg());
-        
+
         this->ipSourceEdit->setText(rule.getIpSource());
-        this->ipSourceMaskEdit->setText(QString::number(rule.getIpSourceMask()));
+        if (rule.getIpSourceMask() == FilterRule::INT_VALUE_UNSPECIFIED)
+            this->ipSourceMaskEdit->setText(QString::fromUtf8(""));
+        else
+            this->ipSourceMaskEdit->setText(QString::number(rule.getIpSourceMask()));
         this->ipSourceNBox->setChecked(rule.isIpSourceNeg());
-        
+
         this->ipDestEdit->setText(rule.getIpDest());
-        this->ipDestMaskEdit->setText(QString::number(rule.getIpDestMask()));
+        if (rule.getIpDestMask() == FilterRule::INT_VALUE_UNSPECIFIED)
+            this->ipDestMaskEdit->setText(QString::fromUtf8(""));
+        else
+            this->ipDestMaskEdit->setText(QString::number(rule.getIpDestMask()));
         this->ipDestNBox->setChecked(rule.isIpDestNeg());
     }
 }
@@ -101,36 +104,42 @@ void RuleEditWidget::ruleSave(QModelIndex index) {
     if (index.isValid()) {
         FilterRule rule = this->rulesModel->getRule(index.row());
 
-        rule.setName(this->nameEdit->text());
-        rule.setDescription(this->descriptionEdit->toPlainText());
+        rule.setName(this->nameEdit->text().trimmed());
+        rule.setDescription(this->descriptionEdit->toPlainText().trimmed());
         rule.setAction(this->actionSelect->currentText());
-        
+
         rule.setInInterface(this->inInterfaceSelect->currentText());
         rule.setInInterfaceNeg(this->inInterfaceNBox->isChecked());
-        
+
         rule.setOutInterface(this->outInterfaceSelect->currentText());
         rule.setOutInterfaceNeg(this->outInterfaceNBox->isChecked());
-        
+
         rule.setEbProtocol(this->ebProtoSelect->currentText());
         rule.setEbProtocolNeg(this->ebProtoNBox->isChecked());
-        
-        rule.setEbSource(this->macSourceEdit->text());
-        rule.setEbSourceMask(this->macDestMaskEdit->text());
+
+        rule.setEbSource(this->macSourceEdit->text().trimmed());
+        rule.setEbSourceMask(this->macSourceMaskEdit->text().trimmed());
         rule.setEbSourceNeg(this->macSourceNBox->isChecked());
-        
-        rule.setEbDest(this->macDestEdit->text());
-        rule.setEbDestMask(this->macDestMaskEdit->text());
+
+        rule.setEbDest(this->macDestEdit->text().trimmed());
+        rule.setEbDestMask(this->macDestMaskEdit->text().trimmed());
         rule.setEbDestNeg(this->macDestNBox->isChecked());
-        
+
         rule.setIpProtocol(this->ipProtoSelect->currentText());
         rule.setIpProtocolNeg(this->ipProtoNBox->isChecked());
-        
-        rule.setIpSource(this->ipSourceEdit->text());
-        rule.setIpSourceMask(this->ipSourceMaskEdit->text().toUShort());
+
+        rule.setIpSource(this->ipSourceEdit->text().trimmed());
+        if (this->ipSourceMaskEdit->text().trimmed().isEmpty())
+            rule.setIpSourceMask(FilterRule::INT_VALUE_UNSPECIFIED);
+        else
+            rule.setIpSourceMask(this->ipSourceMaskEdit->text().toShort());
         rule.setIpSourceNeg(this->ipSourceNBox->isChecked());
-        
-        rule.setIpDest(this->ipDestEdit->text());
-        rule.setIpDestMask(this->ipDestMaskEdit->text().toUShort());
+
+        rule.setIpDest(this->ipDestEdit->text().trimmed());
+        if (this->ipDestMaskEdit->text().trimmed().isEmpty())
+            rule.setIpDestMask(FilterRule::INT_VALUE_UNSPECIFIED);
+        else
+            rule.setIpDestMask(this->ipDestMaskEdit->text().toShort());
         rule.setIpDestNeg(this->ipDestNBox->isChecked());
 
         /** save rule using qt model api */

@@ -2,8 +2,11 @@
 #ifndef NETFILTER_H
 #define	NETFILTER_H
 
-#define EB_OUTUP_FILE "data/ebfile"
-#define EB_CHAIN "FILTER"
+#define EB_OUTPUT_FILE "data/ebfile"
+#define EB_CHAIN "FORWARD"
+
+#define EB_NEGATION "!"
+#define EB_MASK_DELIMITER "/"
 
 #define EB_COMMAND "ebtables-restore < %1"
 #define EB_COMMAND_APPEND "-A"
@@ -15,8 +18,11 @@
 #define EB_COMMAND_PROTOCOL "-p"
 #define EB_COMMAND_ACTION "-j"
 
-#define IP_OUTUP_FILE "data/ipfile"
-#define IP_CHAIN "FILTER"
+#define IP_OUTPUT_FILE "data/ipfile"
+#define IP_CHAIN "FORWARD"
+
+#define IP_NEGATION "!"
+#define IP_MASK_DELIMITER "/"
 
 #define IP_COMMAND "iptables-restore < %1"
 #define IP_COMMAND_APPEND "-A"
