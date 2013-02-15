@@ -105,7 +105,8 @@ void MainWindow::on_saveEditButton_clicked() {
         emit saveRule(index);
     } else {
 
-        //QMessageBox::critical(NULL, QObject::tr("Aditionals privileges needed"), QObject::tr("You must run TFTPinfo as a root."), QMessageBox::Ok, QMessageBox::Ok);
+        QMessageBox::critical(NULL, QObject::tr("Save error"),
+                QObject::tr("Cannot save rule - no rule selected."), QMessageBox::Ok, QMessageBox::Ok);
     }
 }
 
@@ -115,7 +116,10 @@ void MainWindow::on_actionApply_modifications_triggered() {
 
         RulesPusher *pusher = new RulesPusher();
 
-        pusher->writeRules(this->rulesModel->getRulesList());
+        if(pusher->writeRules(this->rulesModel->getRulesList()) == false) {
+            QMessageBox::critical(NULL, QObject::tr("Save error"),
+                    QObject::tr("Error during saving rules to system!"), QMessageBox::Ok, QMessageBox::Ok);
+        }
 
         free(pusher);
     } else {

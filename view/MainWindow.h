@@ -8,6 +8,8 @@
 #ifndef _MAINWINDOW_H
 #define	_MAINWINDOW_H
 
+#include <QtGui/QMessageBox>
+
 #include "../qt/ui_MainWindow.h"
 #include "RuleEditWidget.h"
 #include "../lib/RulesPusher.h"
