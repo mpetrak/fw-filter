@@ -21,15 +21,13 @@ int main(int argc, char *argv[]) {
     
     if(getuid() != 0)
     {
-        QMessageBox::critical(NULL, QObject::tr("Aditionals privileges needed"), QObject::tr("You must run application as a root."), QMessageBox::Ok, QMessageBox::Ok);
-        fprintf(stderr, "You must run application as a root.\n");
-        //TODO uncomment exit
-        //exit(1);
+        QMessageBox::warning(NULL, QString::fromUtf8("Aditionals privileges needed"),
+                QString::fromUtf8("It`s recommended to run application with root privileges."),
+                QMessageBox::Ok, QMessageBox::Ok);
     }
     
     FilterRulesModel *rulesModel = new FilterRulesModel();    
     main.setRulesViewModel(rulesModel);
-    
     
     //TODO load configuration (interfaces aliases)
     

@@ -6,6 +6,7 @@
  */
 
 #include <linux/stddef.h>
+#include <qt4/QtGui/qmessagebox.h>
 
 #include "MainWindow.h"
 
@@ -105,8 +106,8 @@ void MainWindow::on_saveEditButton_clicked() {
         emit saveRule(index);
     } else {
 
-        QMessageBox::critical(NULL, QObject::tr("Save error"),
-                QObject::tr("Cannot save rule - no rule selected."), QMessageBox::Ok, QMessageBox::Ok);
+        QMessageBox::critical(this, QString::fromUtf8("Save error"),
+                QString::fromUtf8("Cannot save rule - no rule selected."), QMessageBox::Ok, QMessageBox::Ok);
     }
 }
 
@@ -117,13 +118,14 @@ void MainWindow::on_actionApply_modifications_triggered() {
         RulesPusher *pusher = new RulesPusher();
 
         if(pusher->writeRules(this->rulesModel->getRulesList()) == false) {
-            QMessageBox::critical(NULL, QObject::tr("Save error"),
-                    QObject::tr("Error during saving rules to system!"), QMessageBox::Ok, QMessageBox::Ok);
+            QMessageBox::critical(this, QString::fromUtf8("Save error"),
+                    QString::fromUtf8("Error during saving rules to system!"), QMessageBox::Ok, QMessageBox::Ok);
         }
 
         free(pusher);
     } else {
-        //TODO error dialog
+        QMessageBox::critical(this, QString::fromUtf8("Internal error"),
+                QString::fromUtf8("NULL rulesModel"), QMessageBox::Ok, QMessageBox::Ok);
     }
 }
 
