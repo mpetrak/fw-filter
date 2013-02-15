@@ -12,7 +12,7 @@ CND_DISTDIR=dist
 CND_BUILDDIR=build
 NBTMPDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/fw-filter
+OUTPUT_PATH=${CND_DISTDIR}/fw-filter
 OUTPUT_BASENAME=fw-filter
 PACKAGE_TOP_DIR=fw-filter/
 
@@ -53,7 +53,7 @@ function copyFileToTmpDir
 
 # Setup
 cd "${TOP}"
-mkdir -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package
+mkdir -p package
 rm -rf ${NBTMPDIR}
 mkdir -p ${NBTMPDIR}
 
@@ -65,9 +65,9 @@ copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BA
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/fw-filter.tar
+rm -f package/fw-filter.tar
 cd ${NBTMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/fw-filter.tar *
+tar -vcf ../../../../package/fw-filter.tar *
 checkReturnCode
 
 # Cleanup
