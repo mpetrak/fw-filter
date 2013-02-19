@@ -26,13 +26,10 @@ int main(int argc, char *argv[]) {
                 QMessageBox::Ok, QMessageBox::Ok);
     }
     
-    FilterRulesModel *rulesModel = new FilterRulesModel();    
+    FilterRulesModel *rulesModel = new FilterRulesModel();
     main.setRulesViewModel(rulesModel);
-    
-    //TODO load configuration (interfaces aliases)
     
     main.show();
     
-
     return app.exec();
 }

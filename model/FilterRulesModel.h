@@ -11,8 +11,10 @@
 #include <QAbstractListModel>
 #include <QStringList>
 #include <QMimeData>
+#include <QtGui/QMessageBox>
 
 #include "FilterRule.h"
+#include "../lib/RulesXML.h"
 
 class FilterRulesModel : public QAbstractListModel {
     Q_OBJECT

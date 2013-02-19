@@ -48,13 +48,18 @@ public:
      */
     QList<FilterRule> loadRules();
     
+    /**
+     * If it was error during loading.
+     * @return true if there was error
+     */
+    bool isLoadError();
 private:
     /**
      * Convert one rule to XML node.
      * @param rule rule
      * @return XML node with rule data
      */
-    xmlNodePtr rule2XmlNode(FilterRule *rule);
+    xmlNodePtr rule2Node(FilterRule *rule);
     
     /**
      * Convert rule value to XML node.
@@ -74,11 +79,24 @@ private:
      * @param negation if address value is negatiated
      */
     void address2Node(xmlNodePtr *parent, const char *nodeName, char *address, char *mask, bool negation);
+    
+    /**
+     * Load data about one rule from given XML node
+     * and create a rule instance with them.
+     * @param ruleNode XML rule node
+     * @return instance of rule with loaded data
+     */
+    FilterRule *node2Rule(xmlNodePtr ruleNode);
+    
+    /**
+     * If given node is negatiated by its attributes.
+     * @param node node
+     * @return true - node is negtiated / false
+     */
+    bool nodeNegation(xmlNodePtr node);
 
-    /** XML document */
-    xmlDocPtr doc;
-    /** XML document root node */
-    xmlNodePtr rootNode;
+    bool loadError;
+
 };
 
 #endif	/* RULESSAVER_H */

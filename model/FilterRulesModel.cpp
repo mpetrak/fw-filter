@@ -10,17 +10,19 @@
 
 FilterRulesModel::FilterRulesModel() {
 
-//    FilterRule *rule = new FilterRule(1);
-//    rule->setName("jedna");
-//    rulesList.append(*rule);
-//
-//    rule = new FilterRule(2);
-//    rule->setName("dva");
-//    rulesList.append(*rule);
-//
-//    rule = new FilterRule(3);
-//    rule->setName("tri");
-//    rulesList.append(*rule);
+    RulesXML *xmlLoader = new RulesXML();
+    QList<FilterRule> loaded = xmlLoader->loadRules();
+    if (xmlLoader->isLoadError()) {
+        QMessageBox::critical(NULL, QString::fromUtf8("Load error"),
+                QString::fromUtf8("Error during loading filter rules. "
+                "A list of rules will be empty."),
+                QMessageBox::Ok, QMessageBox::Ok);
+    } else {
+
+        this->rulesList.append(loaded);
+    }
+
+    free(xmlLoader);
 }
 
 FilterRulesModel::~FilterRulesModel() {
@@ -32,9 +34,9 @@ QList<FilterRule> FilterRulesModel::getRulesList() {
 
 FilterRule FilterRulesModel::getRule(int index) {
     /* return only if index is valid */
-    if(index < rulesList.count()) {
+    if (index < rulesList.count()) {
         return rulesList.at(index);
-    } else  {
+    } else {
         return false;
     }
 }
