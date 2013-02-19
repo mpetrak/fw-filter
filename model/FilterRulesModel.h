@@ -51,6 +51,12 @@ public:
      * @return ordered list of rules
      */
     QList<FilterRule> getRulesList();
+    
+    /**
+     * Reload rules from XML file.
+     * Using library loader.
+     */
+    void reloadRules();
 
 public slots:
     /**

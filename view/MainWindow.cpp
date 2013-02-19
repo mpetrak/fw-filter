@@ -15,7 +15,7 @@ MainWindow::MainWindow() {
     /* after start disable some action - no change made */
     //TODO set enabled to false
     //widget.actionApply_modifications->setEnabled(false);
-    widget.actionReset->setEnabled(false);
+    //widget.actionReset->setEnabled(false);
 
     /* enable drag and drop for rules view */
     widget.rulesView->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -150,4 +150,8 @@ void MainWindow::on_actionNew_triggered() {
 void MainWindow::on_actionDelete_triggered() {
     /* same as delete rule button clicked */
     this->on_deleteRuleButton_clicked();
+}
+
+void MainWindow::on_actionReset_triggered() {
+    this->rulesModel->reloadRules();
 }

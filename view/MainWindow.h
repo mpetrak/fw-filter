@@ -45,6 +45,7 @@ private slots:
     void on_actionNew_triggered();
     void on_actionDelete_triggered();
     void on_actionApply_modifications_triggered();
+    void on_actionReset_triggered();
 
 signals:
 

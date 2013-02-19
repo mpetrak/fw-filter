@@ -9,20 +9,7 @@
 #include "FilterRulesModel.h"
 
 FilterRulesModel::FilterRulesModel() {
-
-    RulesXML *xmlLoader = new RulesXML();
-    QList<FilterRule> loaded = xmlLoader->loadRules();
-    if (xmlLoader->isLoadError()) {
-        QMessageBox::critical(NULL, QString::fromUtf8("Load error"),
-                QString::fromUtf8("Error during loading filter rules. "
-                "A list of rules will be empty."),
-                QMessageBox::Ok, QMessageBox::Ok);
-    } else {
-
-        this->rulesList.append(loaded);
-    }
-
-    free(xmlLoader);
+    reloadRules();
 }
 
 FilterRulesModel::~FilterRulesModel() {
@@ -39,6 +26,24 @@ FilterRule FilterRulesModel::getRule(int index) {
     } else {
         return false;
     }
+}
+
+void FilterRulesModel::reloadRules() {
+    this->rulesList.clear();
+    
+    RulesXML *xmlLoader = new RulesXML();
+    QList<FilterRule> loaded = xmlLoader->loadRules();
+    if (xmlLoader->isLoadError()) {
+        QMessageBox::critical(NULL, QString::fromUtf8("Load error"),
+                QString::fromUtf8("Error during loading filter rules. "
+                "A list of rules will be empty."),
+                QMessageBox::Ok, QMessageBox::Ok);
+    } else {
+
+        this->rulesList.append(loaded);
+    }
+
+    free(xmlLoader);
 }
 
 void FilterRulesModel::newRule(int index) {

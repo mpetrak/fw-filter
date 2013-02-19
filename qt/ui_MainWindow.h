@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Fri Feb 15 11:53:51 2013
+** Created: Tue Feb 19 20:06:24 2013
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -127,6 +127,7 @@ public:
         actionApply_modifications->setText(QApplication::translate("MainWindow", "Apply modifications", 0, QApplication::UnicodeUTF8));
         actionApply_modifications->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+S", 0, QApplication::UnicodeUTF8));
         actionReset->setText(QApplication::translate("MainWindow", "Reset", 0, QApplication::UnicodeUTF8));
+        actionReset->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+R", 0, QApplication::UnicodeUTF8));
         actionSettings->setText(QApplication::translate("MainWindow", "Settings", 0, QApplication::UnicodeUTF8));
         actionSave_rule->setText(QApplication::translate("MainWindow", "Save rule", 0, QApplication::UnicodeUTF8));
         actionSave_rule->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0, QApplication::UnicodeUTF8));
