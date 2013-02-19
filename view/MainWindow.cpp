@@ -117,12 +117,20 @@ void MainWindow::on_actionApply_modifications_triggered() {
 
         RulesPusher *pusher = new RulesPusher();
 
-        if(pusher->writeRules(this->rulesModel->getRulesList()) == false) {
+        if(!pusher->writeRules(this->rulesModel->getRulesList())) {
             QMessageBox::critical(this, QString::fromUtf8("Save error"),
                     QString::fromUtf8("Error during saving rules to system!"), QMessageBox::Ok, QMessageBox::Ok);
         }
-
         free(pusher);
+        
+        RulesXML *xml = new RulesXML();
+        
+        if(!xml->saveRules(this->rulesModel->getRulesList())) {
+            QMessageBox::critical(this, QString::fromUtf8("Save error"),
+                    QString::fromUtf8("Error during saving rules to XML file!"), QMessageBox::Ok, QMessageBox::Ok);
+        }
+        free(xml);
+        
     } else {
         QMessageBox::critical(this, QString::fromUtf8("Internal error"),
                 QString::fromUtf8("NULL rulesModel"), QMessageBox::Ok, QMessageBox::Ok);

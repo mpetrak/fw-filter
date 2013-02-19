@@ -12,6 +12,7 @@
       <itemPath>lib/OptionsLoader.h</itemPath>
       <itemPath>view/RuleEditWidget.h</itemPath>
       <itemPath>lib/RulesPusher.h</itemPath>
+      <itemPath>lib/RulesXML.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -28,6 +29,7 @@
       <itemPath>lib/OptionsLoader.cpp</itemPath>
       <itemPath>view/RuleEditWidget.cpp</itemPath>
       <itemPath>lib/RulesPusher.cpp</itemPath>
+      <itemPath>lib/RulesXML.cpp</itemPath>
       <itemPath>controller/main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -56,6 +58,11 @@
         <uiDir>qt</uiDir>
       </qt>
       <compileType>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibFileItem>/usr/lib/libxml2.so</linkerLibFileItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
       <packaging>
         <packType>Tar</packType>
@@ -93,6 +100,11 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibFileItem>/usr/lib/libxml2.so</linkerLibFileItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
       <packaging>
         <packType>Tar</packType>

@@ -10,17 +10,17 @@
 
 FilterRulesModel::FilterRulesModel() {
 
-    FilterRule *rule = new FilterRule(1);
-    rule->setName("jedna");
-    rulesList.append(*rule);
-
-    rule = new FilterRule(2);
-    rule->setName("dva");
-    rulesList.append(*rule);
-
-    rule = new FilterRule(3);
-    rule->setName("tri");
-    rulesList.append(*rule);
+//    FilterRule *rule = new FilterRule(1);
+//    rule->setName("jedna");
+//    rulesList.append(*rule);
+//
+//    rule = new FilterRule(2);
+//    rule->setName("dva");
+//    rulesList.append(*rule);
+//
+//    rule = new FilterRule(3);
+//    rule->setName("tri");
+//    rulesList.append(*rule);
 }
 
 FilterRulesModel::~FilterRulesModel() {

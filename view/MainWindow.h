@@ -13,6 +13,7 @@
 #include "../qt/ui_MainWindow.h"
 #include "RuleEditWidget.h"
 #include "../lib/RulesPusher.h"
+#include "../lib/RulesXML.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
