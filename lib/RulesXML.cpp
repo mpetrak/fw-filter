@@ -47,7 +47,10 @@ bool RulesXML::saveRules(QList<FilterRule> rules) {
     
     int result = xmlSaveFormatFileEnc(RulesXML::FILE, this->doc, RulesXML::XML_ENCODING, 1);
     
-    return true;
+    if(result < 0)
+        return false;
+    else
+        return true;
 }
 
 xmlNodePtr RulesXML::rule2XmlNode(FilterRule* rule) {
@@ -98,7 +101,6 @@ xmlNodePtr RulesXML::rule2XmlNode(FilterRule* rule) {
             rule->getIpProtocol().toAscii().data(), rule->isIpProtocolNeg());
     
     /* net layer source */
-    
     sprintf(mask, "%d", rule->getIpSourceMask());
     address2Node(&netNode, RulesXML::RULE_SOURCE,
             rule->getIpSource().toAscii().data(),

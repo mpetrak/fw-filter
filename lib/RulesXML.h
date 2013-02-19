@@ -36,6 +36,7 @@ public:
     RulesXML();
     
     bool saveRules(QList<FilterRule> rules);
+    QList<FilterRule> loadRules();
     
 private:
     xmlNodePtr rule2XmlNode(FilterRule *rule);
