@@ -1,9 +1,37 @@
 
-#include <QString>
-#include <QByteArray>
-#include <stdlib.h>
-
 #include "RulesPusher.h"
+
+const char* RulesPusher::EB_OUTPUT_FILE = "data/ebfile";
+const char* RulesPusher::EB_CHAIN = "FORWARD";
+
+const char* RulesPusher::EB_NEGATION = "!";
+const char* RulesPusher::EB_MASK_DELIMITER = "/";
+
+const char* RulesPusher::EB_COMMAND = "ebtables-restore < %1";
+const char* RulesPusher::EB_COMMAND_APPEND = "-A";
+const char* RulesPusher::EB_COMMAND_CHAIN = "";
+const char* RulesPusher::EB_COMMAND_INPUT_IFACE = "-i";
+const char* RulesPusher::EB_COMMAND_OUTPUT_IFACE = "-o";
+const char* RulesPusher::EB_COMMAND_SOURCE_ADDR = "-s";
+const char* RulesPusher::EB_COMMAND_DEST_ADDR = "-d";
+const char* RulesPusher::EB_COMMAND_PROTOCOL = "-p";
+const char* RulesPusher::EB_COMMAND_ACTION = "-j";
+
+const char* RulesPusher::IP_OUTPUT_FILE = "data/ipfile";
+const char* RulesPusher::IP_CHAIN = "FORWARD";
+
+const char* RulesPusher::IP_NEGATION = "!";
+const char* RulesPusher::IP_MASK_DELIMITER = "/";
+
+const char* RulesPusher::IP_COMMAND = "iptables-restore < %1";
+const char* RulesPusher::IP_COMMAND_APPEND = "-A";
+const char* RulesPusher::IP_COMMAND_CHAIN = "";
+const char* RulesPusher::IP_COMMAND_INPUT_IFACE = "-i";
+const char* RulesPusher::IP_COMMAND_OUTPUT_IFACE = "-o";
+const char* RulesPusher::IP_COMMAND_SOURCE_ADDR = "-s";
+const char* RulesPusher::IP_COMMAND_DEST_ADDR = "-d";
+const char* RulesPusher::IP_COMMAND_PROTOCOL = "-p";
+const char* RulesPusher::IP_COMMAND_ACTION = "-j";
 
 RulesPusher::RulesPusher() {
 }
@@ -22,8 +50,8 @@ bool RulesPusher::writeRules(QList<FilterRule> rules) {
     FilterRule rule;
 
     foreach(rule, rules) {
-        ebFile << rule.toEbString().toAscii().data();
-        ipFile << rule.toIpString().toAscii().data();
+        ebFile << rule2EbString(&rule).toAscii().data();
+        ipFile << rule2IpString(&rule).toAscii().data();
     }
 
     ebFile << this->ebFileFooter().toAscii().data();
@@ -37,10 +65,10 @@ bool RulesPusher::writeRules(QList<FilterRule> rules) {
     int ipReturn = -1;
     ebReturn = system(QString(EB_COMMAND).arg(EB_OUTPUT_FILE).toAscii().data());
     ipReturn = system(QString(IP_COMMAND).arg(IP_OUTPUT_FILE).toAscii().data());
-    
+
     /* control return state */
     if (ebReturn != 0 || ipReturn != 0) {
-        
+
         return false;
     } else {
 
@@ -84,4 +112,169 @@ QString RulesPusher::ebFileFooter() {
     QString footer;
 
     return footer;
+}
+
+QString RulesPusher::rule2EbString(FilterRule *rule) {
+    QString out;
+
+    /* append rule command */
+    out.append(QString("%1 ").arg(RulesPusher::EB_COMMAND_APPEND));
+
+    /* chain */
+    out.append(QString("%1 %2 ").arg(RulesPusher::EB_COMMAND_CHAIN, RulesPusher::EB_CHAIN));
+
+    /* input interface if it is set */
+
+    if (rule->getInInterface() != FilterRule::OPTION_VALUE_UNSPECIFIED) {
+        out.append(value2EbString(RulesPusher::EB_COMMAND_INPUT_IFACE,
+                rule->getInInterface(), rule->isInInterfaceNeg()));
+    }
+
+    /* output interface if it is set */
+    if (rule->getOutInterface() != FilterRule::OPTION_VALUE_UNSPECIFIED) {
+        out.append(value2EbString(RulesPusher::EB_COMMAND_OUTPUT_IFACE,
+                rule->getOutInterface(), rule->isOutInterfaceNeg()));
+    }
+
+    /* link protocol */
+    if (rule->getEbProtocol() != FilterRule::OPTION_VALUE_UNSPECIFIED) {
+        out.append(value2EbString(RulesPusher::EB_COMMAND_PROTOCOL,
+                rule->getEbProtocol(), rule->isEbProtocolNeg()));
+    }
+
+    /* source link address */
+    if (!rule->getEbSource().isEmpty()) {
+        out.append(address2EbString(RulesPusher::EB_COMMAND_SOURCE_ADDR,
+                rule->getEbSource(), rule->getEbSourceMask(),
+                rule->isEbSourceNeg(), !rule->getEbSourceMask().isEmpty()));
+    }
+
+    /* destination link address */
+    if (!rule->getEbDest().isEmpty()) {
+        out.append(address2EbString(RulesPusher::EB_COMMAND_DEST_ADDR,
+                rule->getEbDest(), rule->getEbDestMask(),
+                rule->isEbDestNeg(), !rule->getEbDestMask().isEmpty()));
+    }
+
+    /* action */
+    if (!rule->getAction().isEmpty())
+        out.append(QString("%1 %2 ").arg(RulesPusher::EB_COMMAND_ACTION, rule->getAction().toAscii().data()));
+
+    /* finally line end */
+    out.append(QString::fromUtf8("\n"));
+
+    return out;
+}
+
+QString RulesPusher::value2EbString(const char *command, QString value, bool negation) {
+    QString out;
+
+    out.append(QString::fromUtf8(command));
+    if (negation)
+        out.append(QString::fromUtf8(" %1").arg(RulesPusher::EB_NEGATION));
+    out.append(QString(" %1 ").arg(value));
+
+    return out;
+}
+
+QString RulesPusher::address2EbString(const char *command, QString value, QString mask, bool negation, bool maskSet) {
+    QString out;
+
+    out.append(QString::fromUtf8(command));
+    if (negation)
+        out.append(QString::fromUtf8(" %1").arg(RulesPusher::EB_NEGATION));
+    out.append(QString(" %1").arg(value));
+
+    /* mask */
+    if (maskSet) {
+        out.append(QString::fromUtf8("%1%2").arg(RulesPusher::EB_MASK_DELIMITER, mask));
+    }
+
+    /* finally append space*/
+    out.append(QString::fromUtf8(" "));
+
+    return out;
+}
+
+QString RulesPusher::rule2IpString(FilterRule *rule) {
+    QString out;
+
+    /* append rule command */
+    out.append(QString("%1 ").arg(RulesPusher::IP_COMMAND_APPEND));
+
+    /* chain */
+    out.append(QString("%1 %2 ").arg(RulesPusher::IP_COMMAND_CHAIN, IP_CHAIN));
+
+    /* input interface if it is set */
+    if (rule->getInInterface() != FilterRule::OPTION_VALUE_UNSPECIFIED) {
+        out.append(value2IpString(RulesPusher::IP_COMMAND_INPUT_IFACE,
+                rule->getInInterface(), rule->isInInterfaceNeg()));
+    }
+
+    /* output interface if it is set */
+    if (rule->getOutInterface() != FilterRule::OPTION_VALUE_UNSPECIFIED) {
+        out.append(value2IpString(RulesPusher::IP_COMMAND_OUTPUT_IFACE,
+                rule->getOutInterface(), rule->isOutInterfaceNeg()));
+    }
+
+    /* protocol */
+    if (rule->getIpProtocol() != FilterRule::OPTION_VALUE_UNSPECIFIED) {
+        out.append(value2IpString(RulesPusher::IP_COMMAND_PROTOCOL,
+                rule->getIpProtocol(), rule->isIpProtocolNeg()));
+    }
+
+    /* source net address */
+    if (!rule->getIpSource().isEmpty()) {
+        out.append(address2IpString(RulesPusher::IP_COMMAND_SOURCE_ADDR,
+                rule->getIpSource(), QString::number(rule->getIpSourceMask()),
+                rule->isIpSourceNeg(),
+                rule->getIpSourceMask() != FilterRule::INT_VALUE_UNSPECIFIED));
+    }
+
+    /* destination net address */
+    if (!rule->getIpDest().isEmpty()) {
+        out.append(address2IpString(RulesPusher::IP_COMMAND_DEST_ADDR,
+                rule->getIpDest(), QString::number(rule->getIpDestMask()),
+                rule->isIpDestNeg(),
+                rule->getIpDestMask() != FilterRule::INT_VALUE_UNSPECIFIED));
+    }
+
+    /* action */
+    if (!rule->getAction().isEmpty())
+        out.append(QString("%1 %2 ").arg(RulesPusher::IP_COMMAND_ACTION, rule->getAction().toAscii().data()));
+
+    /* finally line end */
+    out.append(QString::fromUtf8("\n"));
+
+    return out;
+}
+
+QString RulesPusher::value2IpString(const char *command, QString value, bool negation) {
+    QString out;
+
+    if (negation)
+        out.append(QString::fromUtf8("%1 ").arg(RulesPusher::IP_NEGATION));
+    out.append(QString::fromUtf8("%1 %2 ").arg(command, value));
+
+    return out;
+}
+
+QString RulesPusher::address2IpString(const char *command, QString value, QString mask, bool negation, bool maskSet) {
+
+    QString out;
+
+    if (negation)
+        out.append(QString::fromUtf8("%1 ").arg(RulesPusher::IP_NEGATION));
+    out.append(QString::fromUtf8(command));
+    out.append(QString(" %1").arg(value));
+
+    /* mask */
+    if (maskSet) {
+        out.append(QString::fromUtf8("%1%2").arg(RulesPusher::IP_MASK_DELIMITER, mask));
+    }
+
+    /* finally append space*/
+    out.append(QString::fromUtf8(" "));
+
+    return out;
 }

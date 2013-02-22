@@ -11,8 +11,6 @@
 #include <QString>
 #include <QMetaType>
 
-#include "../lib/Netfilter.h"
-
 class FilterRule {
 public:
     /* Constants */
@@ -38,18 +36,6 @@ public:
      * @param stream data stream to read from
      */
     void fromStream(QDataStream *stream);
-
-    /**
-     * Print rule to string in a format used by ebtables-restore.
-     * @return rule specification printed into inline string
-     */
-    QString toEbString();
-    
-    /**
-     * Print rule to string in a fromat used by iptables-restore
-     * @return rule specification printed into inline string
-     */
-    QString toIpString();
 
     /* Setters and getters */
     void setNumber(int number);
