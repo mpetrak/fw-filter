@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newForm.ui'
 **
-** Created: Fri Feb 22 15:47:09 2013
+** Created: Fri Feb 22 16:45:36 2013
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -19,6 +19,8 @@
 #include <QtGui/QFrame>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
+#include <QtGui/QLabel>
+#include <QtGui/QSpacerItem>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -29,8 +31,10 @@ public:
     QFrame *frame;
     QWidget *gridLayoutWidget;
     QGridLayout *gridLayout;
-    QCheckBox *checkBox_2;
     QCheckBox *checkBox;
+    QLabel *label;
+    QCheckBox *checkBox_2;
+    QSpacerItem *verticalSpacer;
 
     void setupUi(QDialog *newForm)
     {
@@ -48,15 +52,24 @@ public:
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
-        checkBox_2 = new QCheckBox(gridLayoutWidget);
-        checkBox_2->setObjectName(QString::fromUtf8("checkBox_2"));
-
-        gridLayout->addWidget(checkBox_2, 0, 0, 1, 1);
-
         checkBox = new QCheckBox(gridLayoutWidget);
         checkBox->setObjectName(QString::fromUtf8("checkBox"));
 
-        gridLayout->addWidget(checkBox, 1, 0, 1, 1);
+        gridLayout->addWidget(checkBox, 2, 1, 1, 1);
+
+        label = new QLabel(gridLayoutWidget);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        gridLayout->addWidget(label, 0, 0, 1, 1);
+
+        checkBox_2 = new QCheckBox(gridLayoutWidget);
+        checkBox_2->setObjectName(QString::fromUtf8("checkBox_2"));
+
+        gridLayout->addWidget(checkBox_2, 1, 1, 1, 1);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout->addItem(verticalSpacer, 3, 1, 1, 1);
 
 
         retranslateUi(newForm);
@@ -67,8 +80,9 @@ public:
     void retranslateUi(QDialog *newForm)
     {
         newForm->setWindowTitle(QApplication::translate("newForm", "Hovno", 0, QApplication::UnicodeUTF8));
-        checkBox_2->setText(QApplication::translate("newForm", "CheckBox", 0, QApplication::UnicodeUTF8));
         checkBox->setText(QApplication::translate("newForm", "CheckBox", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("newForm", "TextLabel", 0, QApplication::UnicodeUTF8));
+        checkBox_2->setText(QApplication::translate("newForm", "CheckBox", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

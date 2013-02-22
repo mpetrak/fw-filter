@@ -18,15 +18,16 @@
 #include "../model/FilterRulesModel.h"
 #include "../lib/NetInterfaces.h"
 #include "../lib/OptionsLoader.h"
+#include "../lib/RulesPusher.h"
 
 class RuleEditWidget : public QTabWidget {
     Q_OBJECT
 
-public:   
+public:
     static const char* MAC_ADDRESS_REGEX;
     static const char* IPV4_ADDRESS_REGEX;
     static const char* IPV6_ADDRESS_REGEX;
-    
+
     RuleEditWidget(QWidget *parent);
     virtual ~RuleEditWidget();
 
@@ -53,13 +54,13 @@ private:
 
     /** List of rule actions */
     QStringList actions;
-    
+
     /** List of system interfaces */
     QStringList interfaces;
-    
+
     /** List of possible link protocols */
     QStringList ebProtocols;
-    
+
     /** List of possible net protocols */
     QStringList ipProtocols;
 
@@ -79,6 +80,9 @@ private:
     QLabel *numberLabel;
     QComboBox *actionSelect;
     QTextEdit *descriptionEdit;
+    QCheckBox *chainForwardBox;
+    QCheckBox *chainInputBox;
+    QCheckBox *chainOutputBox;
 
     /* EB edits */
     QCheckBox *macSourceNBox;
@@ -93,7 +97,7 @@ private:
     QComboBox *outInterfaceSelect;
     QCheckBox *ebProtoNBox;
     QComboBox *ebProtoSelect;
-    
+
     /* IP edits */
     QCheckBox *ipSourceNBox;
     QLineEdit *ipSourceEdit;

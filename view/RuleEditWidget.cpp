@@ -180,33 +180,58 @@ void RuleEditWidget::setupGeneralWidget() {
     //this->nameEdit->setSizePolicy(fixedSizePolicy);
     gridLayout->addWidget(this->nameEdit, 1, 2, 1, 1);
 
-    //    QSpacerItem *horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    //    gridLayout->addItem(horizontalSpacer, 1, 3, 1, 1);
+    QLabel *descriptionLabel = new QLabel(this->tabGeneral);
+    descriptionLabel->setObjectName(QString::fromUtf8("descriptionLabel"));
+    descriptionLabel->setText(QString::fromUtf8("Description: "));
+    gridLayout->addWidget(descriptionLabel, 2, 0, 1, 1);
+
+    this->descriptionEdit = new QTextEdit(this->tabGeneral);
+    this->descriptionEdit->setObjectName(QString::fromUtf8("descriptionEdit"));
+    gridLayout->addWidget(this->descriptionEdit, 3, 2, 1, 1);
+
+    /* affected chains */
+    QLabel *chainsLabel = new QLabel(this->tabGeneral);
+    chainsLabel->setObjectName(QString::fromUtf8("chainsLabel"));
+    chainsLabel->setText(QString::fromUtf8("Affected chains:"));
+    gridLayout->addWidget(chainsLabel, 4, 0, 1, 1);
+
+    this->chainInputBox = new QCheckBox(this->tabGeneral);
+    this->chainInputBox->setObjectName(QString::fromUtf8("chainInputBox"));
+    this->chainInputBox->setText(RulesPusher::NF_CHAIN_INPUT);
+    gridLayout->addWidget(this->chainInputBox, 5, 2, 1, 1);
+
+    this->chainForwardBox = new QCheckBox(this->tabGeneral);
+    this->chainForwardBox->setObjectName(QString::fromUtf8("chainForwardBox"));
+    this->chainForwardBox->setText(RulesPusher::NF_CHAIN_FORWARD);
+    gridLayout->addWidget(this->chainForwardBox, 6, 2, 1, 1);
+
+    this->chainOutputBox = new QCheckBox(this->tabGeneral);
+    this->chainOutputBox->setObjectName(QString::fromUtf8("chainOutputBox"));
+    this->chainOutputBox->setText(RulesPusher::NF_CHAIN_OUTPUT);
+    gridLayout->addWidget(this->chainOutputBox, 7, 2, 1, 1);
+
+    //        QSpacerItem *horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    //        gridLayout->addItem(horizontalSpacer, 7, 2, 1, 1);
+
+    /* vertical spacer before action */
+    QSpacerItem *verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    gridLayout->addItem(verticalSpacer, 8, 2, 1, 1);
 
     /* action */
     QLabel *actionLabel = new QLabel(this->tabGeneral);
     actionLabel->setObjectName(QString::fromUtf8("actionLabel"));
     actionLabel->setText(QString::fromUtf8("Action: "));
-    gridLayout->addWidget(actionLabel, 2, 0, 1, 1);
+    gridLayout->addWidget(actionLabel, 9, 0, 1, 1);
 
     this->actionSelect = new QComboBox(this->tabGeneral);
     this->actionSelect->setObjectName(QString::fromUtf8("actionSelect"));
     this->actionSelect->setSizePolicy(fixedSizePolicy);
     this->actionSelect->addItems(this->actions);
-    gridLayout->addWidget(this->actionSelect, 2, 2, 1, 1);
-
-    QLabel *descriptionLabel = new QLabel(this->tabGeneral);
-    descriptionLabel->setObjectName(QString::fromUtf8("descriptionLabel"));
-    descriptionLabel->setText(QString::fromUtf8("Description: "));
-    gridLayout->addWidget(descriptionLabel, 3, 0, 1, 1);
-
-    this->descriptionEdit = new QTextEdit(this->tabGeneral);
-    this->descriptionEdit->setObjectName(QString::fromUtf8("descriptionEdit"));
-    gridLayout->addWidget(this->descriptionEdit, 4, 2, 1, 1);
+    gridLayout->addWidget(this->actionSelect, 9, 2, 1, 1);
 
     /* vertical space to the end */
-    QSpacerItem *verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    gridLayout->addItem(verticalSpacer, 5, 2, 1, 1);
+    QSpacerItem *verticalEndSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    gridLayout->addItem(verticalEndSpacer, 10, 2, 1, 1);
 
     /* add widget as a tab */
     this->addTab(this->tabGeneral, QString::fromUtf8("General"));
@@ -226,7 +251,7 @@ void RuleEditWidget::setupEbWidget() {
     QSizePolicy fixedSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     fixedSizePolicy.setHorizontalStretch(0);
     fixedSizePolicy.setVerticalStretch(0);
-    
+
     /* address validator */
     QRegExp rx(RuleEditWidget::MAC_ADDRESS_REGEX);
     QRegExpValidator *addrValidator = new QRegExpValidator(rx, this->tabEb);
@@ -358,7 +383,7 @@ void RuleEditWidget::setupIpWidget() {
     QSizePolicy fixedSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     fixedSizePolicy.setHorizontalStretch(0);
     fixedSizePolicy.setVerticalStretch(0);
-    
+
     /* validator for addresses */
     QRegExp rx(RuleEditWidget::IPV4_ADDRESS_REGEX);
     QRegExpValidator *addrValidator = new QRegExpValidator(rx, this->tabIp);
