@@ -22,7 +22,11 @@
 class RuleEditWidget : public QTabWidget {
     Q_OBJECT
 
-public:    
+public:   
+    static const char* MAC_ADDRESS_REGEX;
+    static const char* IPV4_ADDRESS_REGEX;
+    static const char* IPV6_ADDRESS_REGEX;
+    
     RuleEditWidget(QWidget *parent);
     virtual ~RuleEditWidget();
 

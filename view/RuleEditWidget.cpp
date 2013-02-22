@@ -15,6 +15,9 @@
 
 #define MASK_EDIT_WIDTH 50
 
+const char* RuleEditWidget::MAC_ADDRESS_REGEX = "^([0-9|A-F]{2}:){5}[0-9|A-F]{2}$";
+const char* RuleEditWidget::IPV4_ADDRESS_REGEX = "^((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])$";
+
 RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
     /* set own tab widget */
     this->setGeometry(QRect(230, 10, 511, 531));
@@ -223,6 +226,10 @@ void RuleEditWidget::setupEbWidget() {
     QSizePolicy fixedSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     fixedSizePolicy.setHorizontalStretch(0);
     fixedSizePolicy.setVerticalStretch(0);
+    
+    /* address validator */
+    QRegExp rx(RuleEditWidget::MAC_ADDRESS_REGEX);
+    QRegExpValidator *addrValidator = new QRegExpValidator(rx, this->tabEb);
 
     /* input interface */
     QLabel *inInterfaceLabel = new QLabel(this->tabEb);
@@ -288,6 +295,7 @@ void RuleEditWidget::setupEbWidget() {
 
     this->macSourceEdit = new QLineEdit(this->tabEb);
     this->macSourceEdit->setObjectName(QString::fromUtf8("macSourceEdit"));
+    this->macSourceEdit->setValidator(addrValidator);
     gridLayout->addWidget(this->macSourceEdit, 4, 2, 1, 1);
 
     /* source mask */
@@ -298,6 +306,7 @@ void RuleEditWidget::setupEbWidget() {
 
     this->macSourceMaskEdit = new QLineEdit(this->tabEb);
     this->macSourceMaskEdit->setObjectName(QString::fromUtf8("macSourceMaskEdit"));
+    this->macSourceMaskEdit->setValidator(addrValidator);
     gridLayout->addWidget(this->macSourceMaskEdit, 4, 4, 1, 1);
 
     /* destination address */
@@ -313,6 +322,7 @@ void RuleEditWidget::setupEbWidget() {
 
     this->macDestEdit = new QLineEdit(this->tabEb);
     this->macDestEdit->setObjectName(QString::fromUtf8("macDestEdit"));
+    this->macDestEdit->setValidator(addrValidator);
     gridLayout->addWidget(this->macDestEdit, 5, 2, 1, 1);
 
     /* destination mask */
@@ -323,6 +333,7 @@ void RuleEditWidget::setupEbWidget() {
 
     this->macDestMaskEdit = new QLineEdit(this->tabEb);
     this->macDestMaskEdit->setObjectName(QString::fromUtf8("macDestMaskEdit"));
+    this->macDestMaskEdit->setValidator(addrValidator);
     gridLayout->addWidget(this->macDestMaskEdit, 5, 4, 1, 1);
 
     /* Vertical spacer to the end */
@@ -347,6 +358,10 @@ void RuleEditWidget::setupIpWidget() {
     QSizePolicy fixedSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     fixedSizePolicy.setHorizontalStretch(0);
     fixedSizePolicy.setVerticalStretch(0);
+    
+    /* validator for addresses */
+    QRegExp rx(RuleEditWidget::IPV4_ADDRESS_REGEX);
+    QRegExpValidator *addrValidator = new QRegExpValidator(rx, this->tabIp);
 
     /* validator for mask fields */
     QIntValidator *maskValidator = new QIntValidator(this->tabIp);
@@ -382,6 +397,7 @@ void RuleEditWidget::setupIpWidget() {
 
     this->ipSourceEdit = new QLineEdit(this->tabIp);
     this->ipSourceEdit->setObjectName(QString::fromUtf8("ipSourceEdit"));
+    this->ipSourceEdit->setValidator(addrValidator);
     gridLayout->addWidget(this->ipSourceEdit, 2, 2, 1, 1);
 
     /* source mask */
@@ -409,6 +425,7 @@ void RuleEditWidget::setupIpWidget() {
 
     this->ipDestEdit = new QLineEdit(this->tabIp);
     this->ipDestEdit->setObjectName(QString::fromUtf8("ipDestEdit"));
+    this->ipDestEdit->setValidator(addrValidator);
     gridLayout->addWidget(this->ipDestEdit, 3, 2, 1, 1);
 
     /* destination mask */
