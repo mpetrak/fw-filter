@@ -19,7 +19,6 @@ public:
     
     /* Constructors, destructor */
     FilterRule();
-    FilterRule(int number);
     virtual ~FilterRule();
 
     /* Other methods */

@@ -18,10 +18,32 @@ const int FilterRule::INT_VALUE_UNSPECIFIED = -1;
 
 /* --- Constructors, destructor --- */
 FilterRule::FilterRule() {
-}
-
-FilterRule::FilterRule(int number) {
-    this->number = number;
+    
+    setNumber(0);
+    setName("New rule");
+    setDescription("Insert description");
+    setAction("DROP");
+    setInInterface(FilterRule::OPTION_VALUE_UNSPECIFIED);
+    setInInterfaceNeg(false);
+    setOutInterface(FilterRule::OPTION_VALUE_UNSPECIFIED);
+    setOutInterfaceNeg(false);
+    setEbProtocol(FilterRule::OPTION_VALUE_UNSPECIFIED);
+    setEbProtocolNeg(false);
+    setEbDest("");
+    setEbDestMask("");
+    setEbDestNeg(false);
+    setEbSource("");
+    setEbSourceMask("");
+    setEbSourceNeg(false);
+    setIpProtocol(FilterRule::OPTION_VALUE_UNSPECIFIED);
+    setIpProtocolNeg(false);
+    setIpSource("");
+    setIpSourceMask(FilterRule::INT_VALUE_UNSPECIFIED);
+    setIpSourceNeg(false);
+    setIpDest("");
+    setIpDestMask(FilterRule::INT_VALUE_UNSPECIFIED);
+    setIpDestNeg(false);
+    setIpFragment(false);
 }
 
 FilterRule::~FilterRule() {

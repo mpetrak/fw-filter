@@ -24,7 +24,7 @@ FilterRule FilterRulesModel::getRule(int index) {
     if (index < rulesList.count()) {
         return rulesList.at(index);
     } else {
-        return false;
+        return *(new FilterRule());
     }
 }
 
@@ -118,7 +118,7 @@ bool FilterRulesModel::insertRows(int position, int rows, const QModelIndex &par
 
     for (int row = 0; row < rows; ++row) {
         /* insert new rule */
-        FilterRule *rule = new FilterRule(position);
+        FilterRule *rule = new FilterRule();
         rule->setName("New rule");
         rulesList.insert(position, *rule);
     }
