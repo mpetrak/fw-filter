@@ -1,9 +1,11 @@
 
 #include "RulesPusher.h"
 
-const char* RulesPusher::EB_OUTPUT_FILE = "data/ebfile";
-const char* RulesPusher::EB_CHAIN = "FORWARD";
+const char* RulesPusher::NF_CHAIN_FORWARD = "FORWARD";
+const char* RulesPusher::NF_CHAIN_INPUT = "INPUT";
+const char* RulesPusher::NF_CHAIN_OUTPUT = "OUTPUT";
 
+const char* RulesPusher::EB_OUTPUT_FILE = "data/ebfile";
 const char* RulesPusher::EB_NEGATION = "!";
 const char* RulesPusher::EB_MASK_DELIMITER = "/";
 
@@ -18,7 +20,6 @@ const char* RulesPusher::EB_COMMAND_PROTOCOL = "-p";
 const char* RulesPusher::EB_COMMAND_ACTION = "-j";
 
 const char* RulesPusher::IP_OUTPUT_FILE = "data/ipfile";
-const char* RulesPusher::IP_CHAIN = "FORWARD";
 
 const char* RulesPusher::IP_NEGATION = "!";
 const char* RulesPusher::IP_MASK_DELIMITER = "/";
@@ -121,7 +122,7 @@ QString RulesPusher::rule2EbString(FilterRule *rule) {
     out.append(QString("%1 ").arg(RulesPusher::EB_COMMAND_APPEND));
 
     /* chain */
-    out.append(QString("%1 %2 ").arg(RulesPusher::EB_COMMAND_CHAIN, RulesPusher::EB_CHAIN));
+    out.append(QString("%1 %2 ").arg(RulesPusher::EB_COMMAND_CHAIN, RulesPusher::NF_CHAIN_FORWARD));
 
     /* input interface if it is set */
 
@@ -203,7 +204,7 @@ QString RulesPusher::rule2IpString(FilterRule *rule) {
     out.append(QString("%1 ").arg(RulesPusher::IP_COMMAND_APPEND));
 
     /* chain */
-    out.append(QString("%1 %2 ").arg(RulesPusher::IP_COMMAND_CHAIN, IP_CHAIN));
+    out.append(QString("%1 %2 ").arg(RulesPusher::IP_COMMAND_CHAIN, NF_CHAIN_FORWARD));
 
     /* input interface if it is set */
     if (rule->getInInterface() != FilterRule::OPTION_VALUE_UNSPECIFIED) {

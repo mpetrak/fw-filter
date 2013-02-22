@@ -12,11 +12,15 @@
       <itemPath>view/RuleEditWidget.h</itemPath>
       <itemPath>lib/RulesPusher.h</itemPath>
       <itemPath>lib/RulesXML.h</itemPath>
+      <itemPath>view/SettingsDialog.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
       <itemPath>view/MainWindow.ui</itemPath>
+      <itemPath>test/newForm.cpp</itemPath>
+      <itemPath>test/newForm.h</itemPath>
+      <itemPath>test/newForm.ui</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -29,6 +33,7 @@
       <itemPath>view/RuleEditWidget.cpp</itemPath>
       <itemPath>lib/RulesPusher.cpp</itemPath>
       <itemPath>lib/RulesXML.cpp</itemPath>
+      <itemPath>view/SettingsDialog.cpp</itemPath>
       <itemPath>controller/main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"

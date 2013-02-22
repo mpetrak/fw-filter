@@ -9,6 +9,7 @@
 #include <qt4/QtGui/qmessagebox.h>
 
 #include "MainWindow.h"
+#include "SettingsDialog.h"
 
 MainWindow::MainWindow() {
     widget.setupUi(this);
@@ -154,4 +155,9 @@ void MainWindow::on_actionDelete_triggered() {
 
 void MainWindow::on_actionReset_triggered() {
     this->rulesModel->reloadRules();
+}
+
+void MainWindow::on_actionSettings_triggered() {
+    SettingsDialog *settings = new SettingsDialog(this);
+    settings->show();
 }

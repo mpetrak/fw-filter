@@ -14,8 +14,12 @@ using namespace std;
 
 class RulesPusher {
 public:
+    static const char* NF_CHAIN_FORWARD;
+    static const char* NF_CHAIN_OUTPUT;
+    static const char* NF_CHAIN_INPUT;
+    
     static const char* EB_OUTPUT_FILE;
-    static const char* EB_CHAIN;
+    static const char* IP_OUTPUT_FILE;
 
     static const char* EB_NEGATION;
     static const char* EB_MASK_DELIMITER;
@@ -29,9 +33,6 @@ public:
     static const char* EB_COMMAND_DEST_ADDR;
     static const char* EB_COMMAND_PROTOCOL;
     static const char* EB_COMMAND_ACTION;
-
-    static const char* IP_OUTPUT_FILE;
-    static const char* IP_CHAIN;
 
     static const char* IP_NEGATION;
     static const char*IP_MASK_DELIMITER;
