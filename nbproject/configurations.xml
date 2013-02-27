@@ -27,6 +27,8 @@
                    projectFiles="true">
       <itemPath>model/FilterRule.cpp</itemPath>
       <itemPath>model/FilterRulesModel.cpp</itemPath>
+      <itemPath>lib/Logger.cpp</itemPath>
+      <itemPath>lib/Logger.h</itemPath>
       <itemPath>view/MainWindow.cpp</itemPath>
       <itemPath>lib/NetInterfaces.cpp</itemPath>
       <itemPath>lib/OptionsLoader.cpp</itemPath>

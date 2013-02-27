@@ -10,6 +10,7 @@
 
 #include "../view/MainWindow.h"
 #include "../model/FilterRulesModel.h"
+#include "../lib/Logger.h"
 
 int main(int argc, char *argv[]) {
     // initialize resources, if needed
@@ -18,6 +19,8 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     MainWindow main;
+    
+    Logger::clearLog();
     
     if(getuid() != 0)
     {

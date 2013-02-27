@@ -4,6 +4,7 @@
 
 
 #include "RulesXML.h"
+#include "Logger.h"
 
 const char* RulesXML::FILE = "data/rules.xml";
 const char* RulesXML::XML_VERSION = "1.0";
@@ -190,6 +191,8 @@ QList<FilterRule> RulesXML::loadRules() {
     xmlFreeDoc(doc);
     xmlCleanupParser();
 
+    Logger::debug("Rules loaded");
+    
     return rulesList;
 }
 
