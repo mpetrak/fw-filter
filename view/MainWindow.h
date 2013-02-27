@@ -1,9 +1,3 @@
-/* 
- * File:   MainWindow.h
- * Author: petris
- *
- * Created on 28. listopad 2012, 11:34
- */
 
 #ifndef _MAINWINDOW_H
 #define	_MAINWINDOW_H
@@ -12,8 +6,10 @@
 
 #include "../qt/ui_MainWindow.h"
 #include "RuleEditWidget.h"
+#include "LogView.h"
 #include "../lib/RulesPusher.h"
 #include "../lib/RulesXML.h"
+#include "../lib/Logger.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -35,6 +31,9 @@ private:
 
     /** Widget for rule editing */
     RuleEditWidget *ruleEditWidget;
+    
+    /** Log view */
+    LogView *logView;
 
 private slots:
     void on_newRuleButton_clicked();

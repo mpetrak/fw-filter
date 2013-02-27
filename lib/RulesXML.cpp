@@ -170,6 +170,7 @@ QList<FilterRule> RulesXML::loadRules() {
 
     this->loadError = false;
     /* parse file to tree */
+    Logger::debug(std::string("Loading rules from file: ") + std::string(RulesXML::FILE));
     doc = xmlReadFile(RulesXML::FILE, RulesXML::XML_ENCODING, 0);
     if (doc == NULL) {
         this->loadError = true;
@@ -191,7 +192,7 @@ QList<FilterRule> RulesXML::loadRules() {
     xmlFreeDoc(doc);
     xmlCleanupParser();
 
-    Logger::debug("Rules loaded");
+    Logger::debug("Rules loading finished, XML parser cleaned");
     
     return rulesList;
 }
@@ -203,6 +204,8 @@ FilterRule *RulesXML::node2Rule(xmlNodePtr ruleNode) {
     xmlNodePtr chainsNode = NULL;
     xmlAttrPtr attr;
     FilterRule *rule = new FilterRule();
+    
+    Logger::debug("Parsing rule node");
 
     /* get rule name and action */
     for (attr = ruleNode->properties; attr; attr = attr->next) {
@@ -335,7 +338,8 @@ FilterRule *RulesXML::node2Rule(xmlNodePtr ruleNode) {
             }
         }
     }
-
+    Logger::debug(std::string("Parsed rule with name: ") + std::string(rule->getName().toAscii().data()));
+    
     return rule;
 }
 

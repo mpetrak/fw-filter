@@ -10,6 +10,7 @@ void Logger::debug(string message) {
 void Logger::clearLog() {
     static ofstream logfile;
     logfile.open(LOGFILE, fstream::trunc);
+    logfile << ">>" << "Log cleared";
     logfile.close();
 }
 

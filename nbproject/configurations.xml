@@ -6,6 +6,8 @@
                    projectFiles="true">
       <itemPath>model/FilterRule.h</itemPath>
       <itemPath>model/FilterRulesModel.h</itemPath>
+      <itemPath>view/LogView.h</itemPath>
+      <itemPath>lib/Logger.h</itemPath>
       <itemPath>view/MainWindow.h</itemPath>
       <itemPath>lib/NetInterfaces.h</itemPath>
       <itemPath>lib/OptionsLoader.h</itemPath>
@@ -27,8 +29,8 @@
                    projectFiles="true">
       <itemPath>model/FilterRule.cpp</itemPath>
       <itemPath>model/FilterRulesModel.cpp</itemPath>
+      <itemPath>view/LogView.cpp</itemPath>
       <itemPath>lib/Logger.cpp</itemPath>
-      <itemPath>lib/Logger.h</itemPath>
       <itemPath>view/MainWindow.cpp</itemPath>
       <itemPath>lib/NetInterfaces.cpp</itemPath>
       <itemPath>lib/OptionsLoader.cpp</itemPath>

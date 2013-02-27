@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Wed Feb 27 16:05:31 2013
+** Created: Wed Feb 27 18:06:17 2013
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -21,7 +21,6 @@
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
-#include <QtGui/QStatusBar>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -47,13 +46,12 @@ public:
     QMenu *menuTools;
     QMenu *menuApplication;
     QMenu *menuRule;
-    QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(750, 644);
+        MainWindow->resize(750, 712);
         MainWindow->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
         actionClose = new QAction(MainWindow);
         actionClose->setObjectName(QString::fromUtf8("actionClose"));
@@ -105,9 +103,6 @@ public:
         menuRule = new QMenu(menubar);
         menuRule->setObjectName(QString::fromUtf8("menuRule"));
         MainWindow->setMenuBar(menubar);
-        statusbar = new QStatusBar(MainWindow);
-        statusbar->setObjectName(QString::fromUtf8("statusbar"));
-        MainWindow->setStatusBar(statusbar);
 
         menubar->addAction(menuApplication->menuAction());
         menubar->addAction(menuRule->menuAction());

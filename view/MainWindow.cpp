@@ -1,9 +1,3 @@
-/*
- * File:   MainWindow.cpp
- * Author: petris
- *
- * Created on 28. listopad 2012, 11:34
- */
 
 #include <linux/stddef.h>
 #include <qt4/QtGui/qmessagebox.h>
@@ -27,7 +21,12 @@ MainWindow::MainWindow() {
 
     ruleEditWidget = new RuleEditWidget(widget.centralwidget);
     ruleEditWidget->setObjectName(QString::fromUtf8("ruleEditWidget"));
-
+    ruleEditWidget->setGeometry(QRect(230, 10, 511, 531));
+    
+    logView = new LogView(widget.centralwidget, Logger::LOGFILE);
+    logView->setObjectName(QString::fromUtf8("logView"));
+    logView->setGeometry(QRect(10, 590, 731, 84));
+    
     /* Connect selection signal from rules view to widget for editing rule */
     QObject::connect(widget.rulesView, SIGNAL(clicked(QModelIndex)),
             ruleEditWidget, SLOT(ruleSelected(QModelIndex)));
@@ -123,6 +122,7 @@ void MainWindow::on_saveEditButton_clicked() {
         /* get last selected index and save rule on it */
         QModelIndex index = indexes.at(indexes.count() - 1);
         emit saveRule(index);
+        Logger::debug("Rule saved");
     } else {
 
         QMessageBox::critical(this, QString::fromUtf8("Save error"),

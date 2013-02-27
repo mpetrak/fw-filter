@@ -19,10 +19,7 @@ const char* RuleEditWidget::MAC_ADDRESS_REGEX = "^([0-9|A-F]{2}:){5}[0-9|A-F]{2}
 const char* RuleEditWidget::IPV4_ADDRESS_REGEX = "^((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])$";
 
 RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
-    /* set own tab widget */
-    this->setGeometry(QRect(230, 10, 511, 531));
-    this->setObjectName(QString::fromUtf8("ruleEditWidget"));
-
+    
     this->actions.append(QString::fromUtf8("ACCEPT"));
     this->actions.append(QString::fromUtf8("DROP"));
     //this->actions.append(QString::fromUtf8("CONTINUE"));
