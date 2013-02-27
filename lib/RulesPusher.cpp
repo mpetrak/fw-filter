@@ -51,8 +51,20 @@ bool RulesPusher::writeRules(QList<FilterRule> rules) {
     FilterRule rule;
 
     foreach(rule, rules) {
-        ebFile << rule2EbString(&rule).toAscii().data();
-        ipFile << rule2IpString(&rule).toAscii().data();
+        if (rule.isChainInput()) {
+            ebFile << rule2EbString(&rule, RulesPusher::NF_CHAIN_INPUT).toAscii().data();
+            ipFile << rule2IpString(&rule, RulesPusher::NF_CHAIN_INPUT).toAscii().data();
+        }
+
+        if (rule.isChainForward()) {
+            ebFile << rule2EbString(&rule, RulesPusher::NF_CHAIN_FORWARD).toAscii().data();
+            ipFile << rule2IpString(&rule, RulesPusher::NF_CHAIN_FORWARD).toAscii().data();
+        }
+
+        if (rule.isChainOutput()) {
+            ebFile << rule2EbString(&rule, RulesPusher::NF_CHAIN_OUTPUT).toAscii().data();
+            ipFile << rule2IpString(&rule, RulesPusher::NF_CHAIN_OUTPUT).toAscii().data();
+        }
     }
 
     ebFile << this->ebFileFooter().toAscii().data();
@@ -115,14 +127,14 @@ QString RulesPusher::ebFileFooter() {
     return footer;
 }
 
-QString RulesPusher::rule2EbString(FilterRule *rule) {
+QString RulesPusher::rule2EbString(FilterRule *rule, const char *chain) {
     QString out;
 
     /* append rule command */
     out.append(QString("%1 ").arg(RulesPusher::EB_COMMAND_APPEND));
 
     /* chain */
-    out.append(QString("%1 %2 ").arg(RulesPusher::EB_COMMAND_CHAIN, RulesPusher::NF_CHAIN_FORWARD));
+    out.append(QString("%1 %2 ").arg(RulesPusher::EB_COMMAND_CHAIN, chain));
 
     /* input interface if it is set */
 
@@ -197,14 +209,14 @@ QString RulesPusher::address2EbString(const char *command, QString value, QStrin
     return out;
 }
 
-QString RulesPusher::rule2IpString(FilterRule *rule) {
+QString RulesPusher::rule2IpString(FilterRule *rule, const char *chain) {
     QString out;
 
     /* append rule command */
     out.append(QString("%1 ").arg(RulesPusher::IP_COMMAND_APPEND));
 
     /* chain */
-    out.append(QString("%1 %2 ").arg(RulesPusher::IP_COMMAND_CHAIN, NF_CHAIN_FORWARD));
+    out.append(QString("%1 %2 ").arg(RulesPusher::IP_COMMAND_CHAIN, chain));
 
     /* input interface if it is set */
     if (rule->getInInterface() != FilterRule::OPTION_VALUE_UNSPECIFIED) {

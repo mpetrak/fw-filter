@@ -85,16 +85,18 @@ private:
     /**
      * Print rule to string in a format used by ebtables-restore.
      * @param rule rule instance
+     * @param chain chain used in output
      * @return rule specification printed into inline string
      */
-    QString rule2EbString(FilterRule *rule);
+    QString rule2EbString(FilterRule *rule, const char *chain);
 
     /**
      * Print rule to string in a format used by iptables-restore.
      * @param rule rule instance
+     * @param chain chain used in output
      * @return rule specification printed into inline string
      */
-    QString rule2IpString(FilterRule *rule);
+    QString rule2IpString(FilterRule *rule, const char *chain);
 
     /**
      * Print rule value to string for ebtables.
