@@ -18,10 +18,13 @@ const int FilterRule::INT_VALUE_UNSPECIFIED = -1;
 
 /* --- Constructors, destructor --- */
 FilterRule::FilterRule() {
-    
+
     setNumber(0);
     setName("New rule");
     setDescription("Insert description");
+    setChainInput(true);
+    setChainForward(true);
+    setChainOutput(true);
     setAction("DROP");
     setInInterface(FilterRule::OPTION_VALUE_UNSPECIFIED);
     setInInterfaceNeg(false);
@@ -55,33 +58,36 @@ void FilterRule::toStream(QDataStream *stream) {
 
     *stream << this->number;
     *stream << this->name;
-    *stream << this->action;
     *stream << this->description;
-    
+    *stream << this->chainInput;
+    *stream << this->chainForward;
+    *stream << this->chainOutput;
+    *stream << this->action;
+
     *stream << this->inInterface;
     *stream << this->inInterfaceNeg;
-    
+
     *stream << this->outInterface;
     *stream << this->outInterfaceNeg;
-    
+
     *stream << this->ebProtocol;
     *stream << this->ebProtocolNeg;
-    
+
     *stream << this->ebSource;
     *stream << this->ebSourceMask;
     *stream << this->ebSourceNeg;
-    
+
     *stream << this->ebDest;
     *stream << this->ebDestMask;
     *stream << this->ebDestNeg;
-    
+
     *stream << this->ipProtocol;
     *stream << this->ipProtocolNeg;
-    
+
     *stream << this->ipSource;
     *stream << this->ipSourceMask;
     *stream << this->ipSourceNeg;
-    
+
     *stream << this->ipDest;
     *stream << this->ipDestMask;
     *stream << this->ipDestNeg;
@@ -91,33 +97,36 @@ void FilterRule::fromStream(QDataStream *stream) {
 
     *stream >> this->number;
     *stream >> this->name;
-    *stream >> this->action;
     *stream >> this->description;
-    
+    *stream >> this->chainInput;
+    *stream >> this->chainForward;
+    *stream >> this->chainOutput;
+    *stream >> this->action;
+
     *stream >> this->inInterface;
     *stream >> this->inInterfaceNeg;
-    
+
     *stream >> this->outInterface;
     *stream >> this->outInterfaceNeg;
-    
+
     *stream >> this->ebProtocol;
     *stream >> this->ebProtocolNeg;
-    
+
     *stream >> this->ebSource;
     *stream >> this->ebSourceMask;
     *stream >> this->ebSourceNeg;
-    
+
     *stream >> this->ebDest;
     *stream >> this->ebDestMask;
     *stream >> this->ebDestNeg;
-    
+
     *stream >> this->ipProtocol;
     *stream >> this->ipProtocolNeg;
-    
+
     *stream >> this->ipSource;
     *stream >> this->ipSourceMask;
     *stream >> this->ipSourceNeg;
-    
+
     *stream >> this->ipDest;
     *stream >> this->ipDestMask;
     *stream >> this->ipDestNeg;
@@ -155,6 +164,30 @@ QString FilterRule::getDescription() const {
 
 void FilterRule::setDescription(QString description) {
     this->description = description;
+}
+
+bool FilterRule::isChainForward() const {
+    return chainForward;
+}
+
+void FilterRule::setChainForward(bool chainForward) {
+    this->chainForward = chainForward;
+}
+
+bool FilterRule::isChainInput() const {
+    return chainInput;
+}
+
+void FilterRule::setChainInput(bool chainInput) {
+    this->chainInput = chainInput;
+}
+
+bool FilterRule::isChainOutput() const {
+    return chainOutput;
+}
+
+void FilterRule::setChainOutput(bool chainOutput) {
+    this->chainOutput = chainOutput;
 }
 
 QString FilterRule::getEbDest() const {

@@ -64,6 +64,9 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
 
         this->nameEdit->setText(rule.getName());
         this->descriptionEdit->setText(rule.getDescription());
+        this->chainInputBox->setChecked(rule.isChainInput());
+        this->chainForwardBox->setChecked(rule.isChainForward());
+        this->chainOutputBox->setChecked(rule.isChainOutput());
         this->actionSelect->setCurrentIndex(actions.indexOf(rule.getAction()));
 
         this->inInterfaceSelect->setCurrentIndex(interfaces.indexOf(rule.getInInterface()));
@@ -109,6 +112,9 @@ void RuleEditWidget::ruleSave(QModelIndex index) {
 
         rule.setName(this->nameEdit->text().trimmed());
         rule.setDescription(this->descriptionEdit->toPlainText().trimmed());
+        rule.setChainInput(this->chainInputBox->isChecked());
+        rule.setChainForward(this->chainForwardBox->isChecked());
+        rule.setChainOutput(this->chainOutputBox->isChecked());
         rule.setAction(this->actionSelect->currentText());
 
         rule.setInInterface(this->inInterfaceSelect->currentText());

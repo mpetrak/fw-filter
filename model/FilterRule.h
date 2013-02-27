@@ -16,7 +16,7 @@ public:
     /* Constants */
     static const QString OPTION_VALUE_UNSPECIFIED;
     static const int INT_VALUE_UNSPECIFIED;
-    
+
     /* Constructors, destructor */
     FilterRule();
     virtual ~FilterRule();
@@ -45,6 +45,12 @@ public:
     void setAction(QString action);
     QString getDescription() const;
     void setDescription(QString description);
+    bool isChainForward() const;
+    void setChainForward(bool chainForward);
+    bool isChainInput() const;
+    void setChainInput(bool chainInput);
+    bool isChainOutput() const;
+    void setChainOutput(bool chainOutput);
     QString getEbDest() const;
     void setEbDest(QString EbDest);
     QString getEbDestMask() const;
@@ -63,7 +69,7 @@ public:
     void setInInterfaceNeg(bool inInterfaceNeg);
     QString getOutInterface() const;
     void setOutInterface(QString outInterface);
-     bool isOutInterfaceNeg() const;
+    bool isOutInterfaceNeg() const;
     void setOutInterfaceNeg(bool outInterfaceNeg);
     QString getEbProtocol() const;
     void setEbProtocol(QString ebProtocol);
@@ -95,6 +101,12 @@ private:
     QString name;
     /** Rule description */
     QString description;
+    /** Rule enabled in input chain */
+    bool chainInput;
+    /** Rule enabled in forward chain */
+    bool chainForward;
+    /** Rule enabled in output chain */
+    bool chainOutput;
 
     /** Input interface */
     QString inInterface;
