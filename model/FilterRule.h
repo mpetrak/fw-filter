@@ -19,6 +19,7 @@ public:
 
     /* Constructors, destructor */
     FilterRule();
+    FilterRule(FilterRule *copy);
     virtual ~FilterRule();
 
     /* Other methods */

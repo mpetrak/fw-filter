@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Wed Feb 27 14:50:31 2013
+** Created: Wed Feb 27 16:05:31 2013
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -36,11 +36,13 @@ public:
     QAction *actionSave_rule;
     QAction *actionNew;
     QAction *actionDelete;
+    QAction *actionDuplicate;
     QWidget *centralwidget;
     QListView *rulesView;
     QPushButton *newRuleButton;
     QPushButton *deleteRuleButton;
     QPushButton *saveEditButton;
+    QPushButton *duplicateRuleButton;
     QMenuBar *menubar;
     QMenu *menuTools;
     QMenu *menuApplication;
@@ -67,6 +69,8 @@ public:
         actionNew->setObjectName(QString::fromUtf8("actionNew"));
         actionDelete = new QAction(MainWindow);
         actionDelete->setObjectName(QString::fromUtf8("actionDelete"));
+        actionDuplicate = new QAction(MainWindow);
+        actionDuplicate->setObjectName(QString::fromUtf8("actionDuplicate"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         rulesView = new QListView(centralwidget);
@@ -79,14 +83,17 @@ public:
         rulesView->setMovement(QListView::Free);
         newRuleButton = new QPushButton(centralwidget);
         newRuleButton->setObjectName(QString::fromUtf8("newRuleButton"));
-        newRuleButton->setGeometry(QRect(10, 550, 92, 27));
+        newRuleButton->setGeometry(QRect(10, 550, 31, 27));
         newRuleButton->setFlat(false);
         deleteRuleButton = new QPushButton(centralwidget);
         deleteRuleButton->setObjectName(QString::fromUtf8("deleteRuleButton"));
-        deleteRuleButton->setGeometry(QRect(110, 550, 92, 27));
+        deleteRuleButton->setGeometry(QRect(50, 550, 31, 27));
         saveEditButton = new QPushButton(centralwidget);
         saveEditButton->setObjectName(QString::fromUtf8("saveEditButton"));
         saveEditButton->setGeometry(QRect(650, 550, 92, 27));
+        duplicateRuleButton = new QPushButton(centralwidget);
+        duplicateRuleButton->setObjectName(QString::fromUtf8("duplicateRuleButton"));
+        duplicateRuleButton->setGeometry(QRect(110, 550, 92, 27));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -111,7 +118,9 @@ public:
         menuApplication->addSeparator();
         menuApplication->addAction(actionClose);
         menuRule->addAction(actionNew);
+        menuRule->addAction(actionDuplicate);
         menuRule->addAction(actionDelete);
+        menuRule->addSeparator();
         menuRule->addAction(actionSave_rule);
 
         retranslateUi(MainWindow);
@@ -134,9 +143,11 @@ public:
         actionNew->setText(QApplication::translate("MainWindow", "New", 0, QApplication::UnicodeUTF8));
         actionNew->setShortcut(QApplication::translate("MainWindow", "Ctrl+N", 0, QApplication::UnicodeUTF8));
         actionDelete->setText(QApplication::translate("MainWindow", "Delete", 0, QApplication::UnicodeUTF8));
-        newRuleButton->setText(QApplication::translate("MainWindow", "New", 0, QApplication::UnicodeUTF8));
-        deleteRuleButton->setText(QApplication::translate("MainWindow", "Delete", 0, QApplication::UnicodeUTF8));
+        actionDuplicate->setText(QApplication::translate("MainWindow", "Duplicate", 0, QApplication::UnicodeUTF8));
+        newRuleButton->setText(QApplication::translate("MainWindow", "+", 0, QApplication::UnicodeUTF8));
+        deleteRuleButton->setText(QApplication::translate("MainWindow", "-", 0, QApplication::UnicodeUTF8));
         saveEditButton->setText(QApplication::translate("MainWindow", "Save", 0, QApplication::UnicodeUTF8));
+        duplicateRuleButton->setText(QApplication::translate("MainWindow", "Duplicate", 0, QApplication::UnicodeUTF8));
         menuTools->setTitle(QApplication::translate("MainWindow", "Tools", 0, QApplication::UnicodeUTF8));
         menuApplication->setTitle(QApplication::translate("MainWindow", "Application", 0, QApplication::UnicodeUTF8));
         menuRule->setTitle(QApplication::translate("MainWindow", "Rule", 0, QApplication::UnicodeUTF8));

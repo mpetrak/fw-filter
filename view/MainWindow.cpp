@@ -49,15 +49,19 @@ MainWindow::~MainWindow() {
 
 void MainWindow::setRulesViewModel(QAbstractItemModel* model) {
     this->rulesModel = (FilterRulesModel *) model;
-    
+
     widget.rulesView->setModel(model);
     ruleEditWidget->setRulesModel((FilterRulesModel *) model);
 
+    /* connect signals to model slots */
     QObject::connect(this, SIGNAL(newRule(int)),
             model, SLOT(newRule(int)));
 
     QObject::connect(this, SIGNAL(deleteRule(int)),
             model, SLOT(deleteRule(int)));
+
+    QObject::connect(this, SIGNAL(duplicateRule(int)),
+            model, SLOT(duplicateRule(int)));
 }
 
 void MainWindow::on_actionClose_triggered() {
@@ -96,6 +100,20 @@ void MainWindow::on_deleteRuleButton_clicked() {
 
 }
 
+void MainWindow::on_duplicateRuleButton_clicked() {
+    QItemSelectionModel *selection = widget.rulesView->selectionModel();
+    QModelIndexList indexes = selection->selectedIndexes();
+    QModelIndex index;
+
+    if (indexes.count() > 0) {
+
+        /* emit signal for each selected index */
+        foreach(index, indexes) {
+            emit duplicateRule(index.row());
+        }
+    }
+}
+
 void MainWindow::on_saveEditButton_clicked() {
     QItemSelectionModel *selection = widget.rulesView->selectionModel();
     QModelIndexList indexes = selection->selectedIndexes();
@@ -113,25 +131,25 @@ void MainWindow::on_saveEditButton_clicked() {
 }
 
 void MainWindow::on_actionApply_modifications_triggered() {
-    
-    if(this->rulesModel != NULL) {
+
+    if (this->rulesModel != NULL) {
 
         RulesPusher *pusher = new RulesPusher();
 
-        if(!pusher->writeRules(this->rulesModel->getRulesList())) {
+        if (!pusher->writeRules(this->rulesModel->getRulesList())) {
             QMessageBox::critical(this, QString::fromUtf8("Save error"),
                     QString::fromUtf8("Error during saving rules to system!"), QMessageBox::Ok, QMessageBox::Ok);
         }
         free(pusher);
-        
+
         RulesXML *xml = new RulesXML();
-        
-        if(!xml->saveRules(this->rulesModel->getRulesList())) {
+
+        if (!xml->saveRules(this->rulesModel->getRulesList())) {
             QMessageBox::critical(this, QString::fromUtf8("Save error"),
                     QString::fromUtf8("Error during saving rules to XML file!"), QMessageBox::Ok, QMessageBox::Ok);
         }
         free(xml);
-        
+
     } else {
         QMessageBox::critical(this, QString::fromUtf8("Internal error"),
                 QString::fromUtf8("NULL rulesModel"), QMessageBox::Ok, QMessageBox::Ok);
@@ -151,6 +169,11 @@ void MainWindow::on_actionNew_triggered() {
 void MainWindow::on_actionDelete_triggered() {
     /* same as delete rule button clicked */
     this->on_deleteRuleButton_clicked();
+}
+
+void MainWindow::on_actionDuplicate_triggered() {
+    /* same as duplicate rule button clicked */
+    this->on_duplicateRuleButton_clicked();
 }
 
 void MainWindow::on_actionReset_triggered() {

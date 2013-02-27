@@ -54,6 +54,14 @@ void FilterRulesModel::deleteRule(int index) {
     removeRows(index, 1, QModelIndex());
 }
 
+void FilterRulesModel::duplicateRule(int index) {
+    FilterRule *newRule = new FilterRule(this->rulesList.at(index));
+    int insertPosition = index + 1;
+    beginInsertRows(QModelIndex(), insertPosition, insertPosition);
+    this->rulesList.insert(insertPosition, newRule);
+    endInsertRows();
+}
+
 int FilterRulesModel::rowCount(const QModelIndex& parent) const {
     return rulesList.count();
 }

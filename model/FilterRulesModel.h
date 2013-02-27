@@ -66,10 +66,16 @@ public slots:
     void newRule(int index);
     
     /**
-     * Delete one rule from given postion
+     * Delete one rule from given position
      * @param index position
      */
     void deleteRule(int index);
+    
+    /**
+     * Duplicate rule on position
+     * @param index position
+     */
+    void duplicateRule(int index);
     
 private:
     /** List of rules */

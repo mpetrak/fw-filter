@@ -49,6 +49,37 @@ FilterRule::FilterRule() {
     setIpFragment(false);
 }
 
+FilterRule::FilterRule(FilterRule* copy) {
+    setNumber(copy->getNumber());
+    setName(QString::fromUtf8("%1 copy").arg(copy->getName()));
+    setDescription(copy->getDescription());
+    setChainInput(copy->isChainInput());
+    setChainForward(copy->isChainForward());
+    setChainOutput(copy->isChainOutput());
+    setAction(copy->getAction());
+    setInInterface(copy->getInInterface());
+    setInInterfaceNeg(copy->isInInterfaceNeg());
+    setOutInterface(copy->getOutInterface());
+    setOutInterfaceNeg(copy->isOutInterfaceNeg());
+    setEbProtocol(copy->getEbProtocol());
+    setEbProtocolNeg(copy->isEbProtocolNeg());
+    setEbDest(copy->getEbDest());
+    setEbDestMask(copy->getEbDestMask());
+    setEbDestNeg(copy->isEbDestNeg());
+    setEbSource(copy->getEbSource());
+    setEbSourceMask(copy->getEbSourceMask());
+    setEbSourceNeg(copy->isEbSourceNeg());
+    setIpProtocol(copy->getIpProtocol());
+    setIpProtocolNeg(copy->isIpProtocolNeg());
+    setIpSource(copy->getIpSource());
+    setIpSourceMask(copy->getIpSourceMask());
+    setIpSourceNeg(copy->isIpSourceNeg());
+    setIpDest(copy->getIpDest());
+    setIpDestMask(copy->getIpDestMask());
+    setIpDestNeg(copy->isIpDestNeg());
+    setIpFragment(copy->isIpFragment());
+}
+
 FilterRule::~FilterRule() {
 }
 

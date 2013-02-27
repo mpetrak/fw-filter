@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'FilterRulesModel.h'
 **
-** Created: Wed Feb 27 14:50:58 2013
+** Created: Wed Feb 27 16:06:17 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_FilterRulesModel[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,13 +33,14 @@ static const uint qt_meta_data_FilterRulesModel[] = {
  // slots: signature, parameters, type, tag, flags
       24,   18,   17,   17, 0x0a,
       37,   18,   17,   17, 0x0a,
+      53,   18,   17,   17, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_FilterRulesModel[] = {
     "FilterRulesModel\0\0index\0newRule(int)\0"
-    "deleteRule(int)\0"
+    "deleteRule(int)\0duplicateRule(int)\0"
 };
 
 const QMetaObject FilterRulesModel::staticMetaObject = {
@@ -73,9 +74,10 @@ int FilterRulesModel::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: newRule((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 1: deleteRule((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: duplicateRule((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

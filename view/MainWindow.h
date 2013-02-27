@@ -39,11 +39,13 @@ private:
 private slots:
     void on_newRuleButton_clicked();
     void on_deleteRuleButton_clicked();
+    void on_duplicateRuleButton_clicked();
     void on_saveEditButton_clicked();
     void on_actionClose_triggered();
     void on_actionSave_rule_triggered();
     void on_actionNew_triggered();
     void on_actionDelete_triggered();
+    void on_actionDuplicate_triggered();
     void on_actionApply_modifications_triggered();
     void on_actionReset_triggered();
     void on_actionSettings_triggered();
@@ -61,6 +63,12 @@ signals:
      * @param position position
      */
     void deleteRule(int position);
+    
+    /**
+     * Duplicate rule on given position
+     * @param position position
+     */
+    void duplicateRule(int position);
     
     /**
      * Selected rule at given index.
