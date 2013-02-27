@@ -23,6 +23,10 @@ public:
     static const char* RULE_NAME;
     static const char* RULE_ACTION;
     static const char* RULE_DESCRIPTON;
+    static const char* RULE_CHAINS;
+    static const char* RULE_CHAIN_INPUT;
+    static const char* RULE_CHAIN_FORWARD;
+    static const char* RULE_CHAIN_OUTPUT;
     
     static const char* LAYER_LINK;
     static const char* LAYER_NET;
