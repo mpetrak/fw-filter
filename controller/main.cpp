@@ -23,6 +23,10 @@ int main(int argc, char *argv[]) {
     
     Logger::getInstance()->clearLog();
     Configuration *config = new Configuration();
+    main.setConfiguration(config);
+    
+    FilterRulesModel *rulesModel = new FilterRulesModel();
+    main.setRulesViewModel(rulesModel);
     
     if(getuid() != 0)
     {
@@ -30,9 +34,6 @@ int main(int argc, char *argv[]) {
                 QString::fromUtf8("It`s recommended to run application with root privileges."),
                 QMessageBox::Ok, QMessageBox::Ok);
     }
-    
-    FilterRulesModel *rulesModel = new FilterRulesModel();
-    main.setRulesViewModel(rulesModel);
     
     main.show();
     

@@ -58,6 +58,8 @@ private slots:
     void on_actionApply_modifications_triggered();
     void on_actionReset_triggered();
     void on_actionSettings_triggered();
+    
+    void newSettings();
 
 signals:
 

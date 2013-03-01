@@ -13,6 +13,8 @@ LogView::~LogView() {
 }
 
 void LogView::addMessage(const char* message) {
-    this->append(QString::fromUtf8(message));
+    if (this->isEnabled()) {
+        this->append(QString::fromUtf8(message));
+    }
 }
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newForm.ui'
 **
-** Created: Wed Feb 27 14:50:31 2013
+** Created: Fri Mar 1 14:07:46 2013
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,6 +16,7 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QCheckBox>
 #include <QtGui/QDialog>
+#include <QtGui/QDialogButtonBox>
 #include <QtGui/QFrame>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
@@ -28,6 +29,7 @@ QT_BEGIN_NAMESPACE
 class Ui_newForm
 {
 public:
+    QAction *actionSave;
     QFrame *frame;
     QWidget *gridLayoutWidget;
     QGridLayout *gridLayout;
@@ -35,12 +37,15 @@ public:
     QLabel *label;
     QCheckBox *checkBox_2;
     QSpacerItem *verticalSpacer;
+    QDialogButtonBox *buttons;
 
     void setupUi(QDialog *newForm)
     {
         if (newForm->objectName().isEmpty())
             newForm->setObjectName(QString::fromUtf8("newForm"));
         newForm->resize(400, 300);
+        actionSave = new QAction(newForm);
+        actionSave->setObjectName(QString::fromUtf8("actionSave"));
         frame = new QFrame(newForm);
         frame->setObjectName(QString::fromUtf8("frame"));
         frame->setGeometry(QRect(10, 10, 371, 171));
@@ -71,6 +76,10 @@ public:
 
         gridLayout->addItem(verticalSpacer, 3, 1, 1, 1);
 
+        buttons = new QDialogButtonBox(newForm);
+        buttons->setObjectName(QString::fromUtf8("buttons"));
+        buttons->setGeometry(QRect(210, 260, 176, 27));
+        buttons->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
         retranslateUi(newForm);
 
@@ -80,6 +89,7 @@ public:
     void retranslateUi(QDialog *newForm)
     {
         newForm->setWindowTitle(QApplication::translate("newForm", "Hovno", 0, QApplication::UnicodeUTF8));
+        actionSave->setText(QApplication::translate("newForm", "save", 0, QApplication::UnicodeUTF8));
         checkBox->setText(QApplication::translate("newForm", "CheckBox", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("newForm", "TextLabel", 0, QApplication::UnicodeUTF8));
         checkBox_2->setText(QApplication::translate("newForm", "CheckBox", 0, QApplication::UnicodeUTF8));

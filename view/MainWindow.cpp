@@ -198,6 +198,18 @@ void MainWindow::on_actionReset_triggered() {
 }
 
 void MainWindow::on_actionSettings_triggered() {
-    SettingsDialog *settings = new SettingsDialog(this);
+    SettingsDialog *settings = new SettingsDialog(this, this->configuration);
+    QObject::connect(settings, SIGNAL(accepted()), this, SLOT(newSettings()));
     settings->show();
+}
+
+void MainWindow::newSettings() {
+    
+    if (this->configuration->isDebugMode()) {
+        this->logView->setEnabled(true);
+    } else {
+        this->logView->setEnabled(false);
+    }
+    
+    Logger::getInstance()->debug("New settings accepted");
 }

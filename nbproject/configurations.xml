@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>lib/Configuration.h</itemPath>
       <itemPath>model/FilterRule.h</itemPath>
       <itemPath>model/FilterRulesModel.h</itemPath>
       <itemPath>view/LogView.h</itemPath>
@@ -27,6 +28,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>lib/Configuration.cpp</itemPath>
       <itemPath>model/FilterRule.cpp</itemPath>
       <itemPath>model/FilterRulesModel.cpp</itemPath>
       <itemPath>view/LogView.cpp</itemPath>
