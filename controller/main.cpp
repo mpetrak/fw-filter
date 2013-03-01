@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
     MainWindow main;
     
-    Logger::clearLog();
+    Logger::getInstance()->clearLog();
     
     if(getuid() != 0)
     {

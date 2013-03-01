@@ -6,17 +6,56 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
+#include <QObject>
+#include <time.h>
 
 using namespace std;
 
-class Logger {
+/**
+ * This class is a singleton. Returning everytime the same instance.
+ * Singleton because connecting QT signals from this class
+ */
+class Logger : public QObject {
+    Q_OBJECT
+
 public:
     static const char* LOGFILE;
-    
-    static void debug(string message);
-    static void clearLog();
+    /**
+     * Getting instance of logger.
+     * @return logger instance
+     */
+    static Logger *getInstance();
+
+    /**
+     * Log debug message.
+     * @param message message
+     */
+    void debug(string message);
+
+    /**
+     * Clearing log file.
+     */
+    void clearLog();
 private:
-    static void message(char *type, const char *message);
+    /* constuctors and destructors are private */
+    Logger(const char* logfile);
+    virtual ~Logger();
+
+    /**
+     * Process log message with given type.
+     * Means log it to the file and emit signal to log view.
+     * @param type type of message
+     * @param message message
+     */
+    void message(char *type, const char *message);
+
+    /** singleton logger class */
+    static Logger *logger;
+    /** log file name */
+    const char *logfile;
+
+signals:
+    void newMessage(const char *message);
 
 };
 

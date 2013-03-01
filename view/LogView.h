@@ -7,15 +7,21 @@
 #include <QFile>
 #include <QTextStream>
 
+#include "../lib/Logger.h"
+
 class LogView : public QTextEdit {
+    Q_OBJECT
+
 public:
-    LogView(QWidget *parent, const char *logfile);
+    LogView(QWidget *parent);
     virtual ~LogView();
 
-private:
-    void read();
-    QFile *file;
-    QTextStream *stream;
+public slots:
+    /**
+     * Add message to the log.
+     * @param message message
+     */
+    void addMessage(const char *message);
 };
 
 #endif	/* LOGGERVIEW_H */
