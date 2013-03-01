@@ -10,6 +10,7 @@
 #include "../lib/RulesPusher.h"
 #include "../lib/RulesXML.h"
 #include "../lib/Logger.h"
+#include "../lib/Configuration.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -22,9 +23,18 @@ public:
      * @param model rules list model
      */
     void setRulesViewModel(QAbstractItemModel *model);
+    
+    /**
+     * Setter for configuration.
+     * @param configuration configuration
+     */
+    void setConfiguration(Configuration *configuration);
 
 private:
     Ui::MainWindow widget;
+    
+    /** Configuration */
+    Configuration *configuration;
     
     /** Model of rules view */
     FilterRulesModel *rulesModel;

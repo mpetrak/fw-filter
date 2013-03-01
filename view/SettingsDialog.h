@@ -14,9 +14,7 @@ public:
 private:
 
     QWidget *widget;
-    QCheckBox *chainForwardBox;
-    QCheckBox *chainOutputBox;
-    QCheckBox *chainInputBox;
+    QCheckBox *debugBox;
 };
 
 #endif	/* SETTINGSDIALOG_H */

@@ -11,6 +11,7 @@
 #include "../view/MainWindow.h"
 #include "../model/FilterRulesModel.h"
 #include "../lib/Logger.h"
+#include "../lib/Configuration.h"
 
 int main(int argc, char *argv[]) {
     // initialize resources, if needed
@@ -21,6 +22,7 @@ int main(int argc, char *argv[]) {
     MainWindow main;
     
     Logger::getInstance()->clearLog();
+    Configuration *config = new Configuration();
     
     if(getuid() != 0)
     {

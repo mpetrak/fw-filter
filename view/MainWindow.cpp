@@ -44,6 +44,11 @@ MainWindow::MainWindow() {
 }
 
 MainWindow::~MainWindow() {
+    //TODO save configuration to file
+    free(this->configuration);
+    free(this->rulesModel);
+    free(this->ruleEditWidget);
+    free(this->logView);
 }
 
 void MainWindow::setRulesViewModel(QAbstractItemModel* model) {
@@ -61,6 +66,10 @@ void MainWindow::setRulesViewModel(QAbstractItemModel* model) {
 
     QObject::connect(this, SIGNAL(duplicateRule(int)),
             model, SLOT(duplicateRule(int)));
+}
+
+void MainWindow::setConfiguration(Configuration* configuration) {
+    this->configuration = configuration;
 }
 
 void MainWindow::on_actionClose_triggered() {
