@@ -41,6 +41,7 @@ RulesPusher::~RulesPusher() {
 }
 
 bool RulesPusher::writeRules(QList<FilterRule> rules) {
+    Logger::getInstance()->debug("Pushing rules to system");
     ebFile.open(EB_OUTPUT_FILE, fstream::out);
     ipFile.open(IP_OUTPUT_FILE, fstream::out);
 
@@ -82,12 +83,14 @@ bool RulesPusher::writeRules(QList<FilterRule> rules) {
     /* control return state */
     if (ebReturn != 0 || ipReturn != 0) {
 
+        Logger::getInstance()->debug("Rules pushing failed");
         return false;
     } else {
 
         /* remove files */
         //remove(EB_OUTPUT_FILE);
         //remove(IP_OUTPUT_FILE);
+        Logger::getInstance()->debug("Rules successfully pushed");
         return true;
     }
 }
@@ -173,6 +176,10 @@ QString RulesPusher::rule2EbString(FilterRule *rule, const char *chain) {
     if (!rule->getAction().isEmpty())
         out.append(QString("%1 %2 ").arg(RulesPusher::EB_COMMAND_ACTION, rule->getAction().toAscii().data()));
 
+    /* log output withou line end */
+    Logger::getInstance()->debug(QString::fromUtf8(
+            "Pushing for ebtables: %1").arg(out).toAscii().data());
+
     /* finally line end */
     out.append(QString::fromUtf8("\n"));
 
@@ -255,6 +262,10 @@ QString RulesPusher::rule2IpString(FilterRule *rule, const char *chain) {
     /* action */
     if (!rule->getAction().isEmpty())
         out.append(QString("%1 %2 ").arg(RulesPusher::IP_COMMAND_ACTION, rule->getAction().toAscii().data()));
+
+    /* log output without line end */
+    Logger::getInstance()->debug(QString::fromUtf8(
+            "Pushing for iptables: %1").arg(out).toAscii().data());
 
     /* finally line end */
     out.append(QString::fromUtf8("\n"));

@@ -9,6 +9,7 @@
 #include <fstream>
 
 #include "../model/FilterRule.h"
+#include "../lib/Logger.h"
 
 using namespace std;
 
@@ -17,7 +18,7 @@ public:
     static const char* NF_CHAIN_FORWARD;
     static const char* NF_CHAIN_OUTPUT;
     static const char* NF_CHAIN_INPUT;
-    
+
     static const char* EB_OUTPUT_FILE;
     static const char* IP_OUTPUT_FILE;
 
@@ -46,7 +47,7 @@ public:
     static const char* IP_COMMAND_DEST_ADDR;
     static const char* IP_COMMAND_PROTOCOL;
     static const char* IP_COMMAND_ACTION;
-    
+
     RulesPusher();
     virtual ~RulesPusher();
 

@@ -42,6 +42,7 @@ bool RulesXML::saveRules(QList<FilterRule> rules) {
     xmlNodePtr ruleNode, rootNode;
     xmlDocPtr doc;
 
+    Logger::getInstance()->debug(std::string("Saving rules to file: ") + std::string(RulesXML::FILE));
     rootNode = xmlNewNode(NULL, BAD_CAST RulesXML::NODE_ROOT);
 
     foreach(rule, rules) {
@@ -55,10 +56,13 @@ bool RulesXML::saveRules(QList<FilterRule> rules) {
 
     int result = xmlSaveFormatFileEnc(RulesXML::FILE, doc, RulesXML::XML_ENCODING, 1);
 
-    if (result < 0)
+    if (result < 0) {
+        Logger::getInstance()->debug("Rules saving failed");
         return false;
-    else
+    } else {
+        Logger::getInstance()->debug("Rules successfully saved");
         return true;
+    }
 }
 
 xmlNodePtr RulesXML::rule2Node(FilterRule* rule) {
@@ -70,7 +74,7 @@ xmlNodePtr RulesXML::rule2Node(FilterRule* rule) {
     /* create net layer node */
     xmlNodePtr netNode = xmlNewNode(NULL, BAD_CAST RulesXML::LAYER_NET);
 
-
+    Logger::getInstance()->debug(std::string("Saving rule ") + rule->getName().toAscii().data());
     /* add name as a node attribute */
     xmlNewProp(ruleNode, BAD_CAST RulesXML::RULE_NAME,
             BAD_CAST rule->getName().toAscii().data());
@@ -140,6 +144,7 @@ xmlNodePtr RulesXML::rule2Node(FilterRule* rule) {
     xmlAddChild(ruleNode, linkNode);
     xmlAddChild(ruleNode, netNode);
 
+    Logger::getInstance()->debug("Rule saved");
     free(mask);
     return ruleNode;
 }
@@ -193,7 +198,7 @@ QList<FilterRule> RulesXML::loadRules() {
     xmlCleanupParser();
 
     Logger::getInstance()->debug("Rules loading finished, XML parser cleaned");
-    
+
     return rulesList;
 }
 
@@ -204,7 +209,7 @@ FilterRule *RulesXML::node2Rule(xmlNodePtr ruleNode) {
     xmlNodePtr chainsNode = NULL;
     xmlAttrPtr attr;
     FilterRule *rule = new FilterRule();
-    
+
     Logger::getInstance()->debug("Parsing rule node");
 
     /* get rule name and action */
@@ -339,7 +344,7 @@ FilterRule *RulesXML::node2Rule(xmlNodePtr ruleNode) {
         }
     }
     Logger::getInstance()->debug(std::string("Parsed rule with name: ") + std::string(rule->getName().toAscii().data()));
-    
+
     return rule;
 }
 

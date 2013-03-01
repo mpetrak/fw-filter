@@ -75,10 +75,14 @@ void MainWindow::on_newRuleButton_clicked() {
 
         /* get last selected index and insert new rule below it */
         QModelIndex index = indexes.at(indexes.count() - 1);
+        Logger::getInstance()->debug(QString::fromUtf8(
+                "New rule on position: %1").arg(index.row() + 1).toAscii().data());
         emit newRule(index.row() + 1);
     } else {
 
         /* if no index is selected, insert new rule to the top */
+        Logger::getInstance()->debug(QString::fromUtf8(
+                "New rule on position: 0").toAscii().data());
         emit newRule(0);
     }
 }
@@ -90,6 +94,8 @@ void MainWindow::on_deleteRuleButton_clicked() {
 
     /* delete rule on each selected index */
     foreach(index, indexes) {
+        Logger::getInstance()->debug(QString::fromUtf8(
+                "Deleting rule on position: %1").arg(index.row()).toAscii().data());
         emit deleteRule(index.row());
     }
 
@@ -108,6 +114,8 @@ void MainWindow::on_duplicateRuleButton_clicked() {
 
         /* emit signal for each selected index */
         foreach(index, indexes) {
+            Logger::getInstance()->debug(QString::fromUtf8(
+                    "Duplicating rule on position: %1").arg(index.row()).toAscii().data());
             emit duplicateRule(index.row());
         }
     }
