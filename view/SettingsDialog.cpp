@@ -52,8 +52,6 @@ SettingsDialog::SettingsDialog(QWidget* parent, Configuration *configuration) : 
 }
 
 SettingsDialog::~SettingsDialog() {
-    free(this->debugBox);
-    free(this->buttons);
 }
 
 void SettingsDialog::accept() {

@@ -46,9 +46,6 @@ MainWindow::MainWindow() {
 MainWindow::~MainWindow() {
     //TODO save configuration to file
     free(this->configuration);
-    free(this->rulesModel);
-    free(this->ruleEditWidget);
-    free(this->logView);
 }
 
 void MainWindow::setRulesViewModel(QAbstractItemModel* model) {
