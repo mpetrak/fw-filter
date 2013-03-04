@@ -9,7 +9,8 @@
 #include <fstream>
 
 #include "../model/FilterRule.h"
-#include "../lib/Logger.h"
+#include "Logger.h"
+#include "Configuration.h"
 
 using namespace std;
 
@@ -48,7 +49,11 @@ public:
     static const char* IP_COMMAND_PROTOCOL;
     static const char* IP_COMMAND_ACTION;
 
-    RulesPusher();
+    /**
+     * Constructor with configuration parameter.
+     * @param configuration application configuration contains default actions
+     */
+    RulesPusher(Configuration *configuration);
     virtual ~RulesPusher();
 
     /**
@@ -139,10 +144,13 @@ private:
      */
     QString address2IpString(const char *command, QString value, QString mask, bool negation, bool maskSet);
 
-    /** output file stream for ebtables */
+    /** Output file stream for ebtables */
     ofstream ebFile;
-    /** output file stream for iptables */
+    /** Output file stream for iptables */
     ofstream ipFile;
+    
+    /** Application configuration with default actions */
+    Configuration *configuration;
 
 };
 

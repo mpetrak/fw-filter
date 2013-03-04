@@ -148,7 +148,7 @@ void MainWindow::on_actionApply_modifications_triggered() {
 
     if (this->rulesModel != NULL) {
 
-        RulesPusher *pusher = new RulesPusher();
+        RulesPusher *pusher = new RulesPusher(configuration);
 
         if (!pusher->writeRules(this->rulesModel->getRulesList())) {
             QMessageBox::critical(this, QString::fromUtf8("Save error"),
