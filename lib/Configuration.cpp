@@ -1,6 +1,16 @@
 
 #include "Configuration.h"
 
+const char* Configuration::XML_FILE = "data/conf.xml";
+const char* Configuration::XML_VERSION = "1.0";
+const char* Configuration::XML_ENCODING = "UTF-8";
+
+const char* Configuration::NODE_ROOT = "configuration";
+const char* Configuration::NODE_DEBUG = "debug";
+const char* Configuration::NODE_INPUT_ACTION = "input_default";
+const char* Configuration::NODE_FORWARD_ACTION = "forward_default";
+const char* Configuration::NODE_OUTPUT_ACTION = "output_default";
+
 Configuration::Configuration() {
     setDebugMode(true);
     setInputAction(FilterRule::ACTION_ACCEPT);
@@ -9,6 +19,34 @@ Configuration::Configuration() {
 }
 
 Configuration::~Configuration() {
+}
+
+bool Configuration::saveToXML() {
+    xmlNodePtr rootNode;
+    xmlDocPtr doc;
+
+    Logger::getInstance()->debug(std::string("Saving configuration to file: ") + std::string(XML_FILE));
+    rootNode = xmlNewNode(NULL, BAD_CAST NODE_ROOT);
+
+    if (this->debugMode)
+        xmlNewChild(rootNode, NULL, BAD_CAST NODE_DEBUG, NULL);
+
+    xmlNewChild(rootNode, NULL, BAD_CAST NODE_INPUT_ACTION, BAD_CAST inputAction.toAscii().data());
+    xmlNewChild(rootNode, NULL, BAD_CAST NODE_FORWARD_ACTION, BAD_CAST forwardAction.toAscii().data());
+    xmlNewChild(rootNode, NULL, BAD_CAST NODE_OUTPUT_ACTION, BAD_CAST outputAction.toAscii().data());
+
+    doc = xmlNewDoc(BAD_CAST XML_VERSION);
+    xmlDocSetRootElement(doc, rootNode);
+
+    int result = xmlSaveFormatFileEnc(XML_FILE, doc, XML_ENCODING, 1);
+
+    if (result < 0) {
+        Logger::getInstance()->debug("Configuration saving failed");
+        return false;
+    } else {
+        Logger::getInstance()->debug("Configuration successfully saved");
+        return true;
+    }
 }
 
 bool Configuration::isDebugMode() const {

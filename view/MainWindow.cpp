@@ -44,7 +44,6 @@ MainWindow::MainWindow() {
 }
 
 MainWindow::~MainWindow() {
-    //TODO save configuration to file
     free(this->configuration);
 }
 
@@ -201,12 +200,12 @@ void MainWindow::on_actionSettings_triggered() {
 }
 
 void MainWindow::newSettings() {
-    
+
     if (this->configuration->isDebugMode()) {
         this->logView->setEnabled(true);
     } else {
         this->logView->setEnabled(false);
     }
-    
+
     Logger::getInstance()->debug("New settings accepted");
 }

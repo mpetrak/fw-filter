@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <input_default>DROP</input_default>
+  <forward_default>ACCEPT</forward_default>
+  <output_default>DROP</output_default>
+</configuration>
