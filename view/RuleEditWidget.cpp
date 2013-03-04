@@ -20,9 +20,8 @@ const char* RuleEditWidget::IPV4_ADDRESS_REGEX = "^((25[0-5]|2[0-4][0-9]|[01]?[0
 
 RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
     
-    this->actions.append(QString::fromUtf8("ACCEPT"));
-    this->actions.append(QString::fromUtf8("DROP"));
-    //this->actions.append(QString::fromUtf8("CONTINUE"));
+    this->actions.append(FilterRule::ACTION_ACCEPT);
+    this->actions.append(FilterRule::ACTION_DROP);
 
     NetInterfaces *netIfs = new NetInterfaces();
     this->interfaces = netIfs->getIfList();

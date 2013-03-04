@@ -16,6 +16,8 @@ public:
     /* Constants */
     static const QString OPTION_VALUE_UNSPECIFIED;
     static const int INT_VALUE_UNSPECIFIED;
+    static const QString ACTION_ACCEPT;
+    static const QString ACTION_DROP;
 
     /* Constructors, destructor */
     FilterRule();

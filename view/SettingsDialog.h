@@ -5,6 +5,7 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QCheckBox>
+#include <QComboBox>
 
 #include "../lib/RulesPusher.h"
 #include "../lib/Configuration.h"
@@ -17,8 +18,13 @@ public:
 private:
 
     Configuration *configuration;
+    QStringList actions;
 
     QCheckBox *debugBox;
+    QComboBox *inputActionSelect;
+    QComboBox *forwardActionSelect;
+    QComboBox *outputActionSelect;
+    
     QDialogButtonBox *buttons;
 
 private slots:
