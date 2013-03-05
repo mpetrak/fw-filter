@@ -66,6 +66,8 @@ void MainWindow::setRulesViewModel(QAbstractItemModel* model) {
 
 void MainWindow::setConfiguration(Configuration* configuration) {
     this->configuration = configuration;
+    
+    logView->setEnabled(configuration->isDebugMode());
 }
 
 void MainWindow::on_actionClose_triggered() {

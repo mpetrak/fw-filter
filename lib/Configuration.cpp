@@ -49,6 +49,49 @@ bool Configuration::saveToXML() {
     }
 }
 
+bool Configuration::loadFromXML() {
+    xmlDocPtr doc;
+    xmlNodePtr rootNode, node;
+
+    Logger::getInstance()->debug(std::string("Loading configuration from file: ") + std::string(XML_FILE));
+    doc = xmlReadFile(XML_FILE, XML_ENCODING, 0);
+
+    if (doc == NULL) {
+        Logger::getInstance()->debug("Error reading configuration XML file");
+        return false;
+    } else {
+
+        rootNode = xmlDocGetRootElement(doc);
+        bool debugMode = false;
+        for (node = rootNode->children; node; node = node->next) {
+            /* skip not XML elements */
+            if (node->type != XML_ELEMENT_NODE)
+                continue;
+
+            if (!strcmp((char *) node->name, NODE_DEBUG)) {
+                debugMode = true;
+
+            } else if (!strcmp((char *) node->name, NODE_INPUT_ACTION)) {
+                this->inputAction = (char *) xmlNodeGetContent(node);
+
+            } else if (!strcmp((char *) node->name, NODE_FORWARD_ACTION)) {
+                this->forwardAction = (char *) xmlNodeGetContent(node);
+
+            } else if (!strcmp((char *) node->name, NODE_OUTPUT_ACTION)) {
+                this->outputAction = (char *) xmlNodeGetContent(node);
+            }
+        }
+
+        this->debugMode = debugMode;
+        
+        xmlFreeDoc(doc);
+        xmlCleanupParser();
+        
+        Logger::getInstance()->debug("Configuration successfully loaded");
+        return true;
+    }
+}
+
 bool Configuration::isDebugMode() const {
     return debugMode;
 }
