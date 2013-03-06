@@ -17,9 +17,7 @@ public:
     static const char* XML_ENCODING;
     static const char* NODE_ROOT;
     static const char* NODE_DEBUG;
-    static const char* NODE_INPUT_ACTION;
-    static const char* NODE_FORWARD_ACTION;
-    static const char* NODE_OUTPUT_ACTION;
+    static const char* NODE_DEFAULT_ACTION;
 
     Configuration();
     virtual ~Configuration();
@@ -39,20 +37,13 @@ public:
     /* getters and setters */
     bool isDebugMode() const;
     void setDebugMode(bool debugMode);
-    QString getForwardAction() const;
-    void setForwardAction(QString forwardAction);
-    QString getInputAction() const;
-    void setInputAction(QString inputAction);
-    QString getOutputAction() const;
-    void setOutputAction(QString outputAction);
+    QString getDefaultAction() const;
+    void setDefaultAction(QString defaultAction);
 
 private:
 
     bool debugMode;
-
-    QString inputAction;
-    QString forwardAction;
-    QString outputAction;
+    QString defaultAction;
 
 };
 

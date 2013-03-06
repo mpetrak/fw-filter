@@ -21,7 +21,7 @@ private:
     QStringList actions;
 
     QCheckBox *debugBox;
-    QComboBox *inputActionSelect;
+    QComboBox *defaultActionSelect;
     QComboBox *forwardActionSelect;
     QComboBox *outputActionSelect;
     

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
   <debug/>
-  <input_default>ACCEPT</input_default>
-  <forward_default>DROP</forward_default>
-  <output_default>ACCEPT</output_default>
+  <default_action>ACCEPT</default_action>
 </configuration>
