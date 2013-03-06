@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'LogView.h'
 **
-** Created: Fri Mar 1 10:53:00 2013
+** Created: Wed Mar 6 21:42:00 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!

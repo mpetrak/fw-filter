@@ -6,6 +6,7 @@
 #include <QThread>
 #include <QFile>
 #include <QTextStream>
+#include <QScrollBar>
 
 #include "../lib/Logger.h"
 
