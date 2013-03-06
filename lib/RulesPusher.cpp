@@ -19,6 +19,10 @@ const char* RulesPusher::EB_COMMAND_DEST_ADDR = "-d";
 const char* RulesPusher::EB_COMMAND_PROTOCOL = "-p";
 const char* RulesPusher::EB_COMMAND_ACTION = "-j";
 
+const char* RulesPusher::EB_COMMAND_IP_SOURCE_ADDR = "--ip-destination";
+const char* RulesPusher::EB_COMMAND_IP_DEST_ADDR = "--ip-source";
+const char* RulesPusher::EB_COMMAND_IP_PROTOCOL = "--ip-protocol";
+
 const char* RulesPusher::IP_OUTPUT_FILE = "data/ipfile";
 
 const char* RulesPusher::IP_NEGATION = "!";
@@ -53,20 +57,28 @@ bool RulesPusher::writeRules(QList<FilterRule> rules) {
     FilterRule rule;
 
     foreach(rule, rules) {
+        bool netLayerPossible = rule.isNetLayerPossible();
+
         /* write to input only if it is possible */
         if (rule.isInputPossible()) {
             ebFile << rule2EbString(&rule, RulesPusher::NF_CHAIN_INPUT).toAscii().data();
-            ipFile << rule2IpString(&rule, RulesPusher::NF_CHAIN_INPUT).toAscii().data();
+            if (netLayerPossible) {
+                ipFile << rule2IpString(&rule, RulesPusher::NF_CHAIN_INPUT).toAscii().data();
+            }
         }
 
         /* write to filter chains everytime */
         ebFile << rule2EbString(&rule, RulesPusher::NF_CHAIN_FORWARD).toAscii().data();
-        ipFile << rule2IpString(&rule, RulesPusher::NF_CHAIN_FORWARD).toAscii().data();
+        if (netLayerPossible) {
+            ipFile << rule2IpString(&rule, RulesPusher::NF_CHAIN_FORWARD).toAscii().data();
+        }
 
         /* write to output chain only if it is possible */
         if (rule.isOutputPossible()) {
             ebFile << rule2EbString(&rule, RulesPusher::NF_CHAIN_OUTPUT).toAscii().data();
-            ipFile << rule2IpString(&rule, RulesPusher::NF_CHAIN_OUTPUT).toAscii().data();
+            if (netLayerPossible) {
+                ipFile << rule2IpString(&rule, RulesPusher::NF_CHAIN_OUTPUT).toAscii().data();
+            }
         }
     }
 
@@ -172,6 +184,28 @@ QString RulesPusher::rule2EbString(FilterRule *rule, const char *chain) {
         out.append(address2EbString(RulesPusher::EB_COMMAND_DEST_ADDR,
                 rule->getEbDest(), rule->getEbDestMask(),
                 rule->isEbDestNeg(), !rule->getEbDestMask().isEmpty()));
+    }
+
+    /* ip protocol */
+    if (rule->getIpProtocol() != FilterRule::OPTION_VALUE_UNSPECIFIED) {
+        out.append(value2EbString(RulesPusher::EB_COMMAND_IP_PROTOCOL,
+                rule->getIpProtocol(), rule->isIpProtocolNeg()));
+    }
+
+    /* ip source address */
+    if (!rule->getIpSource().isEmpty()) {
+        out.append(address2EbString(RulesPusher::EB_COMMAND_IP_SOURCE_ADDR,
+                rule->getIpSource(), QString::number(rule->getIpSourceMask()),
+                rule->isIpSourceNeg(),
+                rule->getIpSourceMask() != FilterRule::INT_VALUE_UNSPECIFIED));
+    }
+
+    /* ip destination address */
+    if (!rule->getIpDest().isEmpty()) {
+        out.append(address2EbString(RulesPusher::EB_COMMAND_IP_DEST_ADDR,
+                rule->getIpDest(), QString::number(rule->getIpDestMask()),
+                rule->isIpDestNeg(),
+                rule->getIpDestMask() != FilterRule::INT_VALUE_UNSPECIFIED));
     }
 
     /* action */

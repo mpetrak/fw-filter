@@ -36,6 +36,10 @@ public:
     static const char* EB_COMMAND_PROTOCOL;
     static const char* EB_COMMAND_ACTION;
 
+    static const char* EB_COMMAND_IP_SOURCE_ADDR;
+    static const char* EB_COMMAND_IP_DEST_ADDR;
+    static const char* EB_COMMAND_IP_PROTOCOL;
+
     static const char* IP_NEGATION;
     static const char*IP_MASK_DELIMITER;
 
@@ -148,7 +152,7 @@ private:
     ofstream ebFile;
     /** Output file stream for iptables */
     ofstream ipFile;
-    
+
     /** Application configuration with default actions */
     Configuration *configuration;
 
