@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'Logger.h'
 **
-** Created: Fri Mar 1 10:52:57 2013
+** Created: Wed Mar 6 21:44:42 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!

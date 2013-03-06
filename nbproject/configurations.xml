@@ -21,9 +21,6 @@
                    displayName="Resource Files"
                    projectFiles="true">
       <itemPath>view/MainWindow.ui</itemPath>
-      <itemPath>test/newForm.cpp</itemPath>
-      <itemPath>test/newForm.h</itemPath>
-      <itemPath>test/newForm.ui</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
