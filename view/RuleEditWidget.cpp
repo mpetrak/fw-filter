@@ -103,32 +103,32 @@ void RuleEditWidget::ruleSave(QModelIndex index) {
     bool wrongInput = false;
     QString optionName;
 
-    if (!this->macDestEdit->hasAcceptableInput()) {
+    if (!macDestEdit->text().isEmpty() && !macDestEdit->hasAcceptableInput()) {
         wrongInput = true;
         optionName = QString("Link destination address");
     }
 
-    if (!this->macDestMaskEdit->hasAcceptableInput()) {
+    if (!macDestMaskEdit->text().isEmpty() && !macDestMaskEdit->hasAcceptableInput()) {
         wrongInput = true;
         optionName = QString("Link destination address mask");
     }
 
-    if (!this->macSourceEdit->hasAcceptableInput()) {
+    if (!macSourceEdit->text().isEmpty() && !macSourceEdit->hasAcceptableInput()) {
         wrongInput = true;
         optionName = QString("Link source address");
     }
 
-    if (!this->macSourceMaskEdit->hasAcceptableInput()) {
+    if (!macSourceMaskEdit->text().isEmpty() && !macSourceMaskEdit->hasAcceptableInput()) {
         wrongInput = true;
         optionName = QString("Link source address mask");
     }
 
-    if (!this->ipDestEdit->hasAcceptableInput()) {
+    if (!ipDestEdit->text().isEmpty() && !ipDestEdit->hasAcceptableInput()) {
         wrongInput = true;
         optionName = QString("Net destination address");
     }
 
-    if (!this->ipSourceEdit->hasAcceptableInput()) {
+    if (!ipSourceEdit->text().isEmpty() && !ipSourceEdit->hasAcceptableInput()) {
         wrongInput = true;
         optionName = QString("Net source address");
     }
