@@ -13,7 +13,7 @@
 #include "FilterRule.h"
 
 /* constant definitions */
-const QString FilterRule::OPTION_VALUE_UNSPECIFIED = QString::fromUtf8("");
+const QString FilterRule::OPTION_VALUE_UNSPECIFIED = QString::fromUtf8("<any>");
 const int FilterRule::INT_VALUE_UNSPECIFIED = -1;
 const QString FilterRule::ACTION_ACCEPT = QString::fromUtf8("ACCEPT");
 const QString FilterRule::ACTION_DROP = QString::fromUtf8("DROP");

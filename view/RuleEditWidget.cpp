@@ -37,8 +37,7 @@ RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
     this->ipProtocols.append(optionsLoader->getOptions());
     free(optionsLoader);
 
-    /* Insert unspecified option*/
-    this->ipProtocols.insert(0, FilterRule::OPTION_VALUE_UNSPECIFIED);
+    /* Insert unspecified option to eb protocols, in ip there is all value with same meanings */
     this->ebProtocols.insert(0, FilterRule::OPTION_VALUE_UNSPECIFIED);
 
     /* create tabs */
