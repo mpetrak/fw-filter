@@ -99,49 +99,92 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
 
 void RuleEditWidget::ruleSave(QModelIndex index) {
 
-    if (index.isValid()) {
-        FilterRule rule = this->rulesModel->getRule(index.row());
+    /* first of all, control some edits, where is possible to write bad values */
+    bool wrongInput = false;
+    QString optionName;
 
-        rule.setName(this->nameEdit->text().trimmed());
-        rule.setDescription(this->descriptionEdit->toPlainText().trimmed());
-        rule.setAction(this->actionSelect->currentText());
+    if (!this->macDestEdit->hasAcceptableInput()) {
+        wrongInput = true;
+        optionName = QString("Link destination address");
+    }
 
-        rule.setInInterface(this->inInterfaceSelect->currentText());
-        rule.setInInterfaceNeg(this->inInterfaceNBox->isChecked());
+    if (!this->macDestMaskEdit->hasAcceptableInput()) {
+        wrongInput = true;
+        optionName = QString("Link destination address mask");
+    }
 
-        rule.setOutInterface(this->outInterfaceSelect->currentText());
-        rule.setOutInterfaceNeg(this->outInterfaceNBox->isChecked());
+    if (!this->macSourceEdit->hasAcceptableInput()) {
+        wrongInput = true;
+        optionName = QString("Link source address");
+    }
 
-        rule.setEbProtocol(this->ebProtoSelect->currentText());
-        rule.setEbProtocolNeg(this->ebProtoNBox->isChecked());
+    if (!this->macSourceMaskEdit->hasAcceptableInput()) {
+        wrongInput = true;
+        optionName = QString("Link source address mask");
+    }
 
-        rule.setEbSource(this->macSourceEdit->text().trimmed());
-        rule.setEbSourceMask(this->macSourceMaskEdit->text().trimmed());
-        rule.setEbSourceNeg(this->macSourceNBox->isChecked());
+    if (!this->ipDestEdit->hasAcceptableInput()) {
+        wrongInput = true;
+        optionName = QString("Net destination address");
+    }
 
-        rule.setEbDest(this->macDestEdit->text().trimmed());
-        rule.setEbDestMask(this->macDestMaskEdit->text().trimmed());
-        rule.setEbDestNeg(this->macDestNBox->isChecked());
+    if (!this->ipSourceEdit->hasAcceptableInput()) {
+        wrongInput = true;
+        optionName = QString("Net source address");
+    }
 
-        rule.setIpProtocol(this->ipProtoSelect->currentText());
-        rule.setIpProtocolNeg(this->ipProtoNBox->isChecked());
+    if (wrongInput) {
+        QMessageBox::critical(this, QString::fromUtf8("Input error"),
+                QString::fromUtf8("%1: wrong value!").arg(optionName), QMessageBox::Ok, QMessageBox::Ok);
+    } else {
 
-        rule.setIpSource(this->ipSourceEdit->text().trimmed());
-        if (this->ipSourceMaskEdit->text().trimmed().isEmpty())
-            rule.setIpSourceMask(FilterRule::INT_VALUE_UNSPECIFIED);
-        else
-            rule.setIpSourceMask(this->ipSourceMaskEdit->text().toShort());
-        rule.setIpSourceNeg(this->ipSourceNBox->isChecked());
+        if (index.isValid()) {
+            FilterRule rule = this->rulesModel->getRule(index.row());
 
-        rule.setIpDest(this->ipDestEdit->text().trimmed());
-        if (this->ipDestMaskEdit->text().trimmed().isEmpty())
-            rule.setIpDestMask(FilterRule::INT_VALUE_UNSPECIFIED);
-        else
-            rule.setIpDestMask(this->ipDestMaskEdit->text().toShort());
-        rule.setIpDestNeg(this->ipDestNBox->isChecked());
+            rule.setName(this->nameEdit->text().trimmed());
+            rule.setDescription(this->descriptionEdit->toPlainText().trimmed());
+            rule.setAction(this->actionSelect->currentText());
 
-        /** save rule using qt model api */
-        this->rulesModel->setData(index, QVariant::fromValue<FilterRule > (rule), Qt::DisplayRole);
+            rule.setInInterface(this->inInterfaceSelect->currentText());
+            rule.setInInterfaceNeg(this->inInterfaceNBox->isChecked());
+
+            rule.setOutInterface(this->outInterfaceSelect->currentText());
+            rule.setOutInterfaceNeg(this->outInterfaceNBox->isChecked());
+
+            rule.setEbProtocol(this->ebProtoSelect->currentText());
+            rule.setEbProtocolNeg(this->ebProtoNBox->isChecked());
+
+            rule.setEbSource(this->macSourceEdit->text().trimmed());
+            rule.setEbSourceMask(this->macSourceMaskEdit->text().trimmed());
+            rule.setEbSourceNeg(this->macSourceNBox->isChecked());
+
+            rule.setEbDest(this->macDestEdit->text().trimmed());
+            rule.setEbDestMask(this->macDestMaskEdit->text().trimmed());
+            rule.setEbDestNeg(this->macDestNBox->isChecked());
+
+            rule.setIpProtocol(this->ipProtoSelect->currentText());
+            rule.setIpProtocolNeg(this->ipProtoNBox->isChecked());
+
+            rule.setIpSource(this->ipSourceEdit->text().trimmed());
+            if (this->ipSourceMaskEdit->text().trimmed().isEmpty())
+                rule.setIpSourceMask(FilterRule::INT_VALUE_UNSPECIFIED);
+            else
+                rule.setIpSourceMask(this->ipSourceMaskEdit->text().toShort());
+            rule.setIpSourceNeg(this->ipSourceNBox->isChecked());
+
+            rule.setIpDest(this->ipDestEdit->text().trimmed());
+            if (this->ipDestMaskEdit->text().trimmed().isEmpty())
+                rule.setIpDestMask(FilterRule::INT_VALUE_UNSPECIFIED);
+            else
+                rule.setIpDestMask(this->ipDestMaskEdit->text().toShort());
+            rule.setIpDestNeg(this->ipDestNBox->isChecked());
+
+            /** save rule using qt model api */
+            this->rulesModel->setData(index, QVariant::fromValue<FilterRule > (rule), Qt::DisplayRole);
+        } else {
+            QMessageBox::critical(this, QString::fromUtf8("Internal error"),
+                    QString::fromUtf8("Bad index!"), QMessageBox::Ok, QMessageBox::Ok);
+        }
     }
 }
 
