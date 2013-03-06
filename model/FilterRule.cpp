@@ -155,19 +155,34 @@ void FilterRule::fromStream(QDataStream *stream) {
 
 bool FilterRule::isInputPossible() {
     bool possible = true;
-    
-    if(!outInterface.isEmpty())
+
+    if (outInterface != OPTION_VALUE_UNSPECIFIED)
         possible = false;
-    
+
     return possible;
 }
 
 bool FilterRule::isOutputPossible() {
     bool possible = true;
-    
-    if(!inInterface.isEmpty())
+
+    if (inInterface != OPTION_VALUE_UNSPECIFIED)
         possible = false;
-    
+
+    return possible;
+}
+
+bool FilterRule::isNetLayerPossible() {
+    bool possible = true;
+
+    if (!this->ebDest.isEmpty())
+        possible = false;
+
+    if (!this->ebSource.isEmpty())
+        possible = false;
+
+    if (ebProtocol != OPTION_VALUE_UNSPECIFIED)
+        possible = false;
+
     return possible;
 }
 

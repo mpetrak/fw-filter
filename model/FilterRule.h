@@ -38,18 +38,24 @@ public:
      * @param stream data stream to read from
      */
     void fromStream(QDataStream *stream);
-    
+
     /**
      * If this rule is possible to insert into input chains.
      * @return true if it is possible
      */
     bool isInputPossible();
-    
+
     /**
      * If this rule is possible to insert into output chains.
      * @return true if it is possible
      */
     bool isOutputPossible();
+
+    /**
+     * If this rule is possible to write into net layer tables.
+     * @return true if it is possible
+     */
+    bool isNetLayerPossible();
 
     /* Setters and getters */
     void setNumber(int number);
