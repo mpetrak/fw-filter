@@ -24,9 +24,6 @@ FilterRule::FilterRule() {
     setNumber(0);
     setName("New rule");
     setDescription("Insert description");
-    setChainInput(true);
-    setChainForward(true);
-    setChainOutput(true);
     setAction("DROP");
     setInInterface(FilterRule::OPTION_VALUE_UNSPECIFIED);
     setInInterfaceNeg(false);
@@ -55,9 +52,6 @@ FilterRule::FilterRule(FilterRule* copy) {
     setNumber(copy->getNumber());
     setName(QString::fromUtf8("%1 copy").arg(copy->getName()));
     setDescription(copy->getDescription());
-    setChainInput(copy->isChainInput());
-    setChainForward(copy->isChainForward());
-    setChainOutput(copy->isChainOutput());
     setAction(copy->getAction());
     setInInterface(copy->getInInterface());
     setInInterfaceNeg(copy->isInInterfaceNeg());
@@ -92,9 +86,6 @@ void FilterRule::toStream(QDataStream *stream) {
     *stream << this->number;
     *stream << this->name;
     *stream << this->description;
-    *stream << this->chainInput;
-    *stream << this->chainForward;
-    *stream << this->chainOutput;
     *stream << this->action;
 
     *stream << this->inInterface;
@@ -131,9 +122,6 @@ void FilterRule::fromStream(QDataStream *stream) {
     *stream >> this->number;
     *stream >> this->name;
     *stream >> this->description;
-    *stream >> this->chainInput;
-    *stream >> this->chainForward;
-    *stream >> this->chainOutput;
     *stream >> this->action;
 
     *stream >> this->inInterface;
@@ -163,6 +151,24 @@ void FilterRule::fromStream(QDataStream *stream) {
     *stream >> this->ipDest;
     *stream >> this->ipDestMask;
     *stream >> this->ipDestNeg;
+}
+
+bool FilterRule::isInputPossible() {
+    bool possible = true;
+    
+    if(!outInterface.isEmpty())
+        possible = false;
+    
+    return possible;
+}
+
+bool FilterRule::isOutputPossible() {
+    bool possible = true;
+    
+    if(!inInterface.isEmpty())
+        possible = false;
+    
+    return possible;
 }
 
 /* --- Getters and setters --- */
@@ -197,30 +203,6 @@ QString FilterRule::getDescription() const {
 
 void FilterRule::setDescription(QString description) {
     this->description = description;
-}
-
-bool FilterRule::isChainForward() const {
-    return chainForward;
-}
-
-void FilterRule::setChainForward(bool chainForward) {
-    this->chainForward = chainForward;
-}
-
-bool FilterRule::isChainInput() const {
-    return chainInput;
-}
-
-void FilterRule::setChainInput(bool chainInput) {
-    this->chainInput = chainInput;
-}
-
-bool FilterRule::isChainOutput() const {
-    return chainOutput;
-}
-
-void FilterRule::setChainOutput(bool chainOutput) {
-    this->chainOutput = chainOutput;
 }
 
 QString FilterRule::getEbDest() const {

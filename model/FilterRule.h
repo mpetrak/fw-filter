@@ -38,6 +38,18 @@ public:
      * @param stream data stream to read from
      */
     void fromStream(QDataStream *stream);
+    
+    /**
+     * If this rule is possible to insert into input chains.
+     * @return true if it is possible
+     */
+    bool isInputPossible();
+    
+    /**
+     * If this rule is possible to insert into output chains.
+     * @return true if it is possible
+     */
+    bool isOutputPossible();
 
     /* Setters and getters */
     void setNumber(int number);
@@ -48,12 +60,6 @@ public:
     void setAction(QString action);
     QString getDescription() const;
     void setDescription(QString description);
-    bool isChainForward() const;
-    void setChainForward(bool chainForward);
-    bool isChainInput() const;
-    void setChainInput(bool chainInput);
-    bool isChainOutput() const;
-    void setChainOutput(bool chainOutput);
     QString getEbDest() const;
     void setEbDest(QString EbDest);
     QString getEbDestMask() const;
@@ -104,12 +110,6 @@ private:
     QString name;
     /** Rule description */
     QString description;
-    /** Rule enabled in input chain */
-    bool chainInput;
-    /** Rule enabled in forward chain */
-    bool chainForward;
-    /** Rule enabled in output chain */
-    bool chainOutput;
 
     /** Input interface */
     QString inInterface;

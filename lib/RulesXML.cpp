@@ -19,10 +19,6 @@ const char* RulesXML::NODE_RULE = "rule";
 const char* RulesXML::RULE_NAME = "name";
 const char* RulesXML::RULE_ACTION = "action";
 const char* RulesXML::RULE_DESCRIPTON = "description";
-const char* RulesXML::RULE_CHAINS = "chains";
-const char* RulesXML::RULE_CHAIN_INPUT = "input";
-const char* RulesXML::RULE_CHAIN_FORWARD = "forward";
-const char* RulesXML::RULE_CHAIN_OUTPUT = "output";
 
 const char* RulesXML::LAYER_LINK = "link";
 const char* RulesXML::LAYER_NET = "net";
@@ -85,22 +81,6 @@ xmlNodePtr RulesXML::rule2Node(FilterRule* rule) {
     /* add description */
     value2Node(&ruleNode, RulesXML::RULE_DESCRIPTON,
             rule->getDescription().toAscii().data(), false);
-
-    /* add chains */
-    xmlNodePtr chainsNode = xmlNewNode(NULL, BAD_CAST RulesXML::RULE_CHAINS);
-    if (rule->isChainInput())
-        xmlNewProp(chainsNode, BAD_CAST RulesXML::RULE_CHAIN_INPUT,
-            BAD_CAST RulesXML::RULE_CHAIN_INPUT);
-
-    if (rule->isChainForward())
-        xmlNewProp(chainsNode, BAD_CAST RulesXML::RULE_CHAIN_FORWARD,
-            BAD_CAST RulesXML::RULE_CHAIN_FORWARD);
-
-    if (rule->isChainOutput())
-        xmlNewProp(chainsNode, BAD_CAST RulesXML::RULE_CHAIN_OUTPUT,
-            BAD_CAST RulesXML::RULE_CHAIN_OUTPUT);
-
-    xmlAddChild(ruleNode, chainsNode);
 
     /* input interface */
     value2Node(&ruleNode, RulesXML::RULE_IN_IFACE,
@@ -206,7 +186,6 @@ FilterRule *RulesXML::node2Rule(xmlNodePtr ruleNode) {
     xmlNodePtr node;
     xmlNodePtr linkNode = NULL;
     xmlNodePtr netNode = NULL;
-    xmlNodePtr chainsNode = NULL;
     xmlAttrPtr attr;
     FilterRule *rule = new FilterRule();
 
@@ -236,29 +215,10 @@ FilterRule *RulesXML::node2Rule(xmlNodePtr ruleNode) {
         } else if (!strcmp((char *) node->name, RulesXML::RULE_OUT_IFACE)) {
             rule->setOutInterface((char *) xmlNodeGetContent(node));
             rule->setOutInterfaceNeg(nodeNegation(node));
-        } else if (!strcmp((char *) node->name, RulesXML::RULE_CHAINS)) {
-            chainsNode = node;
         } else if (!strcmp((char *) node->name, RulesXML::LAYER_LINK)) {
             linkNode = node;
         } else if (!strcmp((char *) node->name, RulesXML::LAYER_NET)) {
             netNode = node;
-        }
-    }
-
-    /* load chains */
-    rule->setChainInput(false);
-    rule->setChainForward(false);
-    rule->setChainOutput(false);
-
-    if (chainsNode != NULL) {
-        for (attr = chainsNode->properties; attr; attr = attr->next) {
-            if (!strcmp((char *) attr->name, RulesXML::RULE_CHAIN_INPUT)) {
-                rule->setChainInput(true);
-            } else if (!strcmp((char *) attr->name, RulesXML::RULE_CHAIN_FORWARD)) {
-                rule->setChainForward(true);
-            } else if (!strcmp((char *) attr->name, RulesXML::RULE_CHAIN_OUTPUT)) {
-                rule->setChainOutput(true);
-            }
         }
     }
 

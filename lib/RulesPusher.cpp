@@ -53,17 +53,18 @@ bool RulesPusher::writeRules(QList<FilterRule> rules) {
     FilterRule rule;
 
     foreach(rule, rules) {
-        if (rule.isChainInput()) {
+        /* write to input only if it is possible */
+        if (rule.isInputPossible()) {
             ebFile << rule2EbString(&rule, RulesPusher::NF_CHAIN_INPUT).toAscii().data();
             ipFile << rule2IpString(&rule, RulesPusher::NF_CHAIN_INPUT).toAscii().data();
         }
 
-        if (rule.isChainForward()) {
-            ebFile << rule2EbString(&rule, RulesPusher::NF_CHAIN_FORWARD).toAscii().data();
-            ipFile << rule2IpString(&rule, RulesPusher::NF_CHAIN_FORWARD).toAscii().data();
-        }
+        /* write to filter chains everytime */
+        ebFile << rule2EbString(&rule, RulesPusher::NF_CHAIN_FORWARD).toAscii().data();
+        ipFile << rule2IpString(&rule, RulesPusher::NF_CHAIN_FORWARD).toAscii().data();
 
-        if (rule.isChainOutput()) {
+        /* write to output chain only if it is possible */
+        if (rule.isOutputPossible()) {
             ebFile << rule2EbString(&rule, RulesPusher::NF_CHAIN_OUTPUT).toAscii().data();
             ipFile << rule2IpString(&rule, RulesPusher::NF_CHAIN_OUTPUT).toAscii().data();
         }

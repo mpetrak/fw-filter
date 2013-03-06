@@ -19,7 +19,7 @@ const char* RuleEditWidget::MAC_ADDRESS_REGEX = "^([0-9|A-F]{2}:){5}[0-9|A-F]{2}
 const char* RuleEditWidget::IPV4_ADDRESS_REGEX = "^((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])$";
 
 RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
-    
+
     this->actions.append(FilterRule::ACTION_ACCEPT);
     this->actions.append(FilterRule::ACTION_DROP);
 
@@ -60,9 +60,6 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
 
         this->nameEdit->setText(rule.getName());
         this->descriptionEdit->setText(rule.getDescription());
-        this->chainInputBox->setChecked(rule.isChainInput());
-        this->chainForwardBox->setChecked(rule.isChainForward());
-        this->chainOutputBox->setChecked(rule.isChainOutput());
         this->actionSelect->setCurrentIndex(actions.indexOf(rule.getAction()));
 
         this->inInterfaceSelect->setCurrentIndex(interfaces.indexOf(rule.getInInterface()));
@@ -108,9 +105,6 @@ void RuleEditWidget::ruleSave(QModelIndex index) {
 
         rule.setName(this->nameEdit->text().trimmed());
         rule.setDescription(this->descriptionEdit->toPlainText().trimmed());
-        rule.setChainInput(this->chainInputBox->isChecked());
-        rule.setChainForward(this->chainForwardBox->isChecked());
-        rule.setChainOutput(this->chainOutputBox->isChecked());
         rule.setAction(this->actionSelect->currentText());
 
         rule.setInInterface(this->inInterfaceSelect->currentText());
@@ -191,49 +185,25 @@ void RuleEditWidget::setupGeneralWidget() {
     this->descriptionEdit->setObjectName(QString::fromUtf8("descriptionEdit"));
     gridLayout->addWidget(this->descriptionEdit, 3, 2, 1, 1);
 
-    /* affected chains */
-    QLabel *chainsLabel = new QLabel(this->tabGeneral);
-    chainsLabel->setObjectName(QString::fromUtf8("chainsLabel"));
-    chainsLabel->setText(QString::fromUtf8("Affected chains:"));
-    gridLayout->addWidget(chainsLabel, 4, 0, 1, 1);
-
-    this->chainInputBox = new QCheckBox(this->tabGeneral);
-    this->chainInputBox->setObjectName(QString::fromUtf8("chainInputBox"));
-    this->chainInputBox->setText(RulesPusher::NF_CHAIN_INPUT);
-    gridLayout->addWidget(this->chainInputBox, 5, 2, 1, 1);
-
-    this->chainForwardBox = new QCheckBox(this->tabGeneral);
-    this->chainForwardBox->setObjectName(QString::fromUtf8("chainForwardBox"));
-    this->chainForwardBox->setText(RulesPusher::NF_CHAIN_FORWARD);
-    gridLayout->addWidget(this->chainForwardBox, 6, 2, 1, 1);
-
-    this->chainOutputBox = new QCheckBox(this->tabGeneral);
-    this->chainOutputBox->setObjectName(QString::fromUtf8("chainOutputBox"));
-    this->chainOutputBox->setText(RulesPusher::NF_CHAIN_OUTPUT);
-    gridLayout->addWidget(this->chainOutputBox, 7, 2, 1, 1);
-
-    //        QSpacerItem *horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    //        gridLayout->addItem(horizontalSpacer, 7, 2, 1, 1);
-
     /* vertical spacer before action */
     QSpacerItem *verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    gridLayout->addItem(verticalSpacer, 8, 2, 1, 1);
+    gridLayout->addItem(verticalSpacer, 4, 2, 1, 1);
 
     /* action */
     QLabel *actionLabel = new QLabel(this->tabGeneral);
     actionLabel->setObjectName(QString::fromUtf8("actionLabel"));
     actionLabel->setText(QString::fromUtf8("Action: "));
-    gridLayout->addWidget(actionLabel, 9, 0, 1, 1);
+    gridLayout->addWidget(actionLabel, 5, 0, 1, 1);
 
     this->actionSelect = new QComboBox(this->tabGeneral);
     this->actionSelect->setObjectName(QString::fromUtf8("actionSelect"));
     this->actionSelect->setSizePolicy(fixedSizePolicy);
     this->actionSelect->addItems(this->actions);
-    gridLayout->addWidget(this->actionSelect, 9, 2, 1, 1);
+    gridLayout->addWidget(this->actionSelect, 5, 2, 1, 1);
 
     /* vertical space to the end */
     QSpacerItem *verticalEndSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    gridLayout->addItem(verticalEndSpacer, 10, 2, 1, 1);
+    gridLayout->addItem(verticalEndSpacer, 6, 2, 1, 1);
 
     /* add widget as a tab */
     this->addTab(this->tabGeneral, QString::fromUtf8("General"));

@@ -80,9 +80,6 @@ private:
     QLabel *numberLabel;
     QComboBox *actionSelect;
     QTextEdit *descriptionEdit;
-    QCheckBox *chainForwardBox;
-    QCheckBox *chainInputBox;
-    QCheckBox *chainOutputBox;
 
     /* EB edits */
     QCheckBox *macSourceNBox;
