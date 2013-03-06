@@ -23,7 +23,7 @@ public:
      * @param model rules list model
      */
     void setRulesViewModel(QAbstractItemModel *model);
-    
+
     /**
      * Setter for configuration.
      * @param configuration configuration
@@ -32,16 +32,16 @@ public:
 
 private:
     Ui::MainWindow widget;
-    
+
     /** Configuration */
     Configuration *configuration;
-    
+
     /** Model of rules view */
     FilterRulesModel *rulesModel;
 
     /** Widget for rule editing */
     RuleEditWidget *ruleEditWidget;
-    
+
     /** Log view */
     LogView *logView;
 
@@ -58,7 +58,7 @@ private slots:
     void on_actionApply_modifications_triggered();
     void on_actionReset_triggered();
     void on_actionSettings_triggered();
-    
+
     void newSettings();
 
 signals:
@@ -74,13 +74,13 @@ signals:
      * @param position position
      */
     void deleteRule(int position);
-    
+
     /**
      * Duplicate rule on given position
      * @param position position
      */
     void duplicateRule(int position);
-    
+
     /**
      * Selected rule at given index.
      * Used in case of deleting rule. Deleted rule is not selected and
@@ -88,7 +88,7 @@ signals:
      * @param index selected index
      */
     void selectedRule(QModelIndex index);
-    
+
     void saveRule(QModelIndex index);
 
 };
