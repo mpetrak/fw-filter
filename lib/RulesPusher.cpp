@@ -19,8 +19,8 @@ const char* RulesPusher::EB_COMMAND_DEST_ADDR = "-d";
 const char* RulesPusher::EB_COMMAND_PROTOCOL = "-p";
 const char* RulesPusher::EB_COMMAND_ACTION = "-j";
 
-const char* RulesPusher::EB_COMMAND_IP_SOURCE_ADDR = "--ip-destination";
-const char* RulesPusher::EB_COMMAND_IP_DEST_ADDR = "--ip-source";
+const char* RulesPusher::EB_COMMAND_IP_SOURCE_ADDR = "--ip-source";
+const char* RulesPusher::EB_COMMAND_IP_DEST_ADDR = "--ip-destination";
 const char* RulesPusher::EB_COMMAND_IP_PROTOCOL = "--ip-protocol";
 
 const char* RulesPusher::IP_OUTPUT_FILE = "data/ipfile";
