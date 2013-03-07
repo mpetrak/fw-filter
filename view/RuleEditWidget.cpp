@@ -17,6 +17,8 @@
 
 const char* RuleEditWidget::MAC_ADDRESS_REGEX = "^([0-9|A-F]{2}:){5}[0-9|A-F]{2}$";
 const char* RuleEditWidget::IPV4_ADDRESS_REGEX = "^((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])$";
+const int RuleEditWidget::NORMAL_OPTION_INDEX = 0;
+const int RuleEditWidget::NEGATION_OPTION_INDEX = 1;
 
 RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
 
@@ -62,38 +64,38 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->actionSelect->setCurrentIndex(actions.indexOf(rule.getAction()));
 
         this->inInterfaceSelect->setCurrentIndex(interfaces.indexOf(rule.getInInterface()));
-        this->inInterfaceNBox->setChecked(rule.isInInterfaceNeg());
+        this->inInterfaceNegSelect->setCurrentIndex(rule.isInInterfaceNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
 
         this->outInterfaceSelect->setCurrentIndex(interfaces.indexOf(rule.getOutInterface()));
-        this->outInterfaceNBox->setChecked(rule.isOutInterfaceNeg());
+        this->outInterfaceNegSelect->setCurrentIndex(rule.isOutInterfaceNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
 
         this->ebProtoSelect->setCurrentIndex(ebProtocols.indexOf(rule.getEbProtocol()));
-        this->ebProtoNBox->setChecked(rule.isEbProtocolNeg());
+        this->ebProtoNegSelect->setCurrentIndex(rule.isEbProtocolNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
 
         this->macSourceEdit->setText(rule.getEbSource());
         this->macSourceMaskEdit->setText(rule.getEbSourceMask());
-        this->macSourceNBox->setChecked(rule.isEbSourceNeg());
+        this->macSourceNegSelect->setCurrentIndex(rule.isEbSourceNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
 
         this->macDestEdit->setText(rule.getEbDest());
         this->macDestMaskEdit->setText(rule.getEbDestMask());
-        this->macDestNBox->setChecked(rule.isEbDestNeg());
+        this->macDestNegSelect->setCurrentIndex(rule.isEbDestNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
 
         this->ipProtoSelect->setCurrentIndex(ipProtocols.indexOf(rule.getIpProtocol()));
-        this->ipProtoNBox->setChecked(rule.isIpProtocolNeg());
+        this->ipProtoNegSelect->setCurrentIndex(rule.isIpProtocolNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
 
         this->ipSourceEdit->setText(rule.getIpSource());
         if (rule.getIpSourceMask() == FilterRule::INT_VALUE_UNSPECIFIED)
             this->ipSourceMaskEdit->setText(QString::fromUtf8(""));
         else
             this->ipSourceMaskEdit->setText(QString::number(rule.getIpSourceMask()));
-        this->ipSourceNBox->setChecked(rule.isIpSourceNeg());
+        this->ipSourceNegSelect->setCurrentIndex(rule.isIpSourceNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
 
         this->ipDestEdit->setText(rule.getIpDest());
         if (rule.getIpDestMask() == FilterRule::INT_VALUE_UNSPECIFIED)
             this->ipDestMaskEdit->setText(QString::fromUtf8(""));
         else
             this->ipDestMaskEdit->setText(QString::number(rule.getIpDestMask()));
-        this->ipDestNBox->setChecked(rule.isIpDestNeg());
+        this->ipDestNegSelect->setCurrentIndex(rule.isIpDestNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
     }
 }
 
@@ -146,38 +148,38 @@ void RuleEditWidget::ruleSave(QModelIndex index) {
             rule.setAction(this->actionSelect->currentText());
 
             rule.setInInterface(this->inInterfaceSelect->currentText());
-            rule.setInInterfaceNeg(this->inInterfaceNBox->isChecked());
+            rule.setInInterfaceNeg(this->inInterfaceNegSelect->currentIndex() == NEGATION_OPTION_INDEX);
 
             rule.setOutInterface(this->outInterfaceSelect->currentText());
-            rule.setOutInterfaceNeg(this->outInterfaceNBox->isChecked());
+            rule.setOutInterfaceNeg(this->outInterfaceNegSelect->currentIndex() == NEGATION_OPTION_INDEX);
 
             rule.setEbProtocol(this->ebProtoSelect->currentText());
-            rule.setEbProtocolNeg(this->ebProtoNBox->isChecked());
+            rule.setEbProtocolNeg(this->ebProtoNegSelect->currentIndex() == NEGATION_OPTION_INDEX);
 
             rule.setEbSource(this->macSourceEdit->text().trimmed());
             rule.setEbSourceMask(this->macSourceMaskEdit->text().trimmed());
-            rule.setEbSourceNeg(this->macSourceNBox->isChecked());
+            rule.setEbSourceNeg(this->macSourceNegSelect->currentIndex() == NEGATION_OPTION_INDEX);
 
             rule.setEbDest(this->macDestEdit->text().trimmed());
             rule.setEbDestMask(this->macDestMaskEdit->text().trimmed());
-            rule.setEbDestNeg(this->macDestNBox->isChecked());
+            rule.setEbDestNeg(this->macDestNegSelect->currentIndex() == NEGATION_OPTION_INDEX);
 
             rule.setIpProtocol(this->ipProtoSelect->currentText());
-            rule.setIpProtocolNeg(this->ipProtoNBox->isChecked());
+            rule.setIpProtocolNeg(this->ipProtoNegSelect->currentIndex() == NEGATION_OPTION_INDEX);
 
             rule.setIpSource(this->ipSourceEdit->text().trimmed());
             if (this->ipSourceMaskEdit->text().trimmed().isEmpty())
                 rule.setIpSourceMask(FilterRule::INT_VALUE_UNSPECIFIED);
             else
                 rule.setIpSourceMask(this->ipSourceMaskEdit->text().toShort());
-            rule.setIpSourceNeg(this->ipSourceNBox->isChecked());
+            rule.setIpSourceNeg(this->ipSourceNegSelect->currentIndex() == NEGATION_OPTION_INDEX);
 
             rule.setIpDest(this->ipDestEdit->text().trimmed());
             if (this->ipDestMaskEdit->text().trimmed().isEmpty())
                 rule.setIpDestMask(FilterRule::INT_VALUE_UNSPECIFIED);
             else
                 rule.setIpDestMask(this->ipDestMaskEdit->text().toShort());
-            rule.setIpDestNeg(this->ipDestNBox->isChecked());
+            rule.setIpDestNeg(this->ipDestNegSelect->currentIndex() == NEGATION_OPTION_INDEX);
 
             /** save rule using qt model api */
             this->rulesModel->setData(index, QVariant::fromValue<FilterRule > (rule), Qt::DisplayRole);
@@ -276,10 +278,9 @@ void RuleEditWidget::setupEbWidget() {
     inInterfaceLabel->setText(QString::fromUtf8("Input interface: "));
     gridLayout->addWidget(inInterfaceLabel, 1, 0, 1, 1);
 
-    this->inInterfaceNBox = new QCheckBox(this->tabEb);
-    this->inInterfaceNBox->setObjectName(QString::fromUtf8("inInterfaceNBox"));
-    this->inInterfaceNBox->setText(QString::fromUtf8("!"));
-    gridLayout->addWidget(this->inInterfaceNBox, 1, 1, 1, 1);
+    this->inInterfaceNegSelect = makeNegationSelect(this->tabEb);
+    this->inInterfaceNegSelect->setObjectName(QString::fromUtf8("inInterfaceNegSelect"));
+    gridLayout->addWidget(this->inInterfaceNegSelect, 1, 1, 1, 1);
 
     this->inInterfaceSelect = new QComboBox(this->tabEb);
     this->inInterfaceSelect->setObjectName(QString::fromUtf8("inInterfaceSelect"));
@@ -293,10 +294,9 @@ void RuleEditWidget::setupEbWidget() {
     outInterfaceLabel->setText(QString::fromUtf8("Output interface: "));
     gridLayout->addWidget(outInterfaceLabel, 2, 0, 1, 1);
 
-    this->outInterfaceNBox = new QCheckBox(this->tabEb);
-    this->outInterfaceNBox->setObjectName(QString::fromUtf8("outInterfaceNBox"));
-    this->outInterfaceNBox->setText(QString::fromUtf8("!"));
-    gridLayout->addWidget(this->outInterfaceNBox, 2, 1, 1, 1);
+    this->outInterfaceNegSelect = makeNegationSelect(this->tabEb);
+    this->outInterfaceNegSelect->setObjectName(QString::fromUtf8("outInterfaceNegSelect"));
+    gridLayout->addWidget(this->outInterfaceNegSelect, 2, 1, 1, 1);
 
     this->outInterfaceSelect = new QComboBox(this->tabEb);
     this->outInterfaceSelect->setObjectName(QString::fromUtf8("outInterfaceSelect"));
@@ -310,10 +310,9 @@ void RuleEditWidget::setupEbWidget() {
     ebProtoLabel->setText(QString::fromUtf8("Protocol: "));
     gridLayout->addWidget(ebProtoLabel, 3, 0, 1, 1);
 
-    this->ebProtoNBox = new QCheckBox(this->tabEb);
-    this->ebProtoNBox->setObjectName(QString::fromUtf8("ebProtoNBox"));
-    this->ebProtoNBox->setText(QString::fromUtf8("!"));
-    gridLayout->addWidget(this->ebProtoNBox, 3, 1, 1, 1);
+    this->ebProtoNegSelect = makeNegationSelect(this->tabEb);
+    this->ebProtoNegSelect->setObjectName(QString::fromUtf8("ebProtoNegSelect"));
+    gridLayout->addWidget(this->ebProtoNegSelect, 3, 1, 1, 1);
 
     this->ebProtoSelect = new QComboBox(this->tabEb);
     this->ebProtoSelect->setObjectName(QString::fromUtf8("ebProtoSelect"));
@@ -327,10 +326,9 @@ void RuleEditWidget::setupEbWidget() {
     macSourceLabel->setText(QString::fromUtf8("Source address: "));
     gridLayout->addWidget(macSourceLabel, 4, 0, 1, 1);
 
-    this->macSourceNBox = new QCheckBox(this->tabEb);
-    this->macSourceNBox->setObjectName(QString::fromUtf8("macSourceNBox"));
-    this->macSourceNBox->setText(QString::fromUtf8("!"));
-    gridLayout->addWidget(this->macSourceNBox, 4, 1, 1, 1);
+    this->macSourceNegSelect = makeNegationSelect(this->tabEb);
+    this->macSourceNegSelect->setObjectName(QString::fromUtf8("macSourceNegSelect"));
+    gridLayout->addWidget(this->macSourceNegSelect, 4, 1, 1, 1);
 
     this->macSourceEdit = new QLineEdit(this->tabEb);
     this->macSourceEdit->setObjectName(QString::fromUtf8("macSourceEdit"));
@@ -354,10 +352,9 @@ void RuleEditWidget::setupEbWidget() {
     macDestLabel->setText(QString::fromUtf8("Destination address: "));
     gridLayout->addWidget(macDestLabel, 5, 0, 1, 1);
 
-    this->macDestNBox = new QCheckBox(this->tabEb);
-    this->macDestNBox->setObjectName(QString::fromUtf8("macDestNBox"));
-    this->macDestNBox->setText(QString::fromUtf8("!"));
-    gridLayout->addWidget(this->macDestNBox, 5, 1, 1, 1);
+    this->macDestNegSelect = makeNegationSelect(this->tabEb);
+    this->macDestNegSelect->setObjectName(QString::fromUtf8("macDestNegSelect"));
+    gridLayout->addWidget(this->macDestNegSelect, 5, 1, 1, 1);
 
     this->macDestEdit = new QLineEdit(this->tabEb);
     this->macDestEdit->setObjectName(QString::fromUtf8("macDestEdit"));
@@ -412,10 +409,9 @@ void RuleEditWidget::setupIpWidget() {
     ipProtoLabel->setText(QString::fromUtf8("Protocol: "));
     gridLayout->addWidget(ipProtoLabel, 1, 0, 1, 1);
 
-    this->ipProtoNBox = new QCheckBox(this->tabIp);
-    this->ipProtoNBox->setObjectName(QString::fromUtf8("ipProtoNBox"));
-    this->ipProtoNBox->setText(QString::fromUtf8("!"));
-    gridLayout->addWidget(this->ipProtoNBox, 1, 1, 1, 1);
+    this->ipProtoNegSelect = makeNegationSelect(this->tabIp);
+    this->ipProtoNegSelect->setObjectName(QString::fromUtf8("ipProtoNegSelect"));
+    gridLayout->addWidget(this->ipProtoNegSelect, 1, 1, 1, 1);
 
     this->ipProtoSelect = new QComboBox(this->tabIp);
     this->ipProtoSelect->setObjectName(QString::fromUtf8("ipProtoSelect"));
@@ -429,10 +425,9 @@ void RuleEditWidget::setupIpWidget() {
     ipSourceLabel->setText(QString::fromUtf8("Source address: "));
     gridLayout->addWidget(ipSourceLabel, 2, 0, 1, 1);
 
-    this->ipSourceNBox = new QCheckBox(this->tabIp);
-    this->ipSourceNBox->setObjectName(QString::fromUtf8("ipSourceNBox"));
-    this->ipSourceNBox->setText(QString::fromUtf8("!"));
-    gridLayout->addWidget(this->ipSourceNBox, 2, 1, 1, 1);
+    this->ipSourceNegSelect = makeNegationSelect(this->tabIp);
+    this->ipSourceNegSelect->setObjectName(QString::fromUtf8("ipSourceNegSelect"));
+    gridLayout->addWidget(ipSourceNegSelect, 2, 1, 1, 1);
 
     this->ipSourceEdit = new QLineEdit(this->tabIp);
     this->ipSourceEdit->setObjectName(QString::fromUtf8("ipSourceEdit"));
@@ -457,10 +452,9 @@ void RuleEditWidget::setupIpWidget() {
     ipDestLabel->setText(QString::fromUtf8("Destination address: "));
     gridLayout->addWidget(ipDestLabel, 3, 0, 1, 1);
 
-    this->ipDestNBox = new QCheckBox(this->tabIp);
-    this->ipDestNBox->setObjectName(QString::fromUtf8("ipDestNBox"));
-    this->ipDestNBox->setText(QString::fromUtf8("!"));
-    gridLayout->addWidget(this->ipDestNBox, 3, 1, 1, 1);
+    this->ipDestNegSelect = makeNegationSelect(this->tabIp);
+    this->ipDestNegSelect->setObjectName(QString::fromUtf8("ipDestNegSelect"));
+    gridLayout->addWidget(this->ipDestNegSelect, 3, 1, 1, 1);
 
     this->ipDestEdit = new QLineEdit(this->tabIp);
     this->ipDestEdit->setObjectName(QString::fromUtf8("ipDestEdit"));
@@ -486,3 +480,9 @@ void RuleEditWidget::setupIpWidget() {
     this->addTab(this->tabIp, QString::fromUtf8("Net layer"));
 }
 
+QComboBox *RuleEditWidget::makeNegationSelect(QWidget *parent) {
+    QComboBox *select = new QComboBox(parent);
+    select->insertItem(NORMAL_OPTION_INDEX, QString::fromUtf8("IS"));
+    select->insertItem(NEGATION_OPTION_INDEX, QString::fromUtf8("NOT"));
+    return select;
+}

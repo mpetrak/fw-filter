@@ -13,7 +13,6 @@
 #include <QtGui/QLabel>
 #include <QtGui/QComboBox>
 #include <QtGui/QTextEdit>
-#include <QtGui/QCheckBox>
 
 #include "../model/FilterRulesModel.h"
 #include "../lib/NetInterfaces.h"
@@ -24,10 +23,6 @@ class RuleEditWidget : public QTabWidget {
     Q_OBJECT
 
 public:
-    static const char* MAC_ADDRESS_REGEX;
-    static const char* IPV4_ADDRESS_REGEX;
-    static const char* IPV6_ADDRESS_REGEX;
-
     RuleEditWidget(QWidget *parent);
     virtual ~RuleEditWidget();
 
@@ -48,9 +43,17 @@ public slots:
     void ruleSave(QModelIndex index);
 
 private:
+    static const char* MAC_ADDRESS_REGEX;
+    static const char* IPV4_ADDRESS_REGEX;
+    static const char* IPV6_ADDRESS_REGEX;
+    static const int NORMAL_OPTION_INDEX;
+    static const int NEGATION_OPTION_INDEX;
+
     void setupEbWidget();
     void setupGeneralWidget();
     void setupIpWidget();
+
+    QComboBox *makeNegationSelect(QWidget *parent);
 
     /** List of rule actions */
     QStringList actions;
@@ -82,27 +85,27 @@ private:
     QTextEdit *descriptionEdit;
 
     /* EB edits */
-    QCheckBox *macSourceNBox;
+    QComboBox *macSourceNegSelect;
     QLineEdit *macSourceEdit;
     QLineEdit *macSourceMaskEdit;
-    QCheckBox *macDestNBox;
+    QComboBox *macDestNegSelect;
     QLineEdit *macDestEdit;
     QLineEdit *macDestMaskEdit;
-    QCheckBox *inInterfaceNBox;
+    QComboBox *inInterfaceNegSelect;
     QComboBox *inInterfaceSelect;
-    QCheckBox *outInterfaceNBox;
+    QComboBox *outInterfaceNegSelect;
     QComboBox *outInterfaceSelect;
-    QCheckBox *ebProtoNBox;
+    QComboBox *ebProtoNegSelect;
     QComboBox *ebProtoSelect;
 
     /* IP edits */
-    QCheckBox *ipSourceNBox;
+    QComboBox *ipSourceNegSelect;
     QLineEdit *ipSourceEdit;
     QLineEdit *ipSourceMaskEdit;
-    QCheckBox *ipDestNBox;
+    QComboBox *ipDestNegSelect;
     QLineEdit *ipDestEdit;
     QLineEdit *ipDestMaskEdit;
-    QCheckBox *ipProtoNBox;
+    QComboBox *ipProtoNegSelect;
     QComboBox *ipProtoSelect;
 
 };
