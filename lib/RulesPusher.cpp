@@ -187,7 +187,7 @@ QString RulesPusher::rule2EbString(FilterRule *rule, const char *chain) {
     }
 
     /* ip protocol */
-    if (rule->getIpProtocol() != FilterRule::OPTION_VALUE_UNSPECIFIED) {
+    if (rule->getIpProtocol() != FilterRule::IP_PROTO_VALUE_UNSPECIFIED) {
         out.append(value2EbString(RulesPusher::EB_COMMAND_IP_PROTOCOL,
                 rule->getIpProtocol(), rule->isIpProtocolNeg()));
     }
@@ -274,7 +274,7 @@ QString RulesPusher::rule2IpString(FilterRule *rule, const char *chain) {
     }
 
     /* protocol */
-    if (rule->getIpProtocol() != FilterRule::OPTION_VALUE_UNSPECIFIED) {
+    if (rule->getIpProtocol() != FilterRule::IP_PROTO_VALUE_UNSPECIFIED) {
         out.append(value2IpString(RulesPusher::IP_COMMAND_PROTOCOL,
                 rule->getIpProtocol(), rule->isIpProtocolNeg()));
     }

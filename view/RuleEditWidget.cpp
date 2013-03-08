@@ -19,6 +19,9 @@ const char* RuleEditWidget::MAC_ADDRESS_REGEX = "^([0-9|A-F]{2}:){5}[0-9|A-F]{2}
 const char* RuleEditWidget::IPV4_ADDRESS_REGEX = "^((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])$";
 const int RuleEditWidget::NORMAL_OPTION_INDEX = 0;
 const int RuleEditWidget::NEGATION_OPTION_INDEX = 1;
+const int RuleEditWidget::TAB_GENERAL_INDEX = 0;
+const int RuleEditWidget::TAB_LINK_INDEX = 1;
+const int RuleEditWidget::TAB_NET_INDEX = 2;
 
 RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
 
@@ -80,7 +83,7 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->macDestMaskEdit->setText(rule.getEbDestMask());
         this->macDestNegSelect->setCurrentIndex(rule.isEbDestNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
 
-        this->ipProtoSelect->setCurrentIndex(ipProtocols.indexOf(rule.getIpProtocol()));
+        this->ipProtoSelect->setCurrentIndex(!rule.getIpProtocol().isEmpty() ? ipProtocols.indexOf(rule.getIpProtocol()) : 0);
         this->ipProtoNegSelect->setCurrentIndex(rule.isIpProtocolNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
 
         this->ipSourceEdit->setText(rule.getIpSource());
@@ -96,6 +99,9 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         else
             this->ipDestMaskEdit->setText(QString::number(rule.getIpDestMask()));
         this->ipDestNegSelect->setCurrentIndex(rule.isIpDestNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
+
+        /* render net layer options */
+        netProtocolChanged();
     }
 }
 
@@ -164,22 +170,35 @@ void RuleEditWidget::ruleSave(QModelIndex index) {
             rule.setEbDestMask(this->macDestMaskEdit->text().trimmed());
             rule.setEbDestNeg(this->macDestNegSelect->currentIndex() == NEGATION_OPTION_INDEX);
 
-            rule.setIpProtocol(this->ipProtoSelect->currentText());
-            rule.setIpProtocolNeg(this->ipProtoNegSelect->currentIndex() == NEGATION_OPTION_INDEX);
+            if (tabIp->isEnabled()) {
+                rule.setIpProtocol(this->ipProtoSelect->currentText());
+                rule.setIpProtocolNeg(this->ipProtoNegSelect->currentIndex() == NEGATION_OPTION_INDEX);
 
-            rule.setIpSource(this->ipSourceEdit->text().trimmed());
-            if (this->ipSourceMaskEdit->text().trimmed().isEmpty())
+                rule.setIpSource(this->ipSourceEdit->text().trimmed());
+                if (this->ipSourceMaskEdit->text().trimmed().isEmpty())
+                    rule.setIpSourceMask(FilterRule::INT_VALUE_UNSPECIFIED);
+                else
+                    rule.setIpSourceMask(this->ipSourceMaskEdit->text().toShort());
+                rule.setIpSourceNeg(this->ipSourceNegSelect->currentIndex() == NEGATION_OPTION_INDEX);
+
+                rule.setIpDest(this->ipDestEdit->text().trimmed());
+                if (this->ipDestMaskEdit->text().trimmed().isEmpty())
+                    rule.setIpDestMask(FilterRule::INT_VALUE_UNSPECIFIED);
+                else
+                    rule.setIpDestMask(this->ipDestMaskEdit->text().toShort());
+                rule.setIpDestNeg(this->ipDestNegSelect->currentIndex() == NEGATION_OPTION_INDEX);
+
+            } else {
+
+                rule.setIpProtocol(FilterRule::IP_PROTO_VALUE_UNSPECIFIED);
+                rule.setIpProtocolNeg(false);
+                rule.setIpSource(QString::fromUtf8(""));
                 rule.setIpSourceMask(FilterRule::INT_VALUE_UNSPECIFIED);
-            else
-                rule.setIpSourceMask(this->ipSourceMaskEdit->text().toShort());
-            rule.setIpSourceNeg(this->ipSourceNegSelect->currentIndex() == NEGATION_OPTION_INDEX);
-
-            rule.setIpDest(this->ipDestEdit->text().trimmed());
-            if (this->ipDestMaskEdit->text().trimmed().isEmpty())
+                rule.setIpSourceNeg(false);
+                rule.setIpDest(QString::fromUtf8(""));
                 rule.setIpDestMask(FilterRule::INT_VALUE_UNSPECIFIED);
-            else
-                rule.setIpDestMask(this->ipDestMaskEdit->text().toShort());
-            rule.setIpDestNeg(this->ipDestNegSelect->currentIndex() == NEGATION_OPTION_INDEX);
+                rule.setIpDestNeg(false);
+            }
 
             /** save rule using qt model api */
             this->rulesModel->setData(index, QVariant::fromValue<FilterRule > (rule), Qt::DisplayRole);
@@ -217,7 +236,6 @@ void RuleEditWidget::setupGeneralWidget() {
 
     this->nameEdit = new QLineEdit(this->tabGeneral);
     this->nameEdit->setObjectName(QString::fromUtf8("nameEdit"));
-    //this->nameEdit->setSizePolicy(fixedSizePolicy);
     gridLayout->addWidget(this->nameEdit, 1, 2, 1, 1);
 
     QLabel *descriptionLabel = new QLabel(this->tabGeneral);
@@ -250,7 +268,7 @@ void RuleEditWidget::setupGeneralWidget() {
     gridLayout->addItem(verticalEndSpacer, 6, 2, 1, 1);
 
     /* add widget as a tab */
-    this->addTab(this->tabGeneral, QString::fromUtf8("General"));
+    this->insertTab(TAB_GENERAL_INDEX, this->tabGeneral, QString::fromUtf8("General"));
 }
 
 void RuleEditWidget::setupEbWidget() {
@@ -307,18 +325,24 @@ void RuleEditWidget::setupEbWidget() {
     /* protocol */
     QLabel *ebProtoLabel = new QLabel(this->tabEb);
     ebProtoLabel->setObjectName(QString::fromUtf8("ebProtoLabel"));
-    ebProtoLabel->setText(QString::fromUtf8("Protocol: "));
+    ebProtoLabel->setText(QString::fromUtf8("Net layer protocol: "));
     gridLayout->addWidget(ebProtoLabel, 3, 0, 1, 1);
 
     this->ebProtoNegSelect = makeNegationSelect(this->tabEb);
     this->ebProtoNegSelect->setObjectName(QString::fromUtf8("ebProtoNegSelect"));
     gridLayout->addWidget(this->ebProtoNegSelect, 3, 1, 1, 1);
+    /* connect to slot for enable/disable net layer options */
+    connect(ebProtoNegSelect, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(netProtocolChanged()));
 
     this->ebProtoSelect = new QComboBox(this->tabEb);
     this->ebProtoSelect->setObjectName(QString::fromUtf8("ebProtoSelect"));
     this->ebProtoSelect->setSizePolicy(fixedSizePolicy);
     this->ebProtoSelect->addItems(this->ebProtocols);
     gridLayout->addWidget(ebProtoSelect, 3, 2, 1, 1);
+    /* connect to slot for enable/disable net layer options */
+    connect(ebProtoSelect, SIGNAL(currentIndexChanged(const QString)),
+            this, SLOT(netProtocolChanged()));
 
     /* source address */
     QLabel *macSourceLabel = new QLabel(this->tabEb);
@@ -377,7 +401,7 @@ void RuleEditWidget::setupEbWidget() {
     gridLayout->addItem(verticalSpacer, 6, 2, 1, 1);
 
     /* add widget as a tab */
-    this->addTab(this->tabEb, QString::fromUtf8("Link layer"));
+    this->insertTab(TAB_LINK_INDEX, this->tabEb, QString::fromUtf8("Link layer"));
 }
 
 void RuleEditWidget::setupIpWidget() {
@@ -406,7 +430,7 @@ void RuleEditWidget::setupIpWidget() {
     /* protocol */
     QLabel *ipProtoLabel = new QLabel(this->tabIp);
     ipProtoLabel->setObjectName(QString::fromUtf8("ipProtoLabel"));
-    ipProtoLabel->setText(QString::fromUtf8("Protocol: "));
+    ipProtoLabel->setText(QString::fromUtf8("Upper layer protocol: "));
     gridLayout->addWidget(ipProtoLabel, 1, 0, 1, 1);
 
     this->ipProtoNegSelect = makeNegationSelect(this->tabIp);
@@ -477,7 +501,7 @@ void RuleEditWidget::setupIpWidget() {
     QSpacerItem *verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
     gridLayout->addItem(verticalSpacer, 4, 2, 1, 1);
 
-    this->addTab(this->tabIp, QString::fromUtf8("Net layer"));
+    this->insertTab(TAB_NET_INDEX, this->tabIp, QString::fromUtf8("Net layer"));
 }
 
 QComboBox *RuleEditWidget::makeNegationSelect(QWidget *parent) {
@@ -485,4 +509,26 @@ QComboBox *RuleEditWidget::makeNegationSelect(QWidget *parent) {
     select->insertItem(NORMAL_OPTION_INDEX, QString::fromUtf8("IS"));
     select->insertItem(NEGATION_OPTION_INDEX, QString::fromUtf8("NOT"));
     return select;
+}
+
+void RuleEditWidget::netProtocolChanged() {
+    if (ebProtoSelect->currentText() == QString::fromUtf8("IPv4")
+            && ebProtoNegSelect->currentIndex() != NEGATION_OPTION_INDEX) {
+
+
+        if (!tabIp->isEnabled()) {
+            this->tabIp->setEnabled(true);
+            this->setTabEnabled(TAB_NET_INDEX, true);
+
+            Logger::getInstance()->debug(std::string("Enabled net options for protocol: ") +
+                    ebProtoSelect->currentText().toStdString());
+        }
+    } else {
+
+        if (tabIp->isEnabled()) {
+            this->tabIp->setEnabled(false);
+            this->setTabEnabled(TAB_NET_INDEX, false);
+            Logger::getInstance()->debug("Disabled net options");
+        }
+    }
 }

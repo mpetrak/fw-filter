@@ -42,13 +42,23 @@ public slots:
 
     void ruleSave(QModelIndex index);
 
+private slots:
+    /**
+     * Enable or disable net layer options.
+     * Depends on current net protocol and protocol negation options.
+     */
+    void netProtocolChanged();
+
 private:
     static const char* MAC_ADDRESS_REGEX;
     static const char* IPV4_ADDRESS_REGEX;
     static const char* IPV6_ADDRESS_REGEX;
     static const int NORMAL_OPTION_INDEX;
     static const int NEGATION_OPTION_INDEX;
-
+    static const int TAB_GENERAL_INDEX;
+    static const int TAB_LINK_INDEX;
+    static const int TAB_NET_INDEX;
+    
     void setupEbWidget();
     void setupGeneralWidget();
     void setupIpWidget();

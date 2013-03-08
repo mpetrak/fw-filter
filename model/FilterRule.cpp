@@ -15,6 +15,7 @@
 /* constant definitions */
 const QString FilterRule::OPTION_VALUE_UNSPECIFIED = QString::fromUtf8("<any>");
 const int FilterRule::INT_VALUE_UNSPECIFIED = -1;
+const QString FilterRule::IP_PROTO_VALUE_UNSPECIFIED = QString::fromUtf8("all");
 const QString FilterRule::ACTION_ACCEPT = QString::fromUtf8("ACCEPT");
 const QString FilterRule::ACTION_DROP = QString::fromUtf8("DROP");
 
@@ -37,7 +38,7 @@ FilterRule::FilterRule() {
     setEbSource("");
     setEbSourceMask("");
     setEbSourceNeg(false);
-    setIpProtocol(FilterRule::OPTION_VALUE_UNSPECIFIED);
+    setIpProtocol(IP_PROTO_VALUE_UNSPECIFIED);
     setIpProtocolNeg(false);
     setIpSource("");
     setIpSourceMask(FilterRule::INT_VALUE_UNSPECIFIED);
@@ -45,7 +46,6 @@ FilterRule::FilterRule() {
     setIpDest("");
     setIpDestMask(FilterRule::INT_VALUE_UNSPECIFIED);
     setIpDestNeg(false);
-    setIpFragment(false);
 }
 
 FilterRule::FilterRule(FilterRule* copy) {
@@ -73,7 +73,6 @@ FilterRule::FilterRule(FilterRule* copy) {
     setIpDest(copy->getIpDest());
     setIpDestMask(copy->getIpDestMask());
     setIpDestNeg(copy->isIpDestNeg());
-    setIpFragment(copy->isIpFragment());
 }
 
 FilterRule::~FilterRule() {
@@ -338,14 +337,6 @@ bool FilterRule::isIpDestNeg() const {
 
 void FilterRule::setIpDestNeg(bool ipDestNeg) {
     this->ipDestNeg = ipDestNeg;
-}
-
-bool FilterRule::isIpFragment() const {
-    return ipFragment;
-}
-
-void FilterRule::setIpFragment(bool ipFragment) {
-    this->ipFragment = ipFragment;
 }
 
 QString FilterRule::getIpProtocol() const {

@@ -16,6 +16,7 @@ public:
     /* Constants */
     static const QString OPTION_VALUE_UNSPECIFIED;
     static const int INT_VALUE_UNSPECIFIED;
+    static const QString IP_PROTO_VALUE_UNSPECIFIED;
     static const QString ACTION_ACCEPT;
     static const QString ACTION_DROP;
 
@@ -106,8 +107,6 @@ public:
     void setIpSourceMask(short ipSourceMask);
     bool isIpSourceNeg() const;
     void setIpSourceNeg(bool ipSourceNeg);
-    bool isIpFragment() const;
-    void setIpFragment(bool ipFragment);
 
 private:
     /** number of rule */
@@ -158,8 +157,6 @@ private:
     short ipDestMask;
     /** IP destintation address negation */
     bool ipDestNeg;
-    /** Fragmented packet */
-    bool ipFragment;
 
     /** Action of matched packet */
     QString action;
