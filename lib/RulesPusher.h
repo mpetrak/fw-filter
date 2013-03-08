@@ -67,6 +67,24 @@ public:
      * @return true on success / false on fault
      */
     bool writeRules(QList<FilterRule> rules);
+
+    /**
+     * Get output for given list to system kernel - Netfilter ebtables part.
+     * Using output files and system call of command ebtables-restore.
+     * @param rules ordered list of rules by priority
+     * @return output for ebtables-restore.
+     */
+    QString getEbOutput(QList<FilterRule> rules);
+
+    /**
+     * Get output for given list to system kernel - Netfilter iptables part.
+     * Using output files and system call of command Xtables-restore.
+     * @param rules ordered list of rules by priority
+     * @return output for Xtables-restore.
+     */
+    QString getIpOutput(QList<FilterRule> rules);
+    
+    void setLog(bool log);
 private:
     /**
      * Make header of file for ebtables
@@ -155,6 +173,9 @@ private:
 
     /** Application configuration with default actions */
     Configuration *configuration;
+    
+    /** log enable */
+    bool log;
 
 };
 

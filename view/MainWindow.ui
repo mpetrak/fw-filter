@@ -112,6 +112,8 @@
      <string>Tools</string>
     </property>
     <addaction name="actionSettings"/>
+    <addaction name="separator"/>
+    <addaction name="actionNetfilter_output"/>
    </widget>
    <widget class="QMenu" name="menuApplication">
     <property name="title">
@@ -189,6 +191,11 @@
   <action name="actionDuplicate">
    <property name="text">
     <string>Duplicate</string>
+   </property>
+  </action>
+  <action name="actionNetfilter_output">
+   <property name="text">
+    <string>Netfilter output</string>
    </property>
   </action>
  </widget>

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Wed Mar 6 21:44:24 2013
+** Created: Fri Mar 8 12:29:39 2013
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -36,6 +36,7 @@ public:
     QAction *actionNew;
     QAction *actionDelete;
     QAction *actionDuplicate;
+    QAction *actionNetfilter_output;
     QWidget *centralwidget;
     QListView *rulesView;
     QPushButton *newRuleButton;
@@ -69,6 +70,8 @@ public:
         actionDelete->setObjectName(QString::fromUtf8("actionDelete"));
         actionDuplicate = new QAction(MainWindow);
         actionDuplicate->setObjectName(QString::fromUtf8("actionDuplicate"));
+        actionNetfilter_output = new QAction(MainWindow);
+        actionNetfilter_output->setObjectName(QString::fromUtf8("actionNetfilter_output"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         rulesView = new QListView(centralwidget);
@@ -108,6 +111,8 @@ public:
         menubar->addAction(menuRule->menuAction());
         menubar->addAction(menuTools->menuAction());
         menuTools->addAction(actionSettings);
+        menuTools->addSeparator();
+        menuTools->addAction(actionNetfilter_output);
         menuApplication->addAction(actionApply_modifications);
         menuApplication->addAction(actionReset);
         menuApplication->addSeparator();
@@ -139,6 +144,7 @@ public:
         actionNew->setShortcut(QApplication::translate("MainWindow", "Ctrl+N", 0, QApplication::UnicodeUTF8));
         actionDelete->setText(QApplication::translate("MainWindow", "Delete", 0, QApplication::UnicodeUTF8));
         actionDuplicate->setText(QApplication::translate("MainWindow", "Duplicate", 0, QApplication::UnicodeUTF8));
+        actionNetfilter_output->setText(QApplication::translate("MainWindow", "Netfilter output", 0, QApplication::UnicodeUTF8));
         newRuleButton->setText(QApplication::translate("MainWindow", "+", 0, QApplication::UnicodeUTF8));
         deleteRuleButton->setText(QApplication::translate("MainWindow", "-", 0, QApplication::UnicodeUTF8));
         saveEditButton->setText(QApplication::translate("MainWindow", "Save", 0, QApplication::UnicodeUTF8));

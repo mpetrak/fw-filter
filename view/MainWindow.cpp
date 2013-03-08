@@ -3,7 +3,6 @@
 #include <qt4/QtGui/qmessagebox.h>
 
 #include "MainWindow.h"
-#include "SettingsDialog.h"
 
 MainWindow::MainWindow() {
     widget.setupUi(this);
@@ -203,6 +202,19 @@ void MainWindow::on_actionSettings_triggered() {
     SettingsDialog *settings = new SettingsDialog(this, this->configuration);
     QObject::connect(settings, SIGNAL(accepted()), this, SLOT(newSettings()));
     settings->show();
+}
+
+void MainWindow::on_actionNetfilter_output_triggered() {
+    RulesPusher *pusher = new RulesPusher(configuration);
+    /* turn out logging */
+    pusher->setLog(false);
+    QString out = pusher->getEbOutput(rulesModel->getRulesList());
+    out.append(QString::fromUtf8("\n---------------------------------\n"));
+    out.append(pusher->getIpOutput(rulesModel->getRulesList()));
+    free(pusher);
+
+    NfOutputDialog *nfOutput = new NfOutputDialog(this, out);
+    nfOutput->show();
 }
 
 void MainWindow::newSettings() {

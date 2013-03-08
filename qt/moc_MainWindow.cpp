@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'MainWindow.h'
 **
-** Created: Fri Mar 8 11:56:41 2013
+** Created: Fri Mar 8 13:44:12 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      18,   14, // methods
+      19,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -51,6 +51,7 @@ static const uint qt_meta_data_MainWindow[] = {
      424,   11,   11,   11, 0x08,
      451,   11,   11,   11, 0x08,
      481,   11,   11,   11, 0x08,
+     519,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -71,6 +72,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_actionApply_modifications_triggered()\0"
     "on_actionReset_triggered()\0"
     "on_actionSettings_triggered()\0"
+    "on_actionNetfilter_output_triggered()\0"
     "newSettings()\0"
 };
 
@@ -120,10 +122,11 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 14: on_actionApply_modifications_triggered(); break;
         case 15: on_actionReset_triggered(); break;
         case 16: on_actionSettings_triggered(); break;
-        case 17: newSettings(); break;
+        case 17: on_actionNetfilter_output_triggered(); break;
+        case 18: newSettings(); break;
         default: ;
         }
-        _id -= 18;
+        _id -= 19;
     }
     return _id;
 }

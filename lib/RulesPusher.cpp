@@ -47,43 +47,13 @@ RulesPusher::~RulesPusher() {
 
 bool RulesPusher::writeRules(QList<FilterRule> rules) {
     Logger::getInstance()->debug("Pushing rules to system");
+    log = true;
+
     ebFile.open(EB_OUTPUT_FILE, fstream::out);
     ipFile.open(IP_OUTPUT_FILE, fstream::out);
 
-    ebFile << this->ebFileHeader().toAscii().data();
-    ipFile << this->ipFileHeader().toAscii().data();
-
-    /* iterate each rule and write rules to files */
-    FilterRule rule;
-
-    foreach(rule, rules) {
-        bool netLayerPossible = rule.isNetLayerPossible();
-
-        /* write to input only if it is possible */
-        if (rule.isInputPossible()) {
-            ebFile << rule2EbString(&rule, RulesPusher::NF_CHAIN_INPUT).toAscii().data();
-            if (netLayerPossible) {
-                ipFile << rule2IpString(&rule, RulesPusher::NF_CHAIN_INPUT).toAscii().data();
-            }
-        }
-
-        /* write to filter chains everytime */
-        ebFile << rule2EbString(&rule, RulesPusher::NF_CHAIN_FORWARD).toAscii().data();
-        if (netLayerPossible) {
-            ipFile << rule2IpString(&rule, RulesPusher::NF_CHAIN_FORWARD).toAscii().data();
-        }
-
-        /* write to output chain only if it is possible */
-        if (rule.isOutputPossible()) {
-            ebFile << rule2EbString(&rule, RulesPusher::NF_CHAIN_OUTPUT).toAscii().data();
-            if (netLayerPossible) {
-                ipFile << rule2IpString(&rule, RulesPusher::NF_CHAIN_OUTPUT).toAscii().data();
-            }
-        }
-    }
-
-    ebFile << this->ebFileFooter().toAscii().data();
-    ipFile << this->ipFileFooter().toAscii().data();
+    ebFile << getEbOutput(rules).toAscii().data();
+    ipFile << getIpOutput(rules).toAscii().data();
 
     ebFile.close();
     ipFile.close();
@@ -107,6 +77,67 @@ bool RulesPusher::writeRules(QList<FilterRule> rules) {
         Logger::getInstance()->debug("Rules successfully pushed");
         return true;
     }
+}
+
+QString RulesPusher::getEbOutput(QList<FilterRule> rules) {
+    QString ebOut;
+
+    ebOut.append(this->ebFileHeader());
+
+    /* iterate each rule and write rules to files */
+    FilterRule rule;
+
+    foreach(rule, rules) {
+
+        /* write to input only if it is possible */
+        if (rule.isInputPossible()) {
+            ebOut.append(rule2EbString(&rule, RulesPusher::NF_CHAIN_INPUT));
+        }
+
+        /* write to filter chains everytime */
+        ebOut.append(rule2EbString(&rule, RulesPusher::NF_CHAIN_FORWARD));
+
+        /* write to output chain only if it is possible */
+        if (rule.isOutputPossible()) {
+            ebOut.append(rule2EbString(&rule, RulesPusher::NF_CHAIN_OUTPUT));
+        }
+    }
+
+    ebOut.append(this->ebFileFooter());
+
+    return ebOut;
+}
+
+QString RulesPusher::getIpOutput(QList<FilterRule> rules) {
+    QString ipOut;
+
+    ipOut.append(this->ipFileHeader());
+
+    /* iterate each rule and write rules to files */
+    FilterRule rule;
+
+    foreach(rule, rules) {
+
+        if (rule.isNetLayerPossible()) {
+
+            /* write to input only if it is possible */
+            if (rule.isInputPossible()) {
+                ipOut.append(rule2IpString(&rule, RulesPusher::NF_CHAIN_INPUT));
+            }
+
+            /* write to filter chains everytime */
+            ipOut.append(rule2IpString(&rule, RulesPusher::NF_CHAIN_FORWARD));
+
+            /* write to output chain only if it is possible */
+            if (rule.isOutputPossible()) {
+                ipOut.append(rule2IpString(&rule, RulesPusher::NF_CHAIN_OUTPUT));
+            }
+        }
+    }
+
+    ipOut.append(this->ipFileFooter());
+
+    return ipOut;
 }
 
 QString RulesPusher::ebFileHeader() {
@@ -212,9 +243,11 @@ QString RulesPusher::rule2EbString(FilterRule *rule, const char *chain) {
     if (!rule->getAction().isEmpty())
         out.append(QString("%1 %2 ").arg(RulesPusher::EB_COMMAND_ACTION, rule->getAction().toAscii().data()));
 
-    /* log output withou line end */
-    Logger::getInstance()->debug(QString::fromUtf8(
-            "Pushing for ebtables: %1").arg(out).toAscii().data());
+    /* log output without line end */
+    if (log) {
+        Logger::getInstance()->debug(QString::fromUtf8(
+                "Pushing for ebtables: %1").arg(out).toAscii().data());
+    }
 
     /* finally line end */
     out.append(QString::fromUtf8("\n"));
@@ -300,8 +333,10 @@ QString RulesPusher::rule2IpString(FilterRule *rule, const char *chain) {
         out.append(QString("%1 %2 ").arg(RulesPusher::IP_COMMAND_ACTION, rule->getAction().toAscii().data()));
 
     /* log output without line end */
-    Logger::getInstance()->debug(QString::fromUtf8(
-            "Pushing for iptables: %1").arg(out).toAscii().data());
+    if (log) {
+        Logger::getInstance()->debug(QString::fromUtf8(
+                "Pushing for iptables: %1").arg(out).toAscii().data());
+    }
 
     /* finally line end */
     out.append(QString::fromUtf8("\n"));
@@ -337,4 +372,8 @@ QString RulesPusher::address2IpString(const char *command, QString value, QStrin
     out.append(QString::fromUtf8(" "));
 
     return out;
+}
+
+void RulesPusher::setLog(bool log) {
+    this->log = log;
 }
