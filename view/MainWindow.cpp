@@ -295,7 +295,8 @@ void MainWindow::setupActions() {
     widget.actionDuplicate->setEnabled(!ruleChanged);
     widget.actionNew->setEnabled(!ruleChanged);
     widget.newRuleButton->setEnabled(!ruleChanged);
-    widget.actionApply_modifications->setEnabled(unsavedChanges);
-    widget.actionReset->setEnabled(unsavedChanges);
-    widget.saveApplyButton->setEnabled(unsavedChanges);
+    
+    widget.actionApply_modifications->setEnabled(unsavedChanges && !ruleChanged);
+    widget.actionReset->setEnabled(unsavedChanges && !ruleChanged);
+    widget.saveApplyButton->setEnabled(unsavedChanges && !ruleChanged);
 }
