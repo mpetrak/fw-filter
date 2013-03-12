@@ -53,7 +53,7 @@ RuleEditWidget::~RuleEditWidget() {
 }
 
 void RuleEditWidget::ruleSelected(QModelIndex index) {
-    this->loadingRule = true;
+    this->blockSignals(true);
 
     /* 
      * loading procedure only on valid index and if rules model is not empty.
@@ -139,12 +139,12 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->ipDestMaskEdit->clear();
         this->ipDestMaskEdit->clear();
         this->ipDestNegSelect->setCurrentIndex(NORMAL_OPTION_INDEX);
-        
+
         this->setEnabled(false);
     }
 
     /* enable emiting rule changed signal */
-    this->loadingRule = false;
+    this->blockSignals(false);
 }
 
 bool RuleEditWidget::ruleSave(QModelIndex index) {
@@ -609,6 +609,5 @@ void RuleEditWidget::netProtocolChanged() {
 }
 
 void RuleEditWidget::ruleChangedSlot() {
-    if (!loadingRule)
-        emit ruleChanged();
+    emit ruleChanged();
 }

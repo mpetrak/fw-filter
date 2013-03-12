@@ -69,13 +69,6 @@ private:
     void setupIpWidget();
 
     /**
-     * True during loading rule process.
-     * Used for block emiting signal, that rule is changed during loading.
-     * During loading, input GUI objects are changing end emiting their changed signals.
-     */
-    bool loadingRule;
-
-    /**
      * Create GUI select for negation.
      * @param parent parent of created combobox
      * @return pointer to created combobox
