@@ -228,10 +228,25 @@ void MainWindow::on_actionDuplicate_triggered() {
 }
 
 void MainWindow::on_actionReset_triggered() {
-    this->rulesModel->reloadRules();
-    unsavedChanges = false;
-    ruleChanged = false;
-    setupActions();
+
+    /* ask for confirmation */
+    if (QMessageBox::question(this, QString::fromUtf8("Are you sure?"),
+            QString::fromUtf8("All unsaved changes will be lost.\n"
+            "Really reset all modifications?"),
+            QMessageBox::Yes, QMessageBox::No,
+            QMessageBox::NoButton) == QMessageBox::Yes) {
+
+        /* reload rules model */
+        this->rulesModel->reloadRules();
+
+        /* change state variables and setup actions in GUI */
+        unsavedChanges = false;
+        ruleChanged = false;
+        setupActions();
+
+        /* call edit widget with invalid index to clean it */
+        ruleEditWidget->ruleSelected(QModelIndex());
+    }
 }
 
 void MainWindow::on_actionSettings_triggered() {
@@ -284,6 +299,8 @@ void MainWindow::setupActions() {
     widget.actionNew->setEnabled(!ruleChanged);
     widget.newRuleButton->setEnabled(!ruleChanged);
 
+    widget.rulesView->setDragEnabled(!ruleChanged);
+    widget.rulesView->setAcceptDrops(!ruleChanged);
     if (ruleChanged) {
         widget.rulesView->setSelectionMode(QAbstractItemView::NoSelection);
         QObject::disconnect(widget.rulesView, SIGNAL(clicked(QModelIndex)),
@@ -307,7 +324,7 @@ void MainWindow::closeEvent(QCloseEvent* event) {
 
         if (QMessageBox::question(this, QString::fromUtf8("Are you sure?"),
                 QString::fromUtf8("There are unsaved changes, which will be lost after closing.\n"
-                "Do you want really quit application?"),
+                "Really quit application?"),
                 QMessageBox::Yes, QMessageBox::No,
                 QMessageBox::NoButton) == QMessageBox::Yes) {
             event->accept();

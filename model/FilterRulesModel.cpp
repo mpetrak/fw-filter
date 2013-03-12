@@ -29,6 +29,7 @@ FilterRule FilterRulesModel::getRule(int index) {
 }
 
 void FilterRulesModel::reloadRules() {
+    beginResetModel();
     this->rulesList.clear();
 
     RulesXML *xmlLoader = new RulesXML();
@@ -44,6 +45,7 @@ void FilterRulesModel::reloadRules() {
     }
 
     free(xmlLoader);
+    endResetModel();
 }
 
 void FilterRulesModel::newRule(int index) {
@@ -197,7 +199,7 @@ bool FilterRulesModel::dropMimeData(const QMimeData* data, Qt::DropAction action
     } else {
         beginRow = rowCount(QModelIndex());
     }
-
+    
     /* decoding imported data */
     QByteArray encodedData = data->data("application/vnd.filterrule.list");
     QDataStream readStream(&encodedData, QIODevice::ReadOnly);
