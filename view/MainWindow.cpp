@@ -96,6 +96,9 @@ void MainWindow::on_newRuleButton_clicked() {
                 "New rule on position: 0").toAscii().data());
         emit newRule(0);
     }
+
+    unsavedChanges = true;
+    setupActions();
 }
 
 void MainWindow::on_deleteRuleButton_clicked() {
@@ -114,6 +117,9 @@ void MainWindow::on_deleteRuleButton_clicked() {
     indexes = widget.rulesView->selectionModel()->selectedIndexes();
     emit selectedRule(index);
 
+    unsavedChanges = true;
+    ruleChanged = false;
+    setupActions();
 }
 
 void MainWindow::on_duplicateRuleButton_clicked() {
@@ -129,6 +135,9 @@ void MainWindow::on_duplicateRuleButton_clicked() {
                     "Duplicating rule on position: %1").arg(index.row()).toAscii().data());
             emit duplicateRule(index.row());
         }
+
+        unsavedChanges = true;
+        setupActions();
     }
 }
 
