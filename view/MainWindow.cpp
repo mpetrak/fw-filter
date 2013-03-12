@@ -17,6 +17,7 @@ MainWindow::MainWindow() {
     ruleEditWidget = new RuleEditWidget(widget.centralwidget);
     ruleEditWidget->setObjectName(QString::fromUtf8("ruleEditWidget"));
     ruleEditWidget->setGeometry(QRect(230, 10, 511, 531));
+    /* connecting rule edit widget slot to clicke signal from rules view in setupActions method */
 
     logView = new LogView(widget.centralwidget);
     logView->setObjectName(QString::fromUtf8("logView"));
@@ -40,7 +41,7 @@ MainWindow::MainWindow() {
     /* after start disable some action - no change made */
     ruleChanged = false;
     unsavedChanges = false;
-    setupActions();
+    setupActions(); // must be called after initilization of ruleEditWidget
 }
 
 MainWindow::~MainWindow() {
