@@ -141,6 +141,7 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->ipDestNegSelect->setCurrentIndex(NORMAL_OPTION_INDEX);
 
         this->setEnabled(false);
+        Logger::getInstance()->debug("Edit widget cleaned");
     }
 
     /* enable emiting rule changed signal */
