@@ -53,10 +53,14 @@ RuleEditWidget::~RuleEditWidget() {
 }
 
 void RuleEditWidget::ruleSelected(QModelIndex index) {
+    this->loadingRule = true;
 
-    if (index.isValid()) {
+    /* 
+     * loading procedure only on valid index and if rules model is not empty.
+     * Can be empty in case of deleting last rule from model.
+     */
+    if (index.isValid() && !this->rulesModel->isEmpty()) {
         FilterRule rule = this->rulesModel->getRule(index.row());
-        this->loadingRule = true;
 
         this->nameEdit->setText(rule.getName());
         this->descriptionEdit->setText(rule.getDescription());
@@ -79,7 +83,7 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->macDestMaskEdit->setText(rule.getEbDestMask());
         this->macDestNegSelect->setCurrentIndex(rule.isEbDestNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
 
-        this->ipProtoSelect->setCurrentIndex(!rule.getIpProtocol().isEmpty() ? ipProtocols.indexOf(rule.getIpProtocol()) : 0);
+        this->ipProtoSelect->setCurrentIndex(ipProtocols.indexOf(!rule.getIpProtocol().isEmpty() ? rule.getIpProtocol() : FilterRule::IP_PROTO_VALUE_UNSPECIFIED));
         this->ipProtoNegSelect->setCurrentIndex(rule.isIpProtocolNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
 
         this->ipSourceEdit->setText(rule.getIpSource());
@@ -99,10 +103,48 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->setEnabled(true); // must be before enable/disable net layer protocol
         /* render net layer options */
         netProtocolChanged();
+    } else {
 
-        /* enable emiting rule changed signal */
-        this->loadingRule = false;
+        /* clear inputs to default */
+        this->nameEdit->clear();
+        this->descriptionEdit->clear();
+        this->actionSelect->setCurrentIndex(actions.indexOf(FilterRule::ACTION_DROP));
+
+        this->inInterfaceSelect->setCurrentIndex(interfaces.indexOf(FilterRule::OPTION_VALUE_UNSPECIFIED));
+        this->inInterfaceNegSelect->setCurrentIndex(NORMAL_OPTION_INDEX);
+
+        this->outInterfaceSelect->setCurrentIndex(interfaces.indexOf(FilterRule::OPTION_VALUE_UNSPECIFIED));
+        this->outInterfaceNegSelect->setCurrentIndex(NORMAL_OPTION_INDEX);
+
+        this->ebProtoSelect->setCurrentIndex(ebProtocols.indexOf(FilterRule::OPTION_VALUE_UNSPECIFIED));
+        this->ebProtoNegSelect->setCurrentIndex(NORMAL_OPTION_INDEX);
+
+        this->macSourceEdit->clear();
+        this->macSourceMaskEdit->clear();
+        this->macSourceNegSelect->setCurrentIndex(NORMAL_OPTION_INDEX);
+
+        this->macDestEdit->clear();
+        this->macDestMaskEdit->clear();
+        this->macDestNegSelect->setCurrentIndex(NORMAL_OPTION_INDEX);
+
+        this->ipProtoSelect->setCurrentIndex(ipProtocols.indexOf(FilterRule::IP_PROTO_VALUE_UNSPECIFIED));
+        this->ipProtoNegSelect->setCurrentIndex(NORMAL_OPTION_INDEX);
+
+        this->ipSourceEdit->clear();
+        this->ipSourceMaskEdit->clear();
+        this->ipSourceMaskEdit->clear();
+        this->ipSourceNegSelect->setCurrentIndex(NORMAL_OPTION_INDEX);
+
+        this->ipDestEdit->clear();
+        this->ipDestMaskEdit->clear();
+        this->ipDestMaskEdit->clear();
+        this->ipDestNegSelect->setCurrentIndex(NORMAL_OPTION_INDEX);
+        
+        this->setEnabled(false);
     }
+
+    /* enable emiting rule changed signal */
+    this->loadingRule = false;
 }
 
 bool RuleEditWidget::ruleSave(QModelIndex index) {

@@ -23,14 +23,6 @@ MainWindow::MainWindow() {
     logView->setObjectName(QString::fromUtf8("logView"));
     logView->setGeometry(QRect(10, 590, 731, 84));
 
-    /* 
-     * Connect selection signal from main window to widget for editing rule.
-     * Used in case of deleting, then emit this signal to update editing widget
-     * from deleted rule to another 
-     */
-    QObject::connect(this, SIGNAL(selectedRule(QModelIndex)),
-            ruleEditWidget, SLOT(ruleSelected(QModelIndex)));
-
     /** 
      * Connect signal from editing widget that rule is changed to class slot.
      * Used for control GUI reaction (warning on unsave changes etc).
@@ -103,9 +95,8 @@ void MainWindow::on_deleteRuleButton_clicked() {
         rulesModel->deleteRule(index.row());
     }
 
-    /* Emit signal for edit widget about new rule is selected - not deleted one */
-    indexes = widget.rulesView->selectionModel()->selectedIndexes();
-    emit selectedRule(index);
+    /* Reload edit widget with new rule on deleted position */
+    ruleEditWidget->ruleSelected(index);
 
     unsavedChanges = true;
     ruleChanged = false;

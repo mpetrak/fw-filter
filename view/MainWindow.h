@@ -90,16 +90,6 @@ private slots:
      */
     void actualRuleChanged();
 
-signals:
-
-    /**
-     * Selected rule at given index.
-     * Used in case of deleting rule. Deleted rule is not selected and
-     * we must emit signal, that different rule is now selected.
-     * @param index selected index
-     */
-    void selectedRule(QModelIndex index);
-
 };
 
 #endif	/* _MAINWINDOW_H */

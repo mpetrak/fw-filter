@@ -76,6 +76,12 @@ public:
      */
     void duplicateRule(int index);
 
+    /**
+     * Check if rules model is empty.
+     * @return true on empty model, false otherwise
+     */
+    bool isEmpty();
+
 private:
     /** List of rules */
     QList<FilterRule> rulesList;

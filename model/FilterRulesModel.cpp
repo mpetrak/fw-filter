@@ -30,7 +30,7 @@ FilterRule FilterRulesModel::getRule(int index) {
 
 void FilterRulesModel::reloadRules() {
     this->rulesList.clear();
-    
+
     RulesXML *xmlLoader = new RulesXML();
     QList<FilterRule> loaded = xmlLoader->loadRules();
     if (xmlLoader->isLoadError()) {
@@ -62,6 +62,10 @@ void FilterRulesModel::duplicateRule(int index) {
     endInsertRows();
 }
 
+bool FilterRulesModel::isEmpty() {
+    return rulesList.isEmpty();
+}
+
 int FilterRulesModel::rowCount(const QModelIndex& parent) const {
     return rulesList.count();
 }
@@ -74,7 +78,6 @@ QVariant FilterRulesModel::data(const QModelIndex& index, int role) const {
 
     if (role == Qt::DisplayRole) {
         FilterRule rule = rulesList.at(index.row());
-        //return tr("#%1 %2").arg(QString::number(rule.getNumber()), rule.getName());
         return rule.getName();
     } else {
 
