@@ -512,7 +512,7 @@ QComboBox *RuleEditWidget::makeNegationSelect(QWidget *parent) {
 }
 
 void RuleEditWidget::netProtocolChanged() {
-    if (ebProtoSelect->currentText() == QString::fromUtf8("IPv4")
+    if (ebProtoSelect->currentText() == FilterRule::IP_PROTO_VALUE_IPV4
             && ebProtoNegSelect->currentIndex() != NEGATION_OPTION_INDEX) {
 
 

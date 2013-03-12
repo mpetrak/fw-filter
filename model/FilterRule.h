@@ -17,6 +17,7 @@ public:
     static const QString OPTION_VALUE_UNSPECIFIED;
     static const int INT_VALUE_UNSPECIFIED;
     static const QString IP_PROTO_VALUE_UNSPECIFIED;
+    static const QString IP_PROTO_VALUE_IPV4;
     static const QString ACTION_ACCEPT;
     static const QString ACTION_DROP;
 
