@@ -46,6 +46,7 @@ RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
 
     /* set first tab */
     this->setCurrentIndex(0);
+    this->setEnabled(false);
 }
 
 RuleEditWidget::~RuleEditWidget() {
@@ -95,9 +96,11 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
             this->ipDestMaskEdit->setText(QString::number(rule.getIpDestMask()));
         this->ipDestNegSelect->setCurrentIndex(rule.isIpDestNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
 
+        this->setEnabled(true); // must be before enable/disable net layer protocol
         /* render net layer options */
         netProtocolChanged();
 
+        /* enable emiting rule changed signal */
         this->loadingRule = false;
     }
 }
