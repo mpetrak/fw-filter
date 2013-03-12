@@ -63,10 +63,12 @@ private slots:
     void on_newRuleButton_clicked();
     void on_deleteRuleButton_clicked();
     void on_duplicateRuleButton_clicked();
+    void on_saveApplyButton_clicked();
     void on_ruleEditButtonBox_accepted();
     void on_ruleEditButtonBox_rejected();
     void on_actionClose_triggered();
     void on_actionSave_rule_triggered();
+    void on_actionCancel_changes_triggered();
     void on_actionNew_triggered();
     void on_actionDelete_triggered();
     void on_actionDuplicate_triggered();

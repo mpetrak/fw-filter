@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'MainWindow.h'
 **
-** Created: Tue Mar 12 14:33:34 2013
+** Created: Tue Mar 12 14:54:54 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      20,   14, // methods
+      22,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -41,18 +41,20 @@ static const uint qt_meta_data_MainWindow[] = {
      128,   11,   11,   11, 0x08,
      158,   11,   11,   11, 0x08,
      191,   11,   11,   11, 0x08,
-     223,   11,   11,   11, 0x08,
-     255,   11,   11,   11, 0x08,
-     282,   11,   11,   11, 0x08,
-     313,   11,   11,   11, 0x08,
-     338,   11,   11,   11, 0x08,
-     366,   11,   11,   11, 0x08,
-     397,   11,   11,   11, 0x08,
-     438,   11,   11,   11, 0x08,
-     465,   11,   11,   11, 0x08,
-     495,   11,   11,   11, 0x08,
-     533,   11,   11,   11, 0x08,
-     547,   11,   11,   11, 0x08,
+     220,   11,   11,   11, 0x08,
+     252,   11,   11,   11, 0x08,
+     284,   11,   11,   11, 0x08,
+     311,   11,   11,   11, 0x08,
+     342,   11,   11,   11, 0x08,
+     378,   11,   11,   11, 0x08,
+     403,   11,   11,   11, 0x08,
+     431,   11,   11,   11, 0x08,
+     462,   11,   11,   11, 0x08,
+     503,   11,   11,   11, 0x08,
+     530,   11,   11,   11, 0x08,
+     560,   11,   11,   11, 0x08,
+     598,   11,   11,   11, 0x08,
+     612,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -64,10 +66,12 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_newRuleButton_clicked()\0"
     "on_deleteRuleButton_clicked()\0"
     "on_duplicateRuleButton_clicked()\0"
+    "on_saveApplyButton_clicked()\0"
     "on_ruleEditButtonBox_accepted()\0"
     "on_ruleEditButtonBox_rejected()\0"
     "on_actionClose_triggered()\0"
     "on_actionSave_rule_triggered()\0"
+    "on_actionCancel_changes_triggered()\0"
     "on_actionNew_triggered()\0"
     "on_actionDelete_triggered()\0"
     "on_actionDuplicate_triggered()\0"
@@ -114,22 +118,24 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 4: on_newRuleButton_clicked(); break;
         case 5: on_deleteRuleButton_clicked(); break;
         case 6: on_duplicateRuleButton_clicked(); break;
-        case 7: on_ruleEditButtonBox_accepted(); break;
-        case 8: on_ruleEditButtonBox_rejected(); break;
-        case 9: on_actionClose_triggered(); break;
-        case 10: on_actionSave_rule_triggered(); break;
-        case 11: on_actionNew_triggered(); break;
-        case 12: on_actionDelete_triggered(); break;
-        case 13: on_actionDuplicate_triggered(); break;
-        case 14: on_actionApply_modifications_triggered(); break;
-        case 15: on_actionReset_triggered(); break;
-        case 16: on_actionSettings_triggered(); break;
-        case 17: on_actionNetfilter_output_triggered(); break;
-        case 18: newSettings(); break;
-        case 19: actualRuleChanged(); break;
+        case 7: on_saveApplyButton_clicked(); break;
+        case 8: on_ruleEditButtonBox_accepted(); break;
+        case 9: on_ruleEditButtonBox_rejected(); break;
+        case 10: on_actionClose_triggered(); break;
+        case 11: on_actionSave_rule_triggered(); break;
+        case 12: on_actionCancel_changes_triggered(); break;
+        case 13: on_actionNew_triggered(); break;
+        case 14: on_actionDelete_triggered(); break;
+        case 15: on_actionDuplicate_triggered(); break;
+        case 16: on_actionApply_modifications_triggered(); break;
+        case 17: on_actionReset_triggered(); break;
+        case 18: on_actionSettings_triggered(); break;
+        case 19: on_actionNetfilter_output_triggered(); break;
+        case 20: newSettings(); break;
+        case 21: actualRuleChanged(); break;
         default: ;
         }
-        _id -= 20;
+        _id -= 22;
     }
     return _id;
 }

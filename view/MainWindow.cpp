@@ -135,6 +135,11 @@ void MainWindow::on_duplicateRuleButton_clicked() {
     }
 }
 
+void MainWindow::on_saveApplyButton_clicked() {
+    /* same as action aplly */
+    this->on_actionApply_modifications_triggered();
+}
+
 void MainWindow::on_ruleEditButtonBox_accepted() {
     QItemSelectionModel *selection = widget.rulesView->selectionModel();
     QModelIndexList indexes = selection->selectedIndexes();
@@ -169,10 +174,10 @@ void MainWindow::on_ruleEditButtonBox_rejected() {
     if (indexes.count() > 0) {
         /* due to selection model only one index is possible to select */
         ruleEditWidget->ruleSelected(indexes.first());
-        
+
         ruleChanged = false;
         setupActions();
-                
+
         Logger::getInstance()->debug("Rule reloaded");
 
     } else {
@@ -212,7 +217,12 @@ void MainWindow::on_actionApply_modifications_triggered() {
 
 void MainWindow::on_actionSave_rule_triggered() {
     /* same as save button clicked */
-    //this->on_saveEditButton_clicked();
+    this->on_ruleEditButtonBox_accepted();
+}
+
+void MainWindow::on_actionCancel_changes_triggered() {
+    /* smae as cancel button clicked */
+    this->on_ruleEditButtonBox_rejected();
 }
 
 void MainWindow::on_actionNew_triggered() {
@@ -279,6 +289,7 @@ void MainWindow::actualRuleChanged() {
 
 void MainWindow::setupActions() {
     widget.actionSave_rule->setEnabled(ruleChanged);
+    widget.actionCancel_changes->setEnabled(ruleChanged);
     widget.ruleEditButtonBox->setEnabled(ruleChanged);
     widget.duplicateRuleButton->setEnabled(!ruleChanged);
     widget.actionDuplicate->setEnabled(!ruleChanged);
@@ -286,4 +297,5 @@ void MainWindow::setupActions() {
     widget.newRuleButton->setEnabled(!ruleChanged);
     widget.actionApply_modifications->setEnabled(unsavedChanges);
     widget.actionReset->setEnabled(unsavedChanges);
+    widget.saveApplyButton->setEnabled(unsavedChanges);
 }
