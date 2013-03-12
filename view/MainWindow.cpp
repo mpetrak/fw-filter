@@ -53,16 +53,6 @@ void MainWindow::setRulesViewModel(QAbstractItemModel* model) {
 
     widget.rulesView->setModel(model);
     ruleEditWidget->setRulesModel((FilterRulesModel *) model);
-
-    /* connect signals to model slots */
-    QObject::connect(this, SIGNAL(newRule(int)),
-            model, SLOT(newRule(int)));
-
-    QObject::connect(this, SIGNAL(deleteRule(int)),
-            model, SLOT(deleteRule(int)));
-
-    QObject::connect(this, SIGNAL(duplicateRule(int)),
-            model, SLOT(duplicateRule(int)));
 }
 
 void MainWindow::setConfiguration(Configuration* configuration) {
@@ -88,13 +78,13 @@ void MainWindow::on_newRuleButton_clicked() {
         QModelIndex index = indexes.at(indexes.count() - 1);
         Logger::getInstance()->debug(QString::fromUtf8(
                 "New rule on position: %1").arg(index.row() + 1).toAscii().data());
-        emit newRule(index.row() + 1);
+        rulesModel->newRule(index.row() + 1);
     } else {
 
         /* if no index is selected, insert new rule to the top */
         Logger::getInstance()->debug(QString::fromUtf8(
                 "New rule on position: 0").toAscii().data());
-        emit newRule(0);
+        rulesModel->newRule(0);
     }
 
     unsavedChanges = true;
@@ -110,7 +100,7 @@ void MainWindow::on_deleteRuleButton_clicked() {
     foreach(index, indexes) {
         Logger::getInstance()->debug(QString::fromUtf8(
                 "Deleting rule on position: %1").arg(index.row()).toAscii().data());
-        emit deleteRule(index.row());
+        rulesModel->deleteRule(index.row());
     }
 
     /* Emit signal for edit widget about new rule is selected - not deleted one */
@@ -133,7 +123,7 @@ void MainWindow::on_duplicateRuleButton_clicked() {
         foreach(index, indexes) {
             Logger::getInstance()->debug(QString::fromUtf8(
                     "Duplicating rule on position: %1").arg(index.row()).toAscii().data());
-            emit duplicateRule(index.row());
+            rulesModel->duplicateRule(index.row());
         }
 
         unsavedChanges = true;
@@ -335,7 +325,7 @@ void MainWindow::closeEvent(QCloseEvent* event) {
         }
 
     } else {
-        
+
         event->accept();
     }
 }

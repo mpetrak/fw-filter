@@ -93,24 +93,6 @@ private slots:
 signals:
 
     /**
-     * New rule at a given position
-     * @param position position
-     */
-    void newRule(int position);
-
-    /**
-     * Delete rule from given position
-     * @param position position
-     */
-    void deleteRule(int position);
-
-    /**
-     * Duplicate rule on given position
-     * @param position position
-     */
-    void duplicateRule(int position);
-
-    /**
      * Selected rule at given index.
      * Used in case of deleting rule. Deleted rule is not selected and
      * we must emit signal, that different rule is now selected.

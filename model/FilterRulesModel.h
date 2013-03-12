@@ -45,38 +45,37 @@ public:
      * @return rule object instance
      */
     FilterRule getRule(int index);
-    
+
     /**
      * Get list of rules ordered by view component.
      * @return ordered list of rules
      */
     QList<FilterRule> getRulesList();
-    
+
     /**
      * Reload rules from XML file.
      * Using library loader.
      */
     void reloadRules();
 
-public slots:
     /**
      * Insert one new rule onto given position
      * @param index position
      */
     void newRule(int index);
-    
+
     /**
      * Delete one rule from given position
      * @param index position
      */
     void deleteRule(int index);
-    
+
     /**
      * Duplicate rule on position
      * @param index position
      */
     void duplicateRule(int index);
-    
+
 private:
     /** List of rules */
     QList<FilterRule> rulesList;
