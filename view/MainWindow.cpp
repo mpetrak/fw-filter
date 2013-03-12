@@ -285,6 +285,7 @@ void MainWindow::newSettings() {
     }
 
     this->repaint();
+    widget.centralwidget->repaint();
     Logger::getInstance()->debug("New settings accepted");
 }
 
