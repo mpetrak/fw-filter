@@ -318,3 +318,23 @@ void MainWindow::setupActions() {
     widget.actionReset->setEnabled(unsavedChanges && !ruleChanged);
     widget.saveApplyButton->setEnabled(unsavedChanges && !ruleChanged);
 }
+
+void MainWindow::closeEvent(QCloseEvent* event) {
+    /* on existing unsaved changes throw dialog to confirm exiting application */
+    if (unsavedChanges || ruleChanged) {
+
+        if (QMessageBox::question(this, QString::fromUtf8("Are you sure?"),
+                QString::fromUtf8("There are unsaved changes, which will be lost after closing.\n"
+                "Do you want really quit application?"),
+                QMessageBox::Yes, QMessageBox::No,
+                QMessageBox::NoButton) == QMessageBox::Yes) {
+            event->accept();
+        } else {
+            event->ignore();
+        }
+
+    } else {
+        
+        event->accept();
+    }
+}

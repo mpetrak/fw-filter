@@ -3,6 +3,7 @@
 #define	_MAINWINDOW_H
 
 #include <QtGui/QMessageBox>
+#include <QCloseEvent>
 
 #include "../qt/ui_MainWindow.h"
 #include "RuleEditWidget.h"
@@ -38,7 +39,9 @@ private:
      * Setup GUI actions as enable or disable.
      * Depends on actual editing rule is changed or not.
      */
-    void setupActions();
+    void setupActions();\
+
+    void closeEvent(QCloseEvent* event);
 
     Ui::MainWindow widget;
 
