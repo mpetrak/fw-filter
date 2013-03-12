@@ -71,10 +71,10 @@
      <string>-</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="saveEditButton">
+   <widget class="QPushButton" name="saveApplyButton">
     <property name="geometry">
      <rect>
-      <x>650</x>
+      <x>230</x>
       <y>550</y>
       <width>92</width>
       <height>27</height>
@@ -95,6 +95,19 @@
     </property>
     <property name="text">
      <string>Duplicate</string>
+    </property>
+   </widget>
+   <widget class="QDialogButtonBox" name="ruleEditButtonBox">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>550</y>
+      <width>176</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="standardButtons">
+     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
     </property>
    </widget>
   </widget>

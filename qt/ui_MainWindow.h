@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Fri Mar 8 12:29:39 2013
+** Created: Tue Mar 12 14:18:15 2013
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -15,6 +15,7 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QDialogButtonBox>
 #include <QtGui/QHeaderView>
 #include <QtGui/QListView>
 #include <QtGui/QMainWindow>
@@ -41,8 +42,9 @@ public:
     QListView *rulesView;
     QPushButton *newRuleButton;
     QPushButton *deleteRuleButton;
-    QPushButton *saveEditButton;
+    QPushButton *saveApplyButton;
     QPushButton *duplicateRuleButton;
+    QDialogButtonBox *ruleEditButtonBox;
     QMenuBar *menubar;
     QMenu *menuTools;
     QMenu *menuApplication;
@@ -89,12 +91,16 @@ public:
         deleteRuleButton = new QPushButton(centralwidget);
         deleteRuleButton->setObjectName(QString::fromUtf8("deleteRuleButton"));
         deleteRuleButton->setGeometry(QRect(50, 550, 31, 27));
-        saveEditButton = new QPushButton(centralwidget);
-        saveEditButton->setObjectName(QString::fromUtf8("saveEditButton"));
-        saveEditButton->setGeometry(QRect(650, 550, 92, 27));
+        saveApplyButton = new QPushButton(centralwidget);
+        saveApplyButton->setObjectName(QString::fromUtf8("saveApplyButton"));
+        saveApplyButton->setGeometry(QRect(230, 550, 92, 27));
         duplicateRuleButton = new QPushButton(centralwidget);
         duplicateRuleButton->setObjectName(QString::fromUtf8("duplicateRuleButton"));
         duplicateRuleButton->setGeometry(QRect(110, 550, 92, 27));
+        ruleEditButtonBox = new QDialogButtonBox(centralwidget);
+        ruleEditButtonBox->setObjectName(QString::fromUtf8("ruleEditButtonBox"));
+        ruleEditButtonBox->setGeometry(QRect(560, 550, 176, 27));
+        ruleEditButtonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -147,7 +153,7 @@ public:
         actionNetfilter_output->setText(QApplication::translate("MainWindow", "Netfilter output", 0, QApplication::UnicodeUTF8));
         newRuleButton->setText(QApplication::translate("MainWindow", "+", 0, QApplication::UnicodeUTF8));
         deleteRuleButton->setText(QApplication::translate("MainWindow", "-", 0, QApplication::UnicodeUTF8));
-        saveEditButton->setText(QApplication::translate("MainWindow", "Save", 0, QApplication::UnicodeUTF8));
+        saveApplyButton->setText(QApplication::translate("MainWindow", "Save", 0, QApplication::UnicodeUTF8));
         duplicateRuleButton->setText(QApplication::translate("MainWindow", "Duplicate", 0, QApplication::UnicodeUTF8));
         menuTools->setTitle(QApplication::translate("MainWindow", "Tools", 0, QApplication::UnicodeUTF8));
         menuApplication->setTitle(QApplication::translate("MainWindow", "Application", 0, QApplication::UnicodeUTF8));

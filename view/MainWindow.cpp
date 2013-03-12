@@ -135,7 +135,7 @@ void MainWindow::on_duplicateRuleButton_clicked() {
     }
 }
 
-void MainWindow::on_saveEditButton_clicked() {
+void MainWindow::on_ruleEditButtonBox_accepted() {
     QItemSelectionModel *selection = widget.rulesView->selectionModel();
     QModelIndexList indexes = selection->selectedIndexes();
 
@@ -159,6 +159,25 @@ void MainWindow::on_saveEditButton_clicked() {
 
         QMessageBox::critical(this, QString::fromUtf8("Save error"),
                 QString::fromUtf8("Cannot save rule - no rule selected."), QMessageBox::Ok, QMessageBox::Ok);
+    }
+}
+
+void MainWindow::on_ruleEditButtonBox_rejected() {
+    QItemSelectionModel *selection = widget.rulesView->selectionModel();
+    QModelIndexList indexes = selection->selectedIndexes();
+
+    if (indexes.count() > 0) {
+        /* due to selection model only one index is possible to select */
+        ruleEditWidget->ruleSelected(indexes.first());
+        
+        ruleChanged = false;
+        setupActions();
+                
+        Logger::getInstance()->debug("Rule reloaded");
+
+    } else {
+        QMessageBox::critical(this, QString::fromUtf8("Internal error"),
+                QString::fromUtf8("No index selected"));
     }
 }
 
@@ -193,7 +212,7 @@ void MainWindow::on_actionApply_modifications_triggered() {
 
 void MainWindow::on_actionSave_rule_triggered() {
     /* same as save button clicked */
-    this->on_saveEditButton_clicked();
+    //this->on_saveEditButton_clicked();
 }
 
 void MainWindow::on_actionNew_triggered() {
@@ -260,7 +279,7 @@ void MainWindow::actualRuleChanged() {
 
 void MainWindow::setupActions() {
     widget.actionSave_rule->setEnabled(ruleChanged);
-    widget.saveEditButton->setEnabled(ruleChanged);
+    widget.ruleEditButtonBox->setEnabled(ruleChanged);
     widget.duplicateRuleButton->setEnabled(!ruleChanged);
     widget.actionDuplicate->setEnabled(!ruleChanged);
     widget.actionNew->setEnabled(!ruleChanged);
