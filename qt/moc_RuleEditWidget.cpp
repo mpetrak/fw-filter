@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'RuleEditWidget.h'
 **
-** Created: Tue Mar 12 10:14:28 2013
+** Created: Tue Mar 12 11:31:44 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,24 +23,28 @@ static const uint qt_meta_data_RuleEditWidget[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: signature, parameters, type, tag, flags
+      16,   15,   15,   15, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      22,   16,   15,   15, 0x0a,
-      48,   16,   15,   15, 0x0a,
-      70,   15,   15,   15, 0x08,
+      36,   30,   15,   15, 0x0a,
+      62,   15,   15,   15, 0x08,
+      83,   15,   15,   15, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_RuleEditWidget[] = {
-    "RuleEditWidget\0\0index\0ruleSelected(QModelIndex)\0"
-    "ruleSave(QModelIndex)\0netProtocolChanged()\0"
+    "RuleEditWidget\0\0ruleChanged()\0index\0"
+    "ruleSelected(QModelIndex)\0"
+    "netProtocolChanged()\0ruleChangedSlot()\0"
 };
 
 const QMetaObject RuleEditWidget::staticMetaObject = {
@@ -72,13 +76,20 @@ int RuleEditWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: ruleSelected((*reinterpret_cast< QModelIndex(*)>(_a[1]))); break;
-        case 1: ruleSave((*reinterpret_cast< QModelIndex(*)>(_a[1]))); break;
+        case 0: ruleChanged(); break;
+        case 1: ruleSelected((*reinterpret_cast< QModelIndex(*)>(_a[1]))); break;
         case 2: netProtocolChanged(); break;
+        case 3: ruleChangedSlot(); break;
         default: ;
         }
-        _id -= 3;
+        _id -= 4;
     }
     return _id;
+}
+
+// SIGNAL 0
+void RuleEditWidget::ruleChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, 0);
 }
 QT_END_MOC_NAMESPACE

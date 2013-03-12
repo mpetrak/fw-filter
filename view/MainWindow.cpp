@@ -8,9 +8,8 @@ MainWindow::MainWindow() {
     widget.setupUi(this);
 
     /* after start disable some action - no change made */
-    //TODO set enabled to false
-    //widget.actionApply_modifications->setEnabled(false);
-    //widget.actionReset->setEnabled(false);
+    changed = false;
+    setupActions();
 
     /* enable drag and drop for rules view */
     widget.rulesView->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -39,8 +38,12 @@ MainWindow::MainWindow() {
     QObject::connect(this, SIGNAL(selectedRule(QModelIndex)),
             ruleEditWidget, SLOT(ruleSelected(QModelIndex)));
 
-    QObject::connect(this, SIGNAL(saveRule(QModelIndex)),
-            ruleEditWidget, SLOT(ruleSave(QModelIndex)));
+    /** 
+     * Connect signal from editing widget that rule is changed to class slot.
+     * Used for control GUI reaction (warning on unsave changes etc).
+     */
+    QObject::connect(ruleEditWidget, SIGNAL(ruleChanged()),
+            this, SLOT(actualRuleChanged()));
 }
 
 MainWindow::~MainWindow() {
@@ -139,8 +142,17 @@ void MainWindow::on_saveEditButton_clicked() {
 
         /* get last selected index and save rule on it */
         QModelIndex index = indexes.at(indexes.count() - 1);
-        emit saveRule(index);
-        Logger::getInstance()->debug("Rule saved");
+        if (!this->ruleEditWidget->ruleSave(index)) {
+
+            Logger::getInstance()->debug("Rule saving fault");
+        } else {
+
+            Logger::getInstance()->debug("Rule saved");
+
+            /* enable / disable GUI actions */
+            changed = false;
+            setupActions();
+        }
     } else {
 
         QMessageBox::critical(this, QString::fromUtf8("Save error"),
@@ -231,4 +243,16 @@ void MainWindow::newSettings() {
 
     this->repaint();
     Logger::getInstance()->debug("New settings accepted");
+}
+
+void MainWindow::actualRuleChanged() {
+    changed = true;
+    setupActions();
+}
+
+void MainWindow::setupActions() {
+    widget.actionSave_rule->setEnabled(changed);
+    widget.saveEditButton->setEnabled(changed);
+    //widget.actionApply_modifications->setEnabled(false);
+    //widget.actionReset->setEnabled(false);
 }

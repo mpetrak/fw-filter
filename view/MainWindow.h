@@ -33,6 +33,13 @@ public:
     void setConfiguration(Configuration *configuration);
 
 private:
+
+    /**
+     * Setup GUI actions as enable or disable.
+     * Depends on actual editing rule is changed or not.
+     */
+    void setupActions();
+
     Ui::MainWindow widget;
 
     /** Configuration */
@@ -46,6 +53,9 @@ private:
 
     /** Log view */
     LogView *logView;
+
+    /** Actualy editing rule is changed or not*/
+    bool changed;
 
 private slots:
     void on_newRuleButton_clicked();
@@ -62,7 +72,15 @@ private slots:
     void on_actionSettings_triggered();
     void on_actionNetfilter_output_triggered();
 
+    /**
+     * Slot to call on settings is changed.
+     */
     void newSettings();
+
+    /**
+     * Slot to call if actual editing rule is changed.
+     */
+    void actualRuleChanged();
 
 signals:
 
@@ -91,8 +109,6 @@ signals:
      * @param index selected index
      */
     void selectedRule(QModelIndex index);
-
-    void saveRule(QModelIndex index);
 
 };
 

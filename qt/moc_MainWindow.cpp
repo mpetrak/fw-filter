@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'MainWindow.h'
 **
-** Created: Tue Mar 12 10:14:25 2013
+** Created: Tue Mar 12 11:31:39 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -28,30 +28,30 @@ static const uint qt_meta_data_MainWindow[] = {
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       5,       // signalCount
+       4,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       21,   12,   11,   11, 0x05,
       34,   12,   11,   11, 0x05,
       50,   12,   11,   11, 0x05,
       75,   69,   11,   11, 0x05,
-     101,   69,   11,   11, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-     123,   11,   11,   11, 0x08,
-     150,   11,   11,   11, 0x08,
-     180,   11,   11,   11, 0x08,
-     213,   11,   11,   11, 0x08,
-     241,   11,   11,   11, 0x08,
-     268,   11,   11,   11, 0x08,
-     299,   11,   11,   11, 0x08,
-     324,   11,   11,   11, 0x08,
-     352,   11,   11,   11, 0x08,
-     383,   11,   11,   11, 0x08,
-     424,   11,   11,   11, 0x08,
-     451,   11,   11,   11, 0x08,
-     481,   11,   11,   11, 0x08,
-     519,   11,   11,   11, 0x08,
+     101,   11,   11,   11, 0x08,
+     128,   11,   11,   11, 0x08,
+     158,   11,   11,   11, 0x08,
+     191,   11,   11,   11, 0x08,
+     219,   11,   11,   11, 0x08,
+     246,   11,   11,   11, 0x08,
+     277,   11,   11,   11, 0x08,
+     302,   11,   11,   11, 0x08,
+     330,   11,   11,   11, 0x08,
+     361,   11,   11,   11, 0x08,
+     402,   11,   11,   11, 0x08,
+     429,   11,   11,   11, 0x08,
+     459,   11,   11,   11, 0x08,
+     497,   11,   11,   11, 0x08,
+     511,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -60,7 +60,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0position\0newRule(int)\0"
     "deleteRule(int)\0duplicateRule(int)\0"
     "index\0selectedRule(QModelIndex)\0"
-    "saveRule(QModelIndex)\0on_newRuleButton_clicked()\0"
+    "on_newRuleButton_clicked()\0"
     "on_deleteRuleButton_clicked()\0"
     "on_duplicateRuleButton_clicked()\0"
     "on_saveEditButton_clicked()\0"
@@ -73,7 +73,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_actionReset_triggered()\0"
     "on_actionSettings_triggered()\0"
     "on_actionNetfilter_output_triggered()\0"
-    "newSettings()\0"
+    "newSettings()\0actualRuleChanged()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -109,21 +109,21 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 1: deleteRule((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: duplicateRule((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 3: selectedRule((*reinterpret_cast< QModelIndex(*)>(_a[1]))); break;
-        case 4: saveRule((*reinterpret_cast< QModelIndex(*)>(_a[1]))); break;
-        case 5: on_newRuleButton_clicked(); break;
-        case 6: on_deleteRuleButton_clicked(); break;
-        case 7: on_duplicateRuleButton_clicked(); break;
-        case 8: on_saveEditButton_clicked(); break;
-        case 9: on_actionClose_triggered(); break;
-        case 10: on_actionSave_rule_triggered(); break;
-        case 11: on_actionNew_triggered(); break;
-        case 12: on_actionDelete_triggered(); break;
-        case 13: on_actionDuplicate_triggered(); break;
-        case 14: on_actionApply_modifications_triggered(); break;
-        case 15: on_actionReset_triggered(); break;
-        case 16: on_actionSettings_triggered(); break;
-        case 17: on_actionNetfilter_output_triggered(); break;
-        case 18: newSettings(); break;
+        case 4: on_newRuleButton_clicked(); break;
+        case 5: on_deleteRuleButton_clicked(); break;
+        case 6: on_duplicateRuleButton_clicked(); break;
+        case 7: on_saveEditButton_clicked(); break;
+        case 8: on_actionClose_triggered(); break;
+        case 9: on_actionSave_rule_triggered(); break;
+        case 10: on_actionNew_triggered(); break;
+        case 11: on_actionDelete_triggered(); break;
+        case 12: on_actionDuplicate_triggered(); break;
+        case 13: on_actionApply_modifications_triggered(); break;
+        case 14: on_actionReset_triggered(); break;
+        case 15: on_actionSettings_triggered(); break;
+        case 16: on_actionNetfilter_output_triggered(); break;
+        case 17: newSettings(); break;
+        case 18: actualRuleChanged(); break;
         default: ;
         }
         _id -= 19;
@@ -157,12 +157,5 @@ void MainWindow::selectedRule(QModelIndex _t1)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 3, _a);
-}
-
-// SIGNAL 4
-void MainWindow::saveRule(QModelIndex _t1)
-{
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 4, _a);
 }
 QT_END_MOC_NAMESPACE

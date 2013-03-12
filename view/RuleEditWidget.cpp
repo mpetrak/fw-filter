@@ -1,9 +1,3 @@
-/* 
- * File:   ruleEditWidget.cpp
- * Author: petris
- * 
- * Created on 10. leden 2013, 13:10
- */
 
 #include <qt4/QtCore/qabstractitemmodel.h>
 #include <qt4/QtGui/qgridlayout.h>
@@ -61,6 +55,7 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
 
     if (index.isValid()) {
         FilterRule rule = this->rulesModel->getRule(index.row());
+        this->loadingRule = true;
 
         this->nameEdit->setText(rule.getName());
         this->descriptionEdit->setText(rule.getDescription());
@@ -102,10 +97,12 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
 
         /* render net layer options */
         netProtocolChanged();
+
+        this->loadingRule = false;
     }
 }
 
-void RuleEditWidget::ruleSave(QModelIndex index) {
+bool RuleEditWidget::ruleSave(QModelIndex index) {
 
     /* first of all, control some edits, where is possible to write bad values */
     bool wrongInput = false;
@@ -207,6 +204,8 @@ void RuleEditWidget::ruleSave(QModelIndex index) {
                     QString::fromUtf8("Bad index!"), QMessageBox::Ok, QMessageBox::Ok);
         }
     }
+
+    return !wrongInput;
 }
 
 void RuleEditWidget::setRulesModel(FilterRulesModel* model) {
@@ -237,6 +236,8 @@ void RuleEditWidget::setupGeneralWidget() {
     this->nameEdit = new QLineEdit(this->tabGeneral);
     this->nameEdit->setObjectName(QString::fromUtf8("nameEdit"));
     gridLayout->addWidget(this->nameEdit, 1, 2, 1, 1);
+    connect(nameEdit, SIGNAL(textEdited(const QString)),
+            this, SLOT(ruleChangedSlot()));
 
     QLabel *descriptionLabel = new QLabel(this->tabGeneral);
     descriptionLabel->setObjectName(QString::fromUtf8("descriptionLabel"));
@@ -246,6 +247,8 @@ void RuleEditWidget::setupGeneralWidget() {
     this->descriptionEdit = new QTextEdit(this->tabGeneral);
     this->descriptionEdit->setObjectName(QString::fromUtf8("descriptionEdit"));
     gridLayout->addWidget(this->descriptionEdit, 3, 2, 1, 1);
+    connect(descriptionEdit, SIGNAL(textChanged()),
+            this, SLOT(ruleChangedSlot()));
 
     /* vertical spacer before action */
     QSpacerItem *verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -262,6 +265,8 @@ void RuleEditWidget::setupGeneralWidget() {
     this->actionSelect->setSizePolicy(fixedSizePolicy);
     this->actionSelect->addItems(this->actions);
     gridLayout->addWidget(this->actionSelect, 5, 2, 1, 1);
+    connect(actionSelect, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(ruleChangedSlot()));
 
     /* vertical space to the end */
     QSpacerItem *verticalEndSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -305,6 +310,8 @@ void RuleEditWidget::setupEbWidget() {
     this->inInterfaceSelect->setSizePolicy(fixedSizePolicy);
     this->inInterfaceSelect->addItems(this->interfaces);
     gridLayout->addWidget(this->inInterfaceSelect, 1, 2, 1, 1);
+    connect(inInterfaceSelect, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(ruleChangedSlot()));
 
     /* output interface */
     QLabel *outInterfaceLabel = new QLabel(this->tabEb);
@@ -320,6 +327,8 @@ void RuleEditWidget::setupEbWidget() {
     this->outInterfaceSelect->setObjectName(QString::fromUtf8("outInterfaceSelect"));
     this->outInterfaceSelect->setSizePolicy(fixedSizePolicy);
     this->outInterfaceSelect->addItems(this->interfaces);
+    connect(outInterfaceSelect, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(ruleChangedSlot()));
     gridLayout->addWidget(this->outInterfaceSelect, 2, 2, 1, 1);
 
     /* protocol */
@@ -339,10 +348,12 @@ void RuleEditWidget::setupEbWidget() {
     this->ebProtoSelect->setObjectName(QString::fromUtf8("ebProtoSelect"));
     this->ebProtoSelect->setSizePolicy(fixedSizePolicy);
     this->ebProtoSelect->addItems(this->ebProtocols);
-    gridLayout->addWidget(ebProtoSelect, 3, 2, 1, 1);
     /* connect to slot for enable/disable net layer options */
     connect(ebProtoSelect, SIGNAL(currentIndexChanged(const QString)),
             this, SLOT(netProtocolChanged()));
+    connect(ebProtoSelect, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(ruleChangedSlot()));
+    gridLayout->addWidget(ebProtoSelect, 3, 2, 1, 1);
 
     /* source address */
     QLabel *macSourceLabel = new QLabel(this->tabEb);
@@ -357,6 +368,8 @@ void RuleEditWidget::setupEbWidget() {
     this->macSourceEdit = new QLineEdit(this->tabEb);
     this->macSourceEdit->setObjectName(QString::fromUtf8("macSourceEdit"));
     this->macSourceEdit->setValidator(addrValidator);
+    connect(macSourceEdit, SIGNAL(textEdited(const QString)),
+            this, SLOT(ruleChangedSlot()));
     gridLayout->addWidget(this->macSourceEdit, 4, 2, 1, 1);
 
     /* source mask */
@@ -368,6 +381,8 @@ void RuleEditWidget::setupEbWidget() {
     this->macSourceMaskEdit = new QLineEdit(this->tabEb);
     this->macSourceMaskEdit->setObjectName(QString::fromUtf8("macSourceMaskEdit"));
     this->macSourceMaskEdit->setValidator(addrValidator);
+    connect(macSourceMaskEdit, SIGNAL(textEdited(const QString)),
+            this, SLOT(ruleChangedSlot()));
     gridLayout->addWidget(this->macSourceMaskEdit, 4, 4, 1, 1);
 
     /* destination address */
@@ -383,6 +398,8 @@ void RuleEditWidget::setupEbWidget() {
     this->macDestEdit = new QLineEdit(this->tabEb);
     this->macDestEdit->setObjectName(QString::fromUtf8("macDestEdit"));
     this->macDestEdit->setValidator(addrValidator);
+    connect(macDestEdit, SIGNAL(textEdited(const QString)),
+            this, SLOT(ruleChangedSlot()));
     gridLayout->addWidget(this->macDestEdit, 5, 2, 1, 1);
 
     /* destination mask */
@@ -394,6 +411,8 @@ void RuleEditWidget::setupEbWidget() {
     this->macDestMaskEdit = new QLineEdit(this->tabEb);
     this->macDestMaskEdit->setObjectName(QString::fromUtf8("macDestMaskEdit"));
     this->macDestMaskEdit->setValidator(addrValidator);
+    connect(macDestMaskEdit, SIGNAL(textEdited(const QString)),
+            this, SLOT(ruleChangedSlot()));
     gridLayout->addWidget(this->macDestMaskEdit, 5, 4, 1, 1);
 
     /* Vertical spacer to the end */
@@ -441,6 +460,8 @@ void RuleEditWidget::setupIpWidget() {
     this->ipProtoSelect->setObjectName(QString::fromUtf8("ipProtoSelect"));
     this->ipProtoSelect->setSizePolicy(fixedSizePolicy);
     this->ipProtoSelect->addItems(this->ipProtocols);
+    connect(ipProtoSelect, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(ruleChangedSlot()));
     gridLayout->addWidget(ipProtoSelect, 1, 2, 1, 1);
 
     /* source address */
@@ -456,6 +477,8 @@ void RuleEditWidget::setupIpWidget() {
     this->ipSourceEdit = new QLineEdit(this->tabIp);
     this->ipSourceEdit->setObjectName(QString::fromUtf8("ipSourceEdit"));
     this->ipSourceEdit->setValidator(addrValidator);
+    connect(ipSourceEdit, SIGNAL(textEdited(const QString)),
+            this, SLOT(ruleChangedSlot()));
     gridLayout->addWidget(this->ipSourceEdit, 2, 2, 1, 1);
 
     /* source mask */
@@ -468,6 +491,8 @@ void RuleEditWidget::setupIpWidget() {
     this->ipSourceMaskEdit->setObjectName(QString::fromUtf8("ipSourceMaskEdit"));
     this->ipSourceMaskEdit->setValidator(maskValidator);
     this->ipSourceMaskEdit->setFixedWidth(MASK_EDIT_WIDTH);
+    connect(ipSourceMaskEdit, SIGNAL(textEdited(const QString)),
+            this, SLOT(ruleChangedSlot()));
     gridLayout->addWidget(this->ipSourceMaskEdit, 2, 4, 1, 1);
 
     /* destination address */
@@ -483,6 +508,8 @@ void RuleEditWidget::setupIpWidget() {
     this->ipDestEdit = new QLineEdit(this->tabIp);
     this->ipDestEdit->setObjectName(QString::fromUtf8("ipDestEdit"));
     this->ipDestEdit->setValidator(addrValidator);
+    connect(ipDestEdit, SIGNAL(textEdited(const QString)),
+            this, SLOT(ruleChangedSlot()));
     gridLayout->addWidget(this->ipDestEdit, 3, 2, 1, 1);
 
     /* destination mask */
@@ -495,6 +522,8 @@ void RuleEditWidget::setupIpWidget() {
     this->ipDestMaskEdit->setObjectName(QString::fromUtf8("ipDestMaskEdit"));
     this->ipDestMaskEdit->setValidator(maskValidator);
     this->ipDestMaskEdit->setFixedWidth(MASK_EDIT_WIDTH);
+    connect(ipDestMaskEdit, SIGNAL(textEdited(const QString)),
+            this, SLOT(ruleChangedSlot()));
     gridLayout->addWidget(this->ipDestMaskEdit, 3, 4, 1, 1);
 
     /* Vertical spacer to the end */
@@ -508,6 +537,7 @@ QComboBox *RuleEditWidget::makeNegationSelect(QWidget *parent) {
     QComboBox *select = new QComboBox(parent);
     select->insertItem(NORMAL_OPTION_INDEX, QString::fromUtf8("IS"));
     select->insertItem(NEGATION_OPTION_INDEX, QString::fromUtf8("NOT"));
+    connect(select, SIGNAL(currentIndexChanged(int)), this, SLOT(ruleChangedSlot()));
     return select;
 }
 
@@ -531,4 +561,9 @@ void RuleEditWidget::netProtocolChanged() {
             Logger::getInstance()->debug("Disabled net options");
         }
     }
+}
+
+void RuleEditWidget::ruleChangedSlot() {
+    if (!loadingRule)
+        emit ruleChanged();
 }

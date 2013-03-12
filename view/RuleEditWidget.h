@@ -1,9 +1,3 @@
-/* 
- * File:   ruleEditWidget.h
- * Author: petris
- *
- * Created on 10. leden 2013, 13:10
- */
 
 #ifndef RULEEDITWIDGET_H
 #define	RULEEDITWIDGET_H
@@ -33,6 +27,14 @@ public:
      */
     void setRulesModel(FilterRulesModel *model);
 
+    /**
+     * Public slot for saving rule from widget to rules model on
+     * actually selected rule.
+     * @param index inces of selected rule in list of rules
+     * @return true on success / false on fault
+     */
+    bool ruleSave(QModelIndex index);
+
 public slots:
     /**
      * Public slot for updating edit widget with actual selected rule.
@@ -40,14 +42,17 @@ public slots:
      */
     void ruleSelected(QModelIndex index);
 
-    void ruleSave(QModelIndex index);
-
 private slots:
     /**
      * Enable or disable net layer options.
      * Depends on current net protocol and protocol negation options.
      */
     void netProtocolChanged();
+
+    /**
+     * Slot to call if rule is changed - edited by user.
+     */
+    void ruleChangedSlot();
 
 private:
     static const char* MAC_ADDRESS_REGEX;
@@ -58,11 +63,23 @@ private:
     static const int TAB_GENERAL_INDEX;
     static const int TAB_LINK_INDEX;
     static const int TAB_NET_INDEX;
-    
+
     void setupEbWidget();
     void setupGeneralWidget();
     void setupIpWidget();
 
+    /**
+     * True during loading rule process.
+     * Used for block emiting signal, that rule is changed during loading.
+     * During loading, input GUI objects are changing end emiting their changed signals.
+     */
+    bool loadingRule;
+
+    /**
+     * Create GUI select for negation.
+     * @param parent parent of created combobox
+     * @return pointer to created combobox
+     */
     QComboBox *makeNegationSelect(QWidget *parent);
 
     /** List of rule actions */
@@ -117,6 +134,13 @@ private:
     QLineEdit *ipDestMaskEdit;
     QComboBox *ipProtoNegSelect;
     QComboBox *ipProtoSelect;
+
+signals:
+
+    /**
+     * Editing rule is changed by user editing.
+     */
+    void ruleChanged();
 
 };
 
