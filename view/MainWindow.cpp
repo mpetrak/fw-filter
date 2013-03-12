@@ -7,11 +7,6 @@
 MainWindow::MainWindow() {
     widget.setupUi(this);
 
-    /* after start disable some action - no change made */
-    ruleChanged = false;
-    unsavedChanges = false;
-    setupActions();
-
     /* enable drag and drop for rules view */
     widget.rulesView->setSelectionMode(QAbstractItemView::SingleSelection);
     widget.rulesView->setDragEnabled(true);
@@ -27,10 +22,6 @@ MainWindow::MainWindow() {
     logView->setObjectName(QString::fromUtf8("logView"));
     logView->setGeometry(QRect(10, 590, 731, 84));
 
-    /* Connect selection signal from rules view to widget for editing rule */
-    QObject::connect(widget.rulesView, SIGNAL(clicked(QModelIndex)),
-            ruleEditWidget, SLOT(ruleSelected(QModelIndex)));
-
     /* 
      * Connect selection signal from main window to widget for editing rule.
      * Used in case of deleting, then emit this signal to update editing widget
@@ -45,6 +36,11 @@ MainWindow::MainWindow() {
      */
     QObject::connect(ruleEditWidget, SIGNAL(ruleChanged()),
             this, SLOT(actualRuleChanged()));
+
+    /* after start disable some action - no change made */
+    ruleChanged = false;
+    unsavedChanges = false;
+    setupActions();
 }
 
 MainWindow::~MainWindow() {
@@ -295,7 +291,19 @@ void MainWindow::setupActions() {
     widget.actionDuplicate->setEnabled(!ruleChanged);
     widget.actionNew->setEnabled(!ruleChanged);
     widget.newRuleButton->setEnabled(!ruleChanged);
-    
+
+    if (ruleChanged) {
+        widget.rulesView->setSelectionMode(QAbstractItemView::NoSelection);
+        QObject::disconnect(widget.rulesView, SIGNAL(clicked(QModelIndex)),
+                ruleEditWidget, SLOT(ruleSelected(QModelIndex)));
+    } else {
+        widget.rulesView->setSelectionMode(QAbstractItemView::SingleSelection);
+        /* Connect selection signal from rules view to widget for editing rule */
+        QObject::connect(widget.rulesView, SIGNAL(clicked(QModelIndex)),
+                ruleEditWidget, SLOT(ruleSelected(QModelIndex)));
+    }
+
+
     widget.actionApply_modifications->setEnabled(unsavedChanges && !ruleChanged);
     widget.actionReset->setEnabled(unsavedChanges && !ruleChanged);
     widget.saveApplyButton->setEnabled(unsavedChanges && !ruleChanged);
