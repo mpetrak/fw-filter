@@ -8,7 +8,8 @@ MainWindow::MainWindow() {
     widget.setupUi(this);
 
     /* after start disable some action - no change made */
-    changed = false;
+    ruleChanged = false;
+    unsavedChanges = false;
     setupActions();
 
     /* enable drag and drop for rules view */
@@ -150,7 +151,8 @@ void MainWindow::on_saveEditButton_clicked() {
             Logger::getInstance()->debug("Rule saved");
 
             /* enable / disable GUI actions */
-            changed = false;
+            ruleChanged = false;
+            unsavedChanges = true;
             setupActions();
         }
     } else {
@@ -163,23 +165,26 @@ void MainWindow::on_saveEditButton_clicked() {
 void MainWindow::on_actionApply_modifications_triggered() {
 
     if (this->rulesModel != NULL) {
+        bool systemSuccess, XMLSuccess;
 
         RulesPusher *pusher = new RulesPusher(configuration);
-
-        if (!pusher->writeRules(this->rulesModel->getRulesList())) {
+        systemSuccess = pusher->writeRules(this->rulesModel->getRulesList());
+        if (!systemSuccess) {
             QMessageBox::critical(this, QString::fromUtf8("Save error"),
                     QString::fromUtf8("Error during saving rules to system!"), QMessageBox::Ok, QMessageBox::Ok);
         }
         free(pusher);
 
         RulesXML *xml = new RulesXML();
-
-        if (!xml->saveRules(this->rulesModel->getRulesList())) {
+        XMLSuccess = xml->saveRules(this->rulesModel->getRulesList());
+        if (!XMLSuccess) {
             QMessageBox::critical(this, QString::fromUtf8("Save error"),
                     QString::fromUtf8("Error during saving rules to XML file!"), QMessageBox::Ok, QMessageBox::Ok);
         }
         free(xml);
 
+        /* write to state variable, if there is unsave changes */
+        unsavedChanges = !(XMLSuccess && systemSuccess);
     } else {
         QMessageBox::critical(this, QString::fromUtf8("Internal error"),
                 QString::fromUtf8("NULL rulesModel"), QMessageBox::Ok, QMessageBox::Ok);
@@ -208,6 +213,9 @@ void MainWindow::on_actionDuplicate_triggered() {
 
 void MainWindow::on_actionReset_triggered() {
     this->rulesModel->reloadRules();
+    unsavedChanges = false;
+    ruleChanged = false;
+    setupActions();
 }
 
 void MainWindow::on_actionSettings_triggered() {
@@ -246,13 +254,17 @@ void MainWindow::newSettings() {
 }
 
 void MainWindow::actualRuleChanged() {
-    changed = true;
+    ruleChanged = true;
     setupActions();
 }
 
 void MainWindow::setupActions() {
-    widget.actionSave_rule->setEnabled(changed);
-    widget.saveEditButton->setEnabled(changed);
-    //widget.actionApply_modifications->setEnabled(false);
-    //widget.actionReset->setEnabled(false);
+    widget.actionSave_rule->setEnabled(ruleChanged);
+    widget.saveEditButton->setEnabled(ruleChanged);
+    widget.duplicateRuleButton->setEnabled(!ruleChanged);
+    widget.actionDuplicate->setEnabled(!ruleChanged);
+    widget.actionNew->setEnabled(!ruleChanged);
+    widget.newRuleButton->setEnabled(!ruleChanged);
+    widget.actionApply_modifications->setEnabled(unsavedChanges);
+    widget.actionReset->setEnabled(unsavedChanges);
 }

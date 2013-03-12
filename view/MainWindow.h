@@ -54,8 +54,10 @@ private:
     /** Log view */
     LogView *logView;
 
-    /** Actualy editing rule is changed or not*/
-    bool changed;
+    /** Actualy editing rule is changed or not */
+    bool ruleChanged;
+    /** If some rule has been changed and changes have not been written to system yet */
+    bool unsavedChanges;
 
 private slots:
     void on_newRuleButton_clicked();
