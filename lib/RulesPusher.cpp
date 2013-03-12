@@ -72,8 +72,8 @@ bool RulesPusher::writeRules(QList<FilterRule> rules) {
     } else {
 
         /* remove files */
-        //remove(EB_OUTPUT_FILE);
-        //remove(IP_OUTPUT_FILE);
+        remove(EB_OUTPUT_FILE);
+        remove(IP_OUTPUT_FILE);
         Logger::getInstance()->debug("Rules successfully pushed");
         return true;
     }
