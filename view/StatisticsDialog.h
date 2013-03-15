@@ -8,6 +8,7 @@
 #include <QSpinBox>
 #include <QLabel>
 #include <QGridLayout>
+#include <QScrollArea>
 #include "../model/FilterRule.h"
 
 class StatisticsDialog : public QDialog {
@@ -19,7 +20,11 @@ private:
     static int COL_PACKETS;
     static int COL_BYTES;
 
+    /** List of filter rules */
     QList<FilterRule> rules;
+
+    /** Central widget */
+    QWidget *centralWidget;
 
 };
 
