@@ -258,6 +258,11 @@ void MainWindow::on_actionSettings_triggered() {
     settings->show();
 }
 
+void MainWindow::on_actionStatistics_triggered() {
+    StatisticsDialog *stats = new StatisticsDialog(this, rulesModel->getRulesList());
+    stats->show();
+}
+
 void MainWindow::on_actionNetfilter_output_triggered() {
     RulesPusher *pusher = new RulesPusher(configuration);
     /* turn out logging */

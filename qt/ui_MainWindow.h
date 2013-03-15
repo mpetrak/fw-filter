@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created: Tue Mar 12 18:41:52 2013
+** Created: Fri Mar 15 11:31:45 2013
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -39,6 +39,7 @@ public:
     QAction *actionDuplicate;
     QAction *actionNetfilter_output;
     QAction *actionCancel_changes;
+    QAction *actionStatistics;
     QWidget *centralwidget;
     QListView *rulesView;
     QPushButton *newRuleButton;
@@ -77,6 +78,8 @@ public:
         actionNetfilter_output->setObjectName(QString::fromUtf8("actionNetfilter_output"));
         actionCancel_changes = new QAction(MainWindow);
         actionCancel_changes->setObjectName(QString::fromUtf8("actionCancel_changes"));
+        actionStatistics = new QAction(MainWindow);
+        actionStatistics->setObjectName(QString::fromUtf8("actionStatistics"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         rulesView = new QListView(centralwidget);
@@ -120,6 +123,7 @@ public:
         menubar->addAction(menuRule->menuAction());
         menubar->addAction(menuTools->menuAction());
         menuTools->addAction(actionSettings);
+        menuTools->addAction(actionStatistics);
         menuTools->addSeparator();
         menuTools->addAction(actionNetfilter_output);
         menuApplication->addAction(actionApply_modifications);
@@ -156,6 +160,7 @@ public:
         actionDuplicate->setText(QApplication::translate("MainWindow", "Duplicate", 0, QApplication::UnicodeUTF8));
         actionNetfilter_output->setText(QApplication::translate("MainWindow", "Netfilter output", 0, QApplication::UnicodeUTF8));
         actionCancel_changes->setText(QApplication::translate("MainWindow", "Cancel changes", 0, QApplication::UnicodeUTF8));
+        actionStatistics->setText(QApplication::translate("MainWindow", "Statistics", 0, QApplication::UnicodeUTF8));
         newRuleButton->setText(QApplication::translate("MainWindow", "+", 0, QApplication::UnicodeUTF8));
         deleteRuleButton->setText(QApplication::translate("MainWindow", "-", 0, QApplication::UnicodeUTF8));
         saveApplyButton->setText(QApplication::translate("MainWindow", "Save and apply", 0, QApplication::UnicodeUTF8));

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'MainWindow.h'
 **
-** Created: Fri Mar 15 10:18:19 2013
+** Created: Fri Mar 15 12:02:36 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      19,   14, // methods
+      20,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -47,9 +47,10 @@ static const uint qt_meta_data_MainWindow[] = {
      414,   11,   11,   11, 0x08,
      441,   11,   11,   11, 0x08,
      471,   11,   11,   11, 0x08,
-     509,   11,   11,   11, 0x08,
-     523,   11,   11,   11, 0x08,
-     543,   11,   11,   11, 0x08,
+     503,   11,   11,   11, 0x08,
+     541,   11,   11,   11, 0x08,
+     555,   11,   11,   11, 0x08,
+     575,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -70,6 +71,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_actionApply_modifications_triggered()\0"
     "on_actionReset_triggered()\0"
     "on_actionSettings_triggered()\0"
+    "on_actionStatistics_triggered()\0"
     "on_actionNetfilter_output_triggered()\0"
     "newSettings()\0actualRuleChanged()\0"
     "clearRuleSelection()\0"
@@ -119,13 +121,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 12: on_actionApply_modifications_triggered(); break;
         case 13: on_actionReset_triggered(); break;
         case 14: on_actionSettings_triggered(); break;
-        case 15: on_actionNetfilter_output_triggered(); break;
-        case 16: newSettings(); break;
-        case 17: actualRuleChanged(); break;
-        case 18: clearRuleSelection(); break;
+        case 15: on_actionStatistics_triggered(); break;
+        case 16: on_actionNetfilter_output_triggered(); break;
+        case 17: newSettings(); break;
+        case 18: actualRuleChanged(); break;
+        case 19: clearRuleSelection(); break;
         default: ;
         }
-        _id -= 19;
+        _id -= 20;
     }
     return _id;
 }

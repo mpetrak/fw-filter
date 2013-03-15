@@ -9,6 +9,7 @@
 #include "RuleEditWidget.h"
 #include "LogView.h"
 #include "SettingsDialog.h"
+#include "StatisticsDialog.h"
 #include "NfOutputDialog.h"
 #include "../lib/RulesPusher.h"
 #include "../lib/RulesXML.h"
@@ -78,6 +79,7 @@ private slots:
     void on_actionApply_modifications_triggered();
     void on_actionReset_triggered();
     void on_actionSettings_triggered();
+    void on_actionStatistics_triggered();
     void on_actionNetfilter_output_triggered();
 
     /**
