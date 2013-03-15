@@ -45,6 +45,9 @@ void MainWindow::setRulesViewModel(QAbstractItemModel* model) {
 
     widget.rulesView->setModel(model);
     ruleEditWidget->setRulesModel((FilterRulesModel *) model);
+
+    /* connect dropped signal from model to slot, that clear rule selection */
+    connect(rulesModel, SIGNAL(droppedItem()), this, SLOT(clearRuleSelection()));
 }
 
 void MainWindow::setConfiguration(Configuration* configuration) {
@@ -287,6 +290,16 @@ void MainWindow::newSettings() {
 
 void MainWindow::actualRuleChanged() {
     ruleChanged = true;
+    setupActions();
+}
+
+void MainWindow::clearRuleSelection() {
+    /* clear edit widget */
+    this->ruleEditWidget->ruleSelected(QModelIndex());
+    // widget.rulesView->clearSelection();
+
+    /* change order - change state of unsaved changes */
+    unsavedChanges = true;
     setupActions();
 }
 

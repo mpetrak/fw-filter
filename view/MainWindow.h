@@ -90,6 +90,10 @@ private slots:
      */
     void actualRuleChanged();
 
+    /**
+     * Slot to clear selection of rules and rule edit widget.
+     */
+    void clearRuleSelection();
 };
 
 #endif	/* _MAINWINDOW_H */

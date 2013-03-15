@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'MainWindow.h'
 **
-** Created: Tue Mar 12 20:58:15 2013
+** Created: Fri Mar 15 10:18:19 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -49,7 +49,7 @@ static const uint qt_meta_data_MainWindow[] = {
      471,   11,   11,   11, 0x08,
      509,   11,   11,   11, 0x08,
      523,   11,   11,   11, 0x08,
-     551,  543,   11,   11, 0x08,
+     543,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -72,7 +72,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_actionSettings_triggered()\0"
     "on_actionNetfilter_output_triggered()\0"
     "newSettings()\0actualRuleChanged()\0"
-    "indexes\0rulesViewSelection(QModelIndexList)\0"
+    "clearRuleSelection()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -122,7 +122,7 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 15: on_actionNetfilter_output_triggered(); break;
         case 16: newSettings(); break;
         case 17: actualRuleChanged(); break;
-        case 18: rulesViewSelection((*reinterpret_cast< QModelIndexList(*)>(_a[1]))); break;
+        case 18: clearRuleSelection(); break;
         default: ;
         }
         _id -= 19;

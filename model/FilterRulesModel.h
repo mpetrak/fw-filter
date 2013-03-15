@@ -86,6 +86,12 @@ private:
     /** List of rules */
     QList<FilterRule> rulesList;
 
+signals:
+    /**
+     * Signals that some thing in model was dropped.
+     * @return 
+     */
+    void droppedItem();
 };
 
 #endif	/* FILTERRULESMODEL_H */

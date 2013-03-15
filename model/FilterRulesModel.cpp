@@ -199,7 +199,7 @@ bool FilterRulesModel::dropMimeData(const QMimeData* data, Qt::DropAction action
     } else {
         beginRow = rowCount(QModelIndex());
     }
-    
+
     /* decoding imported data */
     QByteArray encodedData = data->data("application/vnd.filterrule.list");
     QDataStream readStream(&encodedData, QIODevice::ReadOnly);
@@ -221,6 +221,7 @@ bool FilterRulesModel::dropMimeData(const QMimeData* data, Qt::DropAction action
         beginRow++;
     }
 
+    emit droppedItem();
     return true;
 }
 
