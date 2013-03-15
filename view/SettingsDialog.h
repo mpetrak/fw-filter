@@ -7,7 +7,6 @@
 #include <QCheckBox>
 #include <QComboBox>
 
-#include "../lib/RulesPusher.h"
 #include "../lib/Configuration.h"
 
 class SettingsDialog : public QDialog {
