@@ -3,7 +3,11 @@
 #define	STATISTICSDIALOG_H
 
 #include <QDialog>
+#include <QDialogButtonBox>
 #include <QList>
+#include <QSpinBox>
+#include <QLabel>
+#include <QGridLayout>
 #include "../model/FilterRule.h"
 
 class StatisticsDialog : public QDialog {

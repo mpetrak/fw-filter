@@ -1,8 +1,4 @@
 
-#include <qt4/QtGui/qgridlayout.h>
-#include <qt4/QtGui/qlabel.h>
-#include <qt4/QtGui/qspinbox.h>
-
 #include "StatisticsDialog.h"
 
 int StatisticsDialog::COL_DESC = 0;
@@ -58,7 +54,13 @@ StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : Q
 
     /* Vertical spacer to the end */
     QSpacerItem *verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    layout->addItem(verticalSpacer, rules.count() + 1, 1, 1, 1);
+    layout->addItem(verticalSpacer, rules.count() + 1, COL_DESC, 1, 1);
+
+    /* dialog buttons */
+    QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok, Qt::Horizontal, this);
+    buttons->setObjectName(QString::fromUtf8("buttons"));
+    connect(buttons, SIGNAL(accepted()), this, SLOT(accept()));
+    layout->addWidget(buttons, rules.count() + 2, COL_BYTES, 1, 1);
 }
 
 StatisticsDialog::~StatisticsDialog() {
