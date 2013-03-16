@@ -108,6 +108,10 @@ public:
     void setIpSourceMask(short ipSourceMask);
     bool isIpSourceNeg() const;
     void setIpSourceNeg(bool ipSourceNeg);
+    long getBytesCount() const;
+    void setBytesCount(long bytesCount);
+    long getPacketCount() const;
+    void setPacketCount(long packetCount);
 
 private:
     /** number of rule */
@@ -161,6 +165,12 @@ private:
 
     /** Action of matched packet */
     QString action;
+
+    /** Number of affected packets */
+    long packetCount;
+
+    /** Number of affected bytes */
+    long bytesCount;
 
 
 };

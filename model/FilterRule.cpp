@@ -47,6 +47,8 @@ FilterRule::FilterRule() {
     setIpDest("");
     setIpDestMask(FilterRule::INT_VALUE_UNSPECIFIED);
     setIpDestNeg(false);
+    setPacketCount(0);
+    setBytesCount(0);
 }
 
 FilterRule::FilterRule(FilterRule* copy) {
@@ -383,3 +385,18 @@ void FilterRule::setIpSourceMask(short ipSourceMask) {
     this->ipSourceMask = ipSourceMask;
 }
 
+long FilterRule::getBytesCount() const {
+    return bytesCount;
+}
+
+void FilterRule::setBytesCount(long bytesCount) {
+    this->bytesCount = bytesCount;
+}
+
+long FilterRule::getPacketCount() const {
+    return packetCount;
+}
+
+void FilterRule::setPacketCount(long packetCount) {
+    this->packetCount = packetCount;
+}
