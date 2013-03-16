@@ -10,6 +10,7 @@
 
 #include <QString>
 #include <QMetaType>
+#include <stdint.h>
 
 class FilterRule {
 public:
@@ -62,6 +63,7 @@ public:
     /* Setters and getters */
     void setNumber(int number);
     int getNumber() const;
+    QString getId() const;
     void setName(QString name);
     QString getName() const;
     QString getAction() const;
@@ -114,10 +116,19 @@ public:
     void setPacketCount(long packetCount);
 
 private:
+    /**
+     * Hash function for string.
+     * @param s string
+     * @return hash
+     */
+    uint32_t hashString(const char *s);
+
     /** number of rule */
     int number;
     /** Name of rule */
     QString name;
+    /** Id of rule */
+    QString id;
     /** Rule description */
     QString description;
 

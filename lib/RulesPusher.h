@@ -52,6 +52,7 @@ public:
     static const char* IP_COMMAND_DEST_ADDR;
     static const char* IP_COMMAND_PROTOCOL;
     static const char* IP_COMMAND_ACTION;
+    static const char* IP_COMMAND_COMMENT;
 
     /**
      * Constructor with configuration parameter.

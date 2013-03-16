@@ -37,6 +37,7 @@ const char* RulesPusher::IP_COMMAND_SOURCE_ADDR = "-s";
 const char* RulesPusher::IP_COMMAND_DEST_ADDR = "-d";
 const char* RulesPusher::IP_COMMAND_PROTOCOL = "-p";
 const char* RulesPusher::IP_COMMAND_ACTION = "-j";
+const char* RulesPusher::IP_COMMAND_COMMENT = "-m comment --comment";
 
 RulesPusher::RulesPusher(Configuration *configuration) {
     this->configuration = configuration;
@@ -293,6 +294,9 @@ QString RulesPusher::rule2IpString(FilterRule *rule, const char *chain) {
 
     /* chain */
     out.append(QString("%1 %2 ").arg(RulesPusher::IP_COMMAND_CHAIN, chain));
+    
+    /* comment */
+    out.append(QString("%1 \"%2\" ").arg(IP_COMMAND_COMMENT, rule->getId()).toAscii().data());
 
     /* input interface if it is set */
     if (rule->getInInterface() != FilterRule::OPTION_VALUE_UNSPECIFIED) {

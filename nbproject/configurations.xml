@@ -15,6 +15,7 @@
       <itemPath>lib/OptionsLoader.h</itemPath>
       <itemPath>view/RuleEditWidget.h</itemPath>
       <itemPath>lib/RulesPusher.h</itemPath>
+      <itemPath>lib/RulesStatsLoader.h</itemPath>
       <itemPath>lib/RulesXML.h</itemPath>
       <itemPath>view/SettingsDialog.h</itemPath>
       <itemPath>view/StatisticsDialog.h</itemPath>
@@ -39,7 +40,6 @@
       <itemPath>view/RuleEditWidget.cpp</itemPath>
       <itemPath>lib/RulesPusher.cpp</itemPath>
       <itemPath>lib/RulesStatsLoader.cpp</itemPath>
-      <itemPath>lib/RulesStatsLoader.h</itemPath>
       <itemPath>lib/RulesXML.cpp</itemPath>
       <itemPath>view/SettingsDialog.cpp</itemPath>
       <itemPath>view/StatisticsDialog.cpp</itemPath>
