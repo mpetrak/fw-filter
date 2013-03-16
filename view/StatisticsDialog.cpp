@@ -8,9 +8,13 @@ int StatisticsDialog::COL_BYTES = 2;
 StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : QDialog(parent) {
 
     this->rules = rules;
-    
+
     RulesStatsLoader *loader = new RulesStatsLoader();
-    loader->loadStatistics(&rules);
+    if (!loader->loadStatistics(&rules)) {
+        QMessageBox::critical(NULL, QString::fromUtf8("Loading error"),
+                QString::fromUtf8("Error during loading rules statistics from system"),
+                QMessageBox::Ok, QMessageBox::Ok);
+    }
     free(loader);
 
     /* make GUI object */
@@ -60,12 +64,14 @@ StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : Q
         ruleLabel->setText(rule.getName());
         centralLayout->addWidget(ruleLabel, i + 1, COL_DESC, 1, 1);
 
-        QSpinBox *packets = new QSpinBox(centralWidget);
+        QLineEdit *packets = new QLineEdit(centralWidget);
         packets->setReadOnly(true);
+        packets->setText(QString::number(rule.getPacketsCount()));
         centralLayout->addWidget(packets, i + 1, COL_PACKETS, 1, 1);
 
-        QSpinBox *bytes = new QSpinBox(centralWidget);
+        QLineEdit *bytes = new QLineEdit(centralWidget);
         bytes->setReadOnly(true);
+        bytes->setText(QString::number(rule.getBytesCount()));
         centralLayout->addWidget(bytes, i + 1, COL_BYTES, 1, 1);
     }
 

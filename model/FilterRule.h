@@ -112,8 +112,8 @@ public:
     void setIpSourceNeg(bool ipSourceNeg);
     long getBytesCount() const;
     void setBytesCount(long bytesCount);
-    long getPacketCount() const;
-    void setPacketCount(long packetCount);
+    long getPacketsCount() const;
+    void setPacketsCount(long packetsCount);
 
 private:
     /**
@@ -178,7 +178,7 @@ private:
     QString action;
 
     /** Number of affected packets */
-    long packetCount;
+    long packetsCount;
 
     /** Number of affected bytes */
     long bytesCount;

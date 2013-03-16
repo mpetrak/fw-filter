@@ -5,10 +5,11 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QList>
-#include <QSpinBox>
+#include <QLineEdit>
 #include <QLabel>
 #include <QGridLayout>
 #include <QScrollArea>
+#include <QMessageBox>
 #include "../model/FilterRule.h"
 #include "../lib/RulesStatsLoader.h"
 
