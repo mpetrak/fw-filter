@@ -10,6 +10,7 @@
 #include <QGridLayout>
 #include <QScrollArea>
 #include "../model/FilterRule.h"
+#include "../lib/RulesStatsLoader.h"
 
 class StatisticsDialog : public QDialog {
 public:

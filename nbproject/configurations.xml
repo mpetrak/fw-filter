@@ -38,6 +38,8 @@
       <itemPath>lib/OptionsLoader.cpp</itemPath>
       <itemPath>view/RuleEditWidget.cpp</itemPath>
       <itemPath>lib/RulesPusher.cpp</itemPath>
+      <itemPath>lib/RulesStatsLoader.cpp</itemPath>
+      <itemPath>lib/RulesStatsLoader.h</itemPath>
       <itemPath>lib/RulesXML.cpp</itemPath>
       <itemPath>view/SettingsDialog.cpp</itemPath>
       <itemPath>view/StatisticsDialog.cpp</itemPath>

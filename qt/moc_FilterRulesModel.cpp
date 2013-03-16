@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'FilterRulesModel.h'
 **
-** Created: Fri Mar 15 10:18:23 2013
+** Created: Sat Mar 16 12:51:57 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!

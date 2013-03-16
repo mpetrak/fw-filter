@@ -8,6 +8,10 @@ int StatisticsDialog::COL_BYTES = 2;
 StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : QDialog(parent) {
 
     this->rules = rules;
+    
+    RulesStatsLoader *loader = new RulesStatsLoader();
+    loader->loadStatistics(&rules);
+    free(loader);
 
     /* make GUI object */
     if (this->objectName().isEmpty()) {
@@ -73,7 +77,7 @@ StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : Q
     QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok, Qt::Horizontal, centralWidget);
     buttons->setObjectName(QString::fromUtf8("buttons"));
     connect(buttons, SIGNAL(accepted()), this, SLOT(accept()));
-    centralLayout->addWidget(buttons, rules.count() + 2, COL_BYTES + 1, 1, 1);
+    centralLayout->addWidget(buttons, rules.count() + 2, COL_BYTES, 1, 1);
 
     /* add scroll area to dialog using layout */
     QVBoxLayout *dialogLayout = new QVBoxLayout(this);
