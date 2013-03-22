@@ -2,8 +2,8 @@
 #include "StatisticsDialog.h"
 
 int StatisticsDialog::COL_DESC = 0;
-int StatisticsDialog::COL_PACKETS = 1;
-int StatisticsDialog::COL_BYTES = 2;
+int StatisticsDialog::COL_PACKETS = 2;
+int StatisticsDialog::COL_BYTES = 4;
 int StatisticsDialog::REFRESH = 10000;
 
 StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : QDialog(parent) {
@@ -43,14 +43,26 @@ StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : Q
     QLabel *ruleHeaderLabel = new QLabel(centralWidget);
     ruleHeaderLabel->setText(QString::fromUtf8("Rule name"));
     centralLayout->addWidget(ruleHeaderLabel, 0, COL_DESC, 1, 1);
+    
+    /* Horizontal after rule name spacer */
+    QSpacerItem *ruleSpacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    centralLayout->addItem(ruleSpacer, rules.count() + 1, COL_DESC + 1, 1, 1);
 
     QLabel *packetHeaderLabel = new QLabel(centralWidget);
     packetHeaderLabel->setText(QString::fromUtf8("Packets count"));
     centralLayout->addWidget(packetHeaderLabel, 0, COL_PACKETS, 1, 1);
+    
+    /* Horizontal after packets count spacer */
+    QSpacerItem *packetsSpacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    centralLayout->addItem(packetsSpacer, rules.count() + 1, COL_PACKETS + 1, 1, 1);
 
     QLabel *bytesHeaderLabel = new QLabel(centralWidget);
     bytesHeaderLabel->setText(QString::fromUtf8("Bytes count"));
     centralLayout->addWidget(bytesHeaderLabel, 0, COL_BYTES, 1, 1);
+    
+    /* Horizontal after bytes count spacer */
+    QSpacerItem *bytesSpacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    centralLayout->addItem(bytesSpacer, rules.count() + 1, COL_BYTES + 1, 1, 1);
 
     /* values for each rule */
     for (int i = 0; i < rules.count(); i++) {
