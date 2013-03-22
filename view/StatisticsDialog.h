@@ -43,6 +43,13 @@ private:
 
     /** Internal timer for reloading statistics */
     QTimer *timer;
+    
+    /**
+     * Formating given bytes to KB, MB, TB if possible
+     * @param bytes
+     * @return fromated string
+     */
+    QString formatBytes(long bytes);
 
 private slots:
     /**

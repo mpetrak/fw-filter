@@ -43,7 +43,7 @@ StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : Q
     QLabel *ruleHeaderLabel = new QLabel(centralWidget);
     ruleHeaderLabel->setText(QString::fromUtf8("Rule name"));
     centralLayout->addWidget(ruleHeaderLabel, 0, COL_DESC, 1, 1);
-    
+
     /* Horizontal after rule name spacer */
     QSpacerItem *ruleSpacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
     centralLayout->addItem(ruleSpacer, rules.count() + 1, COL_DESC + 1, 1, 1);
@@ -51,7 +51,7 @@ StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : Q
     QLabel *packetHeaderLabel = new QLabel(centralWidget);
     packetHeaderLabel->setText(QString::fromUtf8("Packets count"));
     centralLayout->addWidget(packetHeaderLabel, 0, COL_PACKETS, 1, 1);
-    
+
     /* Horizontal after packets count spacer */
     QSpacerItem *packetsSpacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
     centralLayout->addItem(packetsSpacer, rules.count() + 1, COL_PACKETS + 1, 1, 1);
@@ -59,7 +59,7 @@ StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : Q
     QLabel *bytesHeaderLabel = new QLabel(centralWidget);
     bytesHeaderLabel->setText(QString::fromUtf8("Bytes count"));
     centralLayout->addWidget(bytesHeaderLabel, 0, COL_BYTES, 1, 1);
-    
+
     /* Horizontal after bytes count spacer */
     QSpacerItem *bytesSpacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
     centralLayout->addItem(bytesSpacer, rules.count() + 1, COL_BYTES + 1, 1, 1);
@@ -117,7 +117,7 @@ void StatisticsDialog::loadStatistics() {
         QMessageBox::critical(NULL, QString::fromUtf8("Loading error"),
                 QString::fromUtf8("Error during loading rules statistics from system"),
                 QMessageBox::Ok, QMessageBox::Ok);
-        
+
         /* disable timer signals - there is error, so not refresh loading */
         timer->blockSignals(true);
     }
@@ -128,7 +128,21 @@ void StatisticsDialog::loadStatistics() {
 
         ruleLabelList[i]->setText(rule.getName());
         packetsList[i]->setText(QString::number(rule.getPacketsCount()));
-        bytesList[i]->setText(QString::number(rule.getBytesCount()));
+        bytesList[i]->setText(formatBytes(rule.getBytesCount()));
     }
 }
 
+QString StatisticsDialog::formatBytes(long bytes) {
+    QStringList suffix;
+    suffix << "B" << "KB" << "MB" << "GB" << "TB";
+    double doubleBytes = bytes;
+    int i = 0;
+    
+    if (bytes > 1024) {
+        for (i = 0; (bytes / 1024) > 0; i++, bytes /= 1024) {
+            doubleBytes = bytes / 1024.0;
+        }
+    }
+
+    return QString::fromUtf8("%1 %2").arg(QString::number(doubleBytes, 'f', 2), suffix[i]);
+}
