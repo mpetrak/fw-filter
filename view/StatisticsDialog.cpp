@@ -4,18 +4,15 @@
 int StatisticsDialog::COL_DESC = 0;
 int StatisticsDialog::COL_PACKETS = 1;
 int StatisticsDialog::COL_BYTES = 2;
+int StatisticsDialog::REFRESH = 10000;
 
 StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : QDialog(parent) {
 
     this->rules = rules;
 
-    RulesStatsLoader *loader = new RulesStatsLoader();
-    if (!loader->loadStatistics(&rules)) {
-        QMessageBox::critical(NULL, QString::fromUtf8("Loading error"),
-                QString::fromUtf8("Error during loading rules statistics from system"),
-                QMessageBox::Ok, QMessageBox::Ok);
-    }
-    free(loader);
+    loader = new RulesStatsLoader();
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(loadStatistics()));
 
     /* make GUI object */
     if (this->objectName().isEmpty()) {
@@ -57,22 +54,19 @@ StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : Q
 
     /* values for each rule */
     for (int i = 0; i < rules.count(); i++) {
-        FilterRule rule = rules.at(i);
 
         /* rule name */
         QLabel *ruleLabel = new QLabel(centralWidget);
-        ruleLabel->setText(rule.getName());
         centralLayout->addWidget(ruleLabel, i + 1, COL_DESC, 1, 1);
+        ruleLabelList.append(ruleLabel);
 
-        QLineEdit *packets = new QLineEdit(centralWidget);
-        packets->setReadOnly(true);
-        packets->setText(QString::number(rule.getPacketsCount()));
+        QLabel *packets = new QLabel(centralWidget);
         centralLayout->addWidget(packets, i + 1, COL_PACKETS, 1, 1);
+        packetsList.append(packets);
 
-        QLineEdit *bytes = new QLineEdit(centralWidget);
-        bytes->setReadOnly(true);
-        bytes->setText(QString::number(rule.getBytesCount()));
+        QLabel *bytes = new QLabel(centralWidget);
         centralLayout->addWidget(bytes, i + 1, COL_BYTES, 1, 1);
+        bytesList.append(bytes);
     }
 
     /* Vertical spacer to the end */
@@ -92,8 +86,37 @@ StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : Q
     dialogLayout->addWidget(scrollArea);
 
     setLayout(dialogLayout);
+
+    /* first load and start timer */
+    loadStatistics();
+    timer->start(REFRESH);
+
 }
 
 StatisticsDialog::~StatisticsDialog() {
+
+    free(loader);
+    free(timer);
+}
+
+void StatisticsDialog::loadStatistics() {
+
+    if (!loader->loadStatistics(&rules)) {
+        QMessageBox::critical(NULL, QString::fromUtf8("Loading error"),
+                QString::fromUtf8("Error during loading rules statistics from system"),
+                QMessageBox::Ok, QMessageBox::Ok);
+        
+        /* disable timer signals - there is error, so not refresh loading */
+        timer->blockSignals(true);
+    }
+
+    /* fill values */
+    for (int i = 0; i < rules.count(); i++) {
+        FilterRule rule = rules.at(i);
+
+        ruleLabelList[i]->setText(rule.getName());
+        packetsList[i]->setText(QString::number(rule.getPacketsCount()));
+        bytesList[i]->setText(QString::number(rule.getBytesCount()));
+    }
 }
 
