@@ -1,7 +1,6 @@
 
 #include <qt4/QtCore/qabstractitemmodel.h>
 #include <qt4/QtGui/qgridlayout.h>
-#include <qt4/QtGui/qcombobox.h>
 #include <QString>
 #include <qt4/QtGui/qapplication.h>
 
@@ -11,8 +10,8 @@
 
 const char* RuleEditWidget::MAC_ADDRESS_REGEX = "^([0-9|A-F]{2}:){5}[0-9|A-F]{2}$";
 const char* RuleEditWidget::IPV4_ADDRESS_REGEX = "^((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])$";
-const int RuleEditWidget::NORMAL_OPTION_INDEX = 0;
-const int RuleEditWidget::NEGATION_OPTION_INDEX = 1;
+const int RuleEditWidget::NORMAL_OPTION_INDEX = NegationComboBox::NORMAL_INDEX;
+const int RuleEditWidget::NEGATION_OPTION_INDEX = NegationComboBox::NEGATION_INDEX;
 const int RuleEditWidget::TAB_GENERAL_INDEX = 0;
 const int RuleEditWidget::TAB_LINK_INDEX = 1;
 const int RuleEditWidget::TAB_NET_INDEX = 2;
@@ -143,6 +142,16 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->setEnabled(false);
         Logger::getInstance()->debug("Edit widget cleaned");
     }
+
+    /* checking for disable negation selects - depends on loaded values */
+    inInterfaceNegSelect->checkForDisable(inInterfaceSelect->currentText());
+    outInterfaceNegSelect->checkForDisable(outInterfaceSelect->currentText());
+    ebProtoNegSelect->checkForDisable(ebProtoSelect->currentText());
+    macSourceNegSelect->checkForDisable(macSourceEdit->text());
+    macDestNegSelect->checkForDisable(macDestEdit->text());
+    ipProtoNegSelect->checkForDisable(ipProtoSelect->currentText());
+    ipSourceNegSelect->checkForDisable(ipSourceEdit->text());
+    ipDestNegSelect->checkForDisable(ipDestEdit->text());
 
     /* enable emiting rule changed signal */
     this->blockSignals(false);
@@ -349,6 +358,7 @@ void RuleEditWidget::setupEbWidget() {
 
     this->inInterfaceNegSelect = makeNegationSelect(this->tabEb);
     this->inInterfaceNegSelect->setObjectName(QString::fromUtf8("inInterfaceNegSelect"));
+    this->inInterfaceNegSelect->setDisableOption(FilterRule::OPTION_VALUE_UNSPECIFIED);
     gridLayout->addWidget(this->inInterfaceNegSelect, 1, 1, 1, 1);
 
     this->inInterfaceSelect = new QComboBox(this->tabEb);
@@ -359,6 +369,9 @@ void RuleEditWidget::setupEbWidget() {
     connect(inInterfaceSelect, SIGNAL(currentIndexChanged(int)),
             this, SLOT(ruleChangedSlot()));
 
+    connect(inInterfaceSelect, SIGNAL(currentIndexChanged(const QString)),
+            inInterfaceNegSelect, SLOT(checkForDisable(QString)));
+
     /* output interface */
     QLabel *outInterfaceLabel = new QLabel(this->tabEb);
     outInterfaceLabel->setObjectName(QString::fromUtf8("outInterfaceLabel"));
@@ -367,6 +380,7 @@ void RuleEditWidget::setupEbWidget() {
 
     this->outInterfaceNegSelect = makeNegationSelect(this->tabEb);
     this->outInterfaceNegSelect->setObjectName(QString::fromUtf8("outInterfaceNegSelect"));
+    this->outInterfaceNegSelect->setDisableOption(FilterRule::OPTION_VALUE_UNSPECIFIED);
     gridLayout->addWidget(this->outInterfaceNegSelect, 2, 1, 1, 1);
 
     this->outInterfaceSelect = new QComboBox(this->tabEb);
@@ -377,6 +391,9 @@ void RuleEditWidget::setupEbWidget() {
             this, SLOT(ruleChangedSlot()));
     gridLayout->addWidget(this->outInterfaceSelect, 2, 2, 1, 1);
 
+    connect(outInterfaceSelect, SIGNAL(currentIndexChanged(const QString)),
+            outInterfaceNegSelect, SLOT(checkForDisable(QString)));
+
     /* protocol */
     QLabel *ebProtoLabel = new QLabel(this->tabEb);
     ebProtoLabel->setObjectName(QString::fromUtf8("ebProtoLabel"));
@@ -385,6 +402,7 @@ void RuleEditWidget::setupEbWidget() {
 
     this->ebProtoNegSelect = makeNegationSelect(this->tabEb);
     this->ebProtoNegSelect->setObjectName(QString::fromUtf8("ebProtoNegSelect"));
+    this->ebProtoNegSelect->setDisableOption(FilterRule::OPTION_VALUE_UNSPECIFIED);
     gridLayout->addWidget(this->ebProtoNegSelect, 3, 1, 1, 1);
     /* connect to slot for enable/disable net layer options */
     connect(ebProtoNegSelect, SIGNAL(currentIndexChanged(int)),
@@ -399,6 +417,8 @@ void RuleEditWidget::setupEbWidget() {
             this, SLOT(netProtocolChanged()));
     connect(ebProtoSelect, SIGNAL(currentIndexChanged(int)),
             this, SLOT(ruleChangedSlot()));
+    connect(ebProtoSelect, SIGNAL(currentIndexChanged(const QString)),
+            ebProtoNegSelect, SLOT(checkForDisable(QString)));
     gridLayout->addWidget(ebProtoSelect, 3, 2, 1, 1);
 
     /* source address */
@@ -409,6 +429,7 @@ void RuleEditWidget::setupEbWidget() {
 
     this->macSourceNegSelect = makeNegationSelect(this->tabEb);
     this->macSourceNegSelect->setObjectName(QString::fromUtf8("macSourceNegSelect"));
+    this->macSourceNegSelect->setDisableOption(QString::fromUtf8(""));
     gridLayout->addWidget(this->macSourceNegSelect, 4, 1, 1, 1);
 
     this->macSourceEdit = new QLineEdit(this->tabEb);
@@ -416,6 +437,8 @@ void RuleEditWidget::setupEbWidget() {
     this->macSourceEdit->setValidator(addrValidator);
     connect(macSourceEdit, SIGNAL(textEdited(const QString)),
             this, SLOT(ruleChangedSlot()));
+    connect(macSourceEdit, SIGNAL(textChanged(const QString)),
+            macSourceNegSelect, SLOT(checkForDisable(QString)));
     gridLayout->addWidget(this->macSourceEdit, 4, 2, 1, 1);
 
     /* source mask */
@@ -439,6 +462,7 @@ void RuleEditWidget::setupEbWidget() {
 
     this->macDestNegSelect = makeNegationSelect(this->tabEb);
     this->macDestNegSelect->setObjectName(QString::fromUtf8("macDestNegSelect"));
+    this->macDestNegSelect->setDisableOption(QString::fromUtf8(""));
     gridLayout->addWidget(this->macDestNegSelect, 5, 1, 1, 1);
 
     this->macDestEdit = new QLineEdit(this->tabEb);
@@ -446,6 +470,8 @@ void RuleEditWidget::setupEbWidget() {
     this->macDestEdit->setValidator(addrValidator);
     connect(macDestEdit, SIGNAL(textEdited(const QString)),
             this, SLOT(ruleChangedSlot()));
+    connect(macDestEdit, SIGNAL(textChanged(const QString)),
+            macDestNegSelect, SLOT(checkForDisable(QString)));
     gridLayout->addWidget(this->macDestEdit, 5, 2, 1, 1);
 
     /* destination mask */
@@ -500,6 +526,7 @@ void RuleEditWidget::setupIpWidget() {
 
     this->ipProtoNegSelect = makeNegationSelect(this->tabIp);
     this->ipProtoNegSelect->setObjectName(QString::fromUtf8("ipProtoNegSelect"));
+    this->ipProtoNegSelect->setDisableOption(FilterRule::IP_PROTO_VALUE_UNSPECIFIED);
     gridLayout->addWidget(this->ipProtoNegSelect, 1, 1, 1, 1);
 
     this->ipProtoSelect = new QComboBox(this->tabIp);
@@ -508,6 +535,8 @@ void RuleEditWidget::setupIpWidget() {
     this->ipProtoSelect->addItems(this->ipProtocols);
     connect(ipProtoSelect, SIGNAL(currentIndexChanged(int)),
             this, SLOT(ruleChangedSlot()));
+    connect(ipProtoSelect, SIGNAL(currentIndexChanged(const QString)),
+            ipProtoNegSelect, SLOT(checkForDisable(QString)));
     gridLayout->addWidget(ipProtoSelect, 1, 2, 1, 1);
 
     /* source address */
@@ -518,6 +547,7 @@ void RuleEditWidget::setupIpWidget() {
 
     this->ipSourceNegSelect = makeNegationSelect(this->tabIp);
     this->ipSourceNegSelect->setObjectName(QString::fromUtf8("ipSourceNegSelect"));
+    this->ipSourceNegSelect->setDisableOption(QString::fromUtf8(""));
     gridLayout->addWidget(ipSourceNegSelect, 2, 1, 1, 1);
 
     this->ipSourceEdit = new QLineEdit(this->tabIp);
@@ -525,6 +555,8 @@ void RuleEditWidget::setupIpWidget() {
     this->ipSourceEdit->setValidator(addrValidator);
     connect(ipSourceEdit, SIGNAL(textEdited(const QString)),
             this, SLOT(ruleChangedSlot()));
+    connect(ipSourceEdit, SIGNAL(textEdited(const QString)),
+            ipSourceNegSelect, SLOT(checkForDisable(QString)));
     gridLayout->addWidget(this->ipSourceEdit, 2, 2, 1, 1);
 
     /* source mask */
@@ -549,6 +581,7 @@ void RuleEditWidget::setupIpWidget() {
 
     this->ipDestNegSelect = makeNegationSelect(this->tabIp);
     this->ipDestNegSelect->setObjectName(QString::fromUtf8("ipDestNegSelect"));
+    this->ipDestNegSelect->setDisableOption(QString::fromUtf8(""));
     gridLayout->addWidget(this->ipDestNegSelect, 3, 1, 1, 1);
 
     this->ipDestEdit = new QLineEdit(this->tabIp);
@@ -556,6 +589,8 @@ void RuleEditWidget::setupIpWidget() {
     this->ipDestEdit->setValidator(addrValidator);
     connect(ipDestEdit, SIGNAL(textEdited(const QString)),
             this, SLOT(ruleChangedSlot()));
+    connect(ipDestEdit, SIGNAL(textEdited(const QString)),
+            ipDestNegSelect, SLOT(checkForDisable(QString)));
     gridLayout->addWidget(this->ipDestEdit, 3, 2, 1, 1);
 
     /* destination mask */
@@ -579,8 +614,8 @@ void RuleEditWidget::setupIpWidget() {
     this->insertTab(TAB_NET_INDEX, this->tabIp, QString::fromUtf8("Net layer"));
 }
 
-QComboBox *RuleEditWidget::makeNegationSelect(QWidget *parent) {
-    QComboBox *select = new QComboBox(parent);
+NegationComboBox *RuleEditWidget::makeNegationSelect(QWidget *parent) {
+    NegationComboBox *select = new NegationComboBox(parent);
     select->insertItem(NORMAL_OPTION_INDEX, QString::fromUtf8("IS"));
     select->insertItem(NEGATION_OPTION_INDEX, QString::fromUtf8("NOT"));
     connect(select, SIGNAL(currentIndexChanged(int)), this, SLOT(ruleChangedSlot()));
@@ -595,6 +630,11 @@ void RuleEditWidget::netProtocolChanged() {
         if (!tabIp->isEnabled()) {
             this->tabIp->setEnabled(true);
             this->setTabEnabled(TAB_NET_INDEX, true);
+
+            /* again we must check for disable negation selects - depends on values */
+            ipProtoNegSelect->checkForDisable(ipProtoSelect->currentText());
+            ipSourceNegSelect->checkForDisable(ipSourceEdit->text());
+            ipDestNegSelect->checkForDisable(ipDestEdit->text());
 
             Logger::getInstance()->debug(std::string("Enabled net options for protocol: ") +
                     ebProtoSelect->currentText().toStdString());

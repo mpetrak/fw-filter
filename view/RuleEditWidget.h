@@ -8,6 +8,7 @@
 #include <QtGui/QComboBox>
 #include <QtGui/QTextEdit>
 
+#include "NegationComboBox.h"
 #include "../model/FilterRulesModel.h"
 #include "../lib/NetInterfaces.h"
 #include "../lib/OptionsLoader.h"
@@ -73,7 +74,7 @@ private:
      * @param parent parent of created combobox
      * @return pointer to created combobox
      */
-    QComboBox *makeNegationSelect(QWidget *parent);
+    NegationComboBox *makeNegationSelect(QWidget *parent);
 
     /** List of rule actions */
     QStringList actions;
@@ -105,27 +106,27 @@ private:
     QTextEdit *descriptionEdit;
 
     /* EB edits */
-    QComboBox *macSourceNegSelect;
+    NegationComboBox *macSourceNegSelect;
     QLineEdit *macSourceEdit;
     QLineEdit *macSourceMaskEdit;
-    QComboBox *macDestNegSelect;
+    NegationComboBox *macDestNegSelect;
     QLineEdit *macDestEdit;
     QLineEdit *macDestMaskEdit;
-    QComboBox *inInterfaceNegSelect;
+    NegationComboBox *inInterfaceNegSelect;
     QComboBox *inInterfaceSelect;
-    QComboBox *outInterfaceNegSelect;
+    NegationComboBox *outInterfaceNegSelect;
     QComboBox *outInterfaceSelect;
-    QComboBox *ebProtoNegSelect;
+    NegationComboBox *ebProtoNegSelect;
     QComboBox *ebProtoSelect;
 
     /* IP edits */
-    QComboBox *ipSourceNegSelect;
+    NegationComboBox *ipSourceNegSelect;
     QLineEdit *ipSourceEdit;
     QLineEdit *ipSourceMaskEdit;
-    QComboBox *ipDestNegSelect;
+    NegationComboBox *ipDestNegSelect;
     QLineEdit *ipDestEdit;
     QLineEdit *ipDestMaskEdit;
-    QComboBox *ipProtoNegSelect;
+    NegationComboBox *ipProtoNegSelect;
     QComboBox *ipProtoSelect;
 
 signals:
