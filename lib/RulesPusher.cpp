@@ -119,7 +119,7 @@ QString RulesPusher::getIpOutput(QList<FilterRule> rules) {
 
     foreach(rule, rules) {
 
-        if (rule.isNetLayerPossible()) {
+        if (!rule.isOnlyBridged()) {
 
             /* write to input only if it is possible */
             if (rule.isInputPossible()) {
@@ -294,7 +294,7 @@ QString RulesPusher::rule2IpString(FilterRule *rule, const char *chain) {
 
     /* chain */
     out.append(QString("%1 %2 ").arg(RulesPusher::IP_COMMAND_CHAIN, chain));
-    
+
     /* comment */
     out.append(QString("%1 \"%2\" ").arg(IP_COMMAND_COMMENT, rule->getId()).toAscii().data());
 

@@ -18,7 +18,7 @@ public:
     static const QString OPTION_VALUE_UNSPECIFIED;
     static const int INT_VALUE_UNSPECIFIED;
     static const QString IP_PROTO_VALUE_UNSPECIFIED;
-    static const QString IP_PROTO_VALUE_IPV4;
+    static const QString EB_PROTO_VALUE_IPV4;
     static const QString ACTION_ACCEPT;
     static const QString ACTION_DROP;
 
@@ -54,12 +54,6 @@ public:
      */
     bool isOutputPossible();
 
-    /**
-     * If this rule is possible to write into net layer tables.
-     * @return true if it is possible
-     */
-    bool isNetLayerPossible();
-
     /* Setters and getters */
     void setNumber(int number);
     int getNumber() const;
@@ -70,6 +64,8 @@ public:
     void setAction(QString action);
     QString getDescription() const;
     void setDescription(QString description);
+    bool isOnlyBridged() const;
+    void setOnlyBridged(bool onlyBridged);
     QString getEbDest() const;
     void setEbDest(QString EbDest);
     QString getEbDestMask() const;
@@ -131,6 +127,9 @@ private:
     QString id;
     /** Rule description */
     QString description;
+
+    /** Is only bridged rule */
+    bool onlyBridged;
 
     /** Input interface */
     QString inInterface;

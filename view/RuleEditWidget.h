@@ -7,6 +7,7 @@
 #include <QtGui/QLabel>
 #include <QtGui/QComboBox>
 #include <QtGui/QTextEdit>
+#include <QtGui/QRadioButton>
 
 #include "NegationComboBox.h"
 #include "../model/FilterRulesModel.h"
@@ -54,6 +55,11 @@ private slots:
      * Slot to call if rule is changed - edited by user.
      */
     void ruleChangedSlot();
+
+    /**
+     * Slot to call if type of packet choice has changed.
+     */
+    void packetsTypeChanged();
 
 private:
     static const char* MAC_ADDRESS_REGEX;
@@ -104,6 +110,8 @@ private:
     QLabel *numberLabel;
     QComboBox *actionSelect;
     QTextEdit *descriptionEdit;
+    QRadioButton *bridgeChoice;
+    QRadioButton *nonBridgeChoice;
 
     /* EB edits */
     NegationComboBox *macSourceNegSelect;

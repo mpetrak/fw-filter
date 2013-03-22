@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'RuleEditWidget.h'
 **
-** Created: Fri Mar 22 14:45:43 2013
+** Created: Fri Mar 22 16:22:00 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_RuleEditWidget[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -37,6 +37,7 @@ static const uint qt_meta_data_RuleEditWidget[] = {
       36,   30,   15,   15, 0x0a,
       62,   15,   15,   15, 0x08,
       83,   15,   15,   15, 0x08,
+     101,   15,   15,   15, 0x08,
 
        0        // eod
 };
@@ -45,6 +46,7 @@ static const char qt_meta_stringdata_RuleEditWidget[] = {
     "RuleEditWidget\0\0ruleChanged()\0index\0"
     "ruleSelected(QModelIndex)\0"
     "netProtocolChanged()\0ruleChangedSlot()\0"
+    "packetsTypeChanged()\0"
 };
 
 const QMetaObject RuleEditWidget::staticMetaObject = {
@@ -80,9 +82,10 @@ int RuleEditWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 1: ruleSelected((*reinterpret_cast< QModelIndex(*)>(_a[1]))); break;
         case 2: netProtocolChanged(); break;
         case 3: ruleChangedSlot(); break;
+        case 4: packetsTypeChanged(); break;
         default: ;
         }
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }

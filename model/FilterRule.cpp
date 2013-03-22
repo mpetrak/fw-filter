@@ -16,7 +16,7 @@
 const QString FilterRule::OPTION_VALUE_UNSPECIFIED = QString::fromUtf8("<any>");
 const int FilterRule::INT_VALUE_UNSPECIFIED = -1;
 const QString FilterRule::IP_PROTO_VALUE_UNSPECIFIED = QString::fromUtf8("all");
-const QString FilterRule::IP_PROTO_VALUE_IPV4 = QString::fromUtf8("IPv4");
+const QString FilterRule::EB_PROTO_VALUE_IPV4 = QString::fromUtf8("IPv4");
 const QString FilterRule::ACTION_ACCEPT = QString::fromUtf8("ACCEPT");
 const QString FilterRule::ACTION_DROP = QString::fromUtf8("DROP");
 
@@ -27,6 +27,7 @@ FilterRule::FilterRule() {
     setName("New rule");
     setDescription("Insert description");
     setAction("DROP");
+    setOnlyBridged(true);
     setInInterface(FilterRule::OPTION_VALUE_UNSPECIFIED);
     setInInterfaceNeg(false);
     setOutInterface(FilterRule::OPTION_VALUE_UNSPECIFIED);
@@ -55,6 +56,7 @@ FilterRule::FilterRule(FilterRule* copy) {
     setNumber(copy->getNumber());
     setName(QString::fromUtf8("%1 copy").arg(copy->getName()));
     setDescription(copy->getDescription());
+    setOnlyBridged(copy->isOnlyBridged());
     setAction(copy->getAction());
     setInInterface(copy->getInInterface());
     setInInterfaceNeg(copy->isInInterfaceNeg());
@@ -88,6 +90,7 @@ void FilterRule::toStream(QDataStream *stream) {
     *stream << this->number;
     *stream << this->name;
     *stream << this->description;
+    *stream << this->onlyBridged;
     *stream << this->action;
 
     *stream << this->inInterface;
@@ -124,6 +127,7 @@ void FilterRule::fromStream(QDataStream *stream) {
     *stream >> this->number;
     *stream >> this->name;
     *stream >> this->description;
+    *stream >> this->onlyBridged;
     *stream >> this->action;
 
     *stream >> this->inInterface;
@@ -168,24 +172,6 @@ bool FilterRule::isOutputPossible() {
     bool possible = true;
 
     if (inInterface != OPTION_VALUE_UNSPECIFIED)
-        possible = false;
-
-    return possible;
-}
-
-bool FilterRule::isNetLayerPossible() {
-    bool possible = true;
-
-    if (!this->ebDest.isEmpty())
-        possible = false;
-
-    if (!this->ebSource.isEmpty())
-        possible = false;
-
-    if (ebProtocol != IP_PROTO_VALUE_IPV4)
-        possible = false;
-
-    if (ebProtocolNeg)
         possible = false;
 
     return possible;
@@ -244,6 +230,14 @@ QString FilterRule::getDescription() const {
 
 void FilterRule::setDescription(QString description) {
     this->description = description;
+}
+
+bool FilterRule::isOnlyBridged() const {
+    return this->onlyBridged;
+}
+
+void FilterRule::setOnlyBridged(bool onlyBridged) {
+    this->onlyBridged = onlyBridged;
 }
 
 QString FilterRule::getEbDest() const {

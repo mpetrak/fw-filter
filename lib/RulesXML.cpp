@@ -19,6 +19,7 @@ const char* RulesXML::NODE_RULE = "rule";
 const char* RulesXML::RULE_NAME = "name";
 const char* RulesXML::RULE_ACTION = "action";
 const char* RulesXML::RULE_DESCRIPTON = "description";
+const char* RulesXML::RULE_ONLY_BRIDGE = "bridge_only";
 
 const char* RulesXML::LAYER_LINK = "link";
 const char* RulesXML::LAYER_NET = "net";
@@ -74,6 +75,11 @@ xmlNodePtr RulesXML::rule2Node(FilterRule* rule) {
     /* add name as a node attribute */
     xmlNewProp(ruleNode, BAD_CAST RulesXML::RULE_NAME,
             BAD_CAST rule->getName().toAscii().data());
+    /* add only bridge if set as a node attribute */
+    if (rule->isOnlyBridged()) {
+        xmlNewProp(ruleNode, BAD_CAST RulesXML::RULE_ONLY_BRIDGE,
+                BAD_CAST RulesXML::RULE_ONLY_BRIDGE);
+    }
     /* add action as a node attribute */
     xmlNewProp(ruleNode, BAD_CAST RulesXML::RULE_ACTION,
             BAD_CAST rule->getAction().toAscii().data());
@@ -191,12 +197,15 @@ FilterRule *RulesXML::node2Rule(xmlNodePtr ruleNode) {
 
     Logger::getInstance()->debug("Parsing rule node");
 
-    /* get rule name and action */
+    /* get rule name, only bridge and action */
+    rule->setOnlyBridged(false);
     for (attr = ruleNode->properties; attr; attr = attr->next) {
         if (!strcmp((char *) attr->name, RulesXML::RULE_ACTION)) {
             rule->setAction((char *) xmlNodeGetContent(attr->children));
         } else if (!strcmp((char *) attr->name, RulesXML::RULE_NAME)) {
             rule->setName((char *) xmlNodeGetContent(attr->children));
+        } else if (!strcmp((char *) attr->name, RulesXML::RULE_ONLY_BRIDGE)) {
+            rule->setOnlyBridged(true);
         }
     }
 

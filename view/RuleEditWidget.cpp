@@ -63,6 +63,13 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
 
         this->nameEdit->setText(rule.getName());
         this->descriptionEdit->setText(rule.getDescription());
+        if(rule.isOnlyBridged()) {
+            this->bridgeChoice->setChecked(true);
+            this->nonBridgeChoice->setChecked(false);
+        } else {
+            this->bridgeChoice->setChecked(false);
+            this->nonBridgeChoice->setChecked(true);
+        }
         this->actionSelect->setCurrentIndex(actions.indexOf(rule.getAction()));
 
         this->inInterfaceSelect->setCurrentIndex(interfaces.indexOf(rule.getInInterface()));
@@ -107,6 +114,8 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         /* clear inputs to default */
         this->nameEdit->clear();
         this->descriptionEdit->clear();
+        this->nonBridgeChoice->setChecked(false);
+        this->bridgeChoice->setChecked(false);
         this->actionSelect->setCurrentIndex(actions.indexOf(FilterRule::ACTION_DROP));
 
         this->inInterfaceSelect->setCurrentIndex(interfaces.indexOf(FilterRule::OPTION_VALUE_UNSPECIFIED));
@@ -203,6 +212,7 @@ bool RuleEditWidget::ruleSave(QModelIndex index) {
 
             rule.setName(this->nameEdit->text().trimmed());
             rule.setDescription(this->descriptionEdit->toPlainText().trimmed());
+            rule.setOnlyBridged(this->bridgeChoice->isChecked());
             rule.setAction(this->actionSelect->currentText());
 
             rule.setInInterface(this->inInterfaceSelect->currentText());
@@ -304,22 +314,40 @@ void RuleEditWidget::setupGeneralWidget() {
     gridLayout->addWidget(this->descriptionEdit, 3, 2, 1, 1);
     connect(descriptionEdit, SIGNAL(textChanged()),
             this, SLOT(ruleChangedSlot()));
+    
+    /* type of affected packets */
+    QLabel *packetChoiceLabel = new QLabel(this->tabGeneral);
+    packetChoiceLabel->setObjectName(QString::fromUtf8("packetChoiceLabel"));
+    packetChoiceLabel->setText(QString::fromUtf8("Type of packets: "));
+    gridLayout->addWidget(packetChoiceLabel, 4, 0, 1, 1);
+    
+    this->bridgeChoice = new QRadioButton(this->tabGeneral);
+    this->bridgeChoice->setObjectName(QString::fromUtf8("bridgeChoice"));
+    this->bridgeChoice->setText(QString::fromUtf8("Only bridged packets will be affected"));
+    connect(bridgeChoice, SIGNAL(clicked()), this, SLOT(packetsTypeChanged()));
+    gridLayout->addWidget(bridgeChoice, 4, 2, 1, 1);
+    
+    this->nonBridgeChoice = new QRadioButton(this->tabGeneral);
+    this->nonBridgeChoice->setObjectName(QString::fromUtf8("nonBridgeChoice"));
+    this->nonBridgeChoice->setText(QString::fromUtf8("Bridged and routed packets will be affected"));
+    connect(nonBridgeChoice, SIGNAL(clicked()), this, SLOT(packetsTypeChanged()));
+    gridLayout->addWidget(nonBridgeChoice, 5, 2, 1, 1);
 
     /* vertical spacer before action */
     QSpacerItem *verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    gridLayout->addItem(verticalSpacer, 4, 2, 1, 1);
+    gridLayout->addItem(verticalSpacer, 5, 2, 1, 1);
 
     /* action */
     QLabel *actionLabel = new QLabel(this->tabGeneral);
     actionLabel->setObjectName(QString::fromUtf8("actionLabel"));
     actionLabel->setText(QString::fromUtf8("Action: "));
-    gridLayout->addWidget(actionLabel, 5, 0, 1, 1);
+    gridLayout->addWidget(actionLabel, 6, 0, 1, 1);
 
     this->actionSelect = new QComboBox(this->tabGeneral);
     this->actionSelect->setObjectName(QString::fromUtf8("actionSelect"));
     this->actionSelect->setSizePolicy(fixedSizePolicy);
     this->actionSelect->addItems(this->actions);
-    gridLayout->addWidget(this->actionSelect, 5, 2, 1, 1);
+    gridLayout->addWidget(this->actionSelect, 6, 2, 1, 1);
     connect(actionSelect, SIGNAL(currentIndexChanged(int)),
             this, SLOT(ruleChangedSlot()));
 
@@ -623,7 +651,7 @@ NegationComboBox *RuleEditWidget::makeNegationSelect(QWidget *parent) {
 }
 
 void RuleEditWidget::netProtocolChanged() {
-    if (ebProtoSelect->currentText() == FilterRule::IP_PROTO_VALUE_IPV4
+    if (ebProtoSelect->currentText() == FilterRule::EB_PROTO_VALUE_IPV4
             && ebProtoNegSelect->currentIndex() != NEGATION_OPTION_INDEX) {
 
 
@@ -650,5 +678,36 @@ void RuleEditWidget::netProtocolChanged() {
 }
 
 void RuleEditWidget::ruleChangedSlot() {
+    emit ruleChanged();
+}
+
+void RuleEditWidget::packetsTypeChanged() {
+    if(bridgeChoice->isChecked()) {
+        
+        ebProtoSelect->clear();
+        ebProtoSelect->addItems(ebProtocols);
+        ebProtoNegSelect->setEnabled(true);
+        ebProtoNegSelect->checkForDisable(ebProtoSelect->currentText());
+        macSourceEdit->setEnabled(true);
+        macSourceMaskEdit->setEnabled(true);
+        macSourceNegSelect->setEnabled(true);
+        macDestEdit->setEnabled(true);
+        macDestMaskEdit->setEnabled(true);
+        macDestNegSelect->setEnabled(true);
+    } else {
+        
+        ebProtoSelect->clear();
+        ebProtoSelect->addItem(FilterRule::EB_PROTO_VALUE_IPV4);
+        ebProtoNegSelect->setCurrentIndex(NegationComboBox::NORMAL_INDEX);
+        ebProtoNegSelect->setEnabled(false);
+        macSourceEdit->setEnabled(false);
+        macSourceMaskEdit->setEnabled(false);
+        macSourceNegSelect->setEnabled(false);
+        macDestEdit->setEnabled(false);
+        macDestMaskEdit->setEnabled(false);
+        macDestNegSelect->setEnabled(false);
+    }
+    
+    /* finally emit signal, that rule has been changed */
     emit ruleChanged();
 }

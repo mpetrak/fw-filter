@@ -30,12 +30,12 @@ bool RulesStatsLoader::loadStatistics(QList<FilterRule>* rules) {
         FilterRule rule;
         for (int i = 0; i < rules->count(); i++) {
             rule = rules->at(i);
-            
+
             /* set previous result to zero */
             rule.setBytesCount(0);
             rule.setPacketsCount(0);
 
-            if (rule.isNetLayerPossible()) {
+            if (!rule.isOnlyBridged()) {
                 loadIpStats(&rule);
             }
 
