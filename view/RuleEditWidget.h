@@ -91,6 +91,9 @@ private:
     /** List of possible link protocols */
     QStringList ebProtocols;
 
+    /** List of possible link protocols in non bridge mode */
+    QStringList ebProtocolsNonBridge;
+
     /** List of possible net protocols */
     QStringList ipProtocols;
 
