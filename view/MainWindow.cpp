@@ -56,6 +56,7 @@ void MainWindow::setConfiguration(Configuration* configuration) {
     logView->setEnabled(configuration->isDebugMode());
 
     /* reaction of GUI onto new configuration */
+    oldDefaultAction = configuration->getDefaultAction();
     newSettings();
 }
 
@@ -253,6 +254,8 @@ void MainWindow::on_actionReset_triggered() {
 }
 
 void MainWindow::on_actionSettings_triggered() {
+    /* save default action to compare in new settings method */
+    oldDefaultAction = this->configuration->getDefaultAction();
     SettingsDialog *settings = new SettingsDialog(this, this->configuration);
     QObject::connect(settings, SIGNAL(accepted()), this, SLOT(newSettings()));
     settings->show();
@@ -280,6 +283,11 @@ void MainWindow::on_actionNetfilter_output_triggered() {
 }
 
 void MainWindow::newSettings() {
+    
+    if(oldDefaultAction != this->configuration->getDefaultAction()) {
+        this->unsavedChanges = true;
+        setupActions();
+    }
 
     if (this->configuration->isDebugMode()) {
         this->logView->setEnabled(true);

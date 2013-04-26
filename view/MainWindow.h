@@ -62,6 +62,9 @@ private:
     bool ruleChanged;
     /** If some rule has been changed and changes have not been written to system yet */
     bool unsavedChanges;
+    
+    /** Contains default action before settings dialgo execution */
+    QString oldDefaultAction;
 
 private slots:
     void on_newRuleButton_clicked();
