@@ -3,6 +3,6 @@ tcp
 udp
 udplite
 icmp
+icmpv6
 esp
 ah
-sctp
