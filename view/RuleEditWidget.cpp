@@ -31,6 +31,7 @@ RuleEditWidget::RuleEditWidget(QWidget *parent) : QTabWidget(parent) {
     OptionsLoader *optionsLoader = new OptionsLoader(OptionsLoader::LINK_PROTOCOLS_OPTIONS);
     this->ebProtocols.append(optionsLoader->getOptions());
     this->ebProtocolsNonBridge.append(FilterRule::EB_PROTO_VALUE_IPV4);
+    this->ebProtocolsNonBridge.append(FilterRule::EB_PROTO_VALUE_IPV6);
     free(optionsLoader);
 
     optionsLoader = new OptionsLoader(OptionsLoader::NET_PROTOCOLS_OPTIONS);
@@ -80,18 +81,7 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->outInterfaceSelect->setCurrentIndex(interfaces.indexOf(rule.getOutInterface()));
         this->outInterfaceNegSelect->setCurrentIndex(rule.isOutInterfaceNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
 
-        this->ebProtoSelect->clear();
-        if (rule.isOnlyBridged()) {
-            this->ebProtoSelect->addItems(ebProtocols);
-            this->ebProtoSelect->setCurrentIndex(ebProtocols.indexOf(rule.getEbProtocol()));
-            this->ebProtoNegSelect->setEnabled(true);
-            this->ebProtoNegSelect->setCurrentIndex(rule.isEbProtocolNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
-        } else {
-            this->ebProtoSelect->addItems(ebProtocolsNonBridge);
-            this->ebProtoSelect->setCurrentIndex(ebProtocolsNonBridge.indexOf(rule.getEbProtocol()));
-            this->ebProtoNegSelect->setEnabled(false);
-            this->ebProtoNegSelect->setCurrentIndex(NegationComboBox::NORMAL_INDEX);
-        }
+        packetTypeChange(rule.isOnlyBridged(), rule.getEbProtocol());
 
         this->macSourceEdit->setText(rule.getEbSource());
         this->macSourceMaskEdit->setText(rule.getEbSourceMask());
@@ -121,6 +111,7 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->setEnabled(true); // must be before enable/disable net layer protocol
         /* render net layer options */
         netProtocolChanged();
+
     } else {
 
         /* clear inputs to default */
@@ -167,7 +158,7 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
     /* checking for disable negation selects - depends on loaded values */
     inInterfaceNegSelect->checkForDisable(inInterfaceSelect->currentText());
     outInterfaceNegSelect->checkForDisable(outInterfaceSelect->currentText());
-    ebProtoNegSelect->checkForDisable(ebProtoSelect->currentText());
+    //ebProtoNegSelect->checkForDisable(ebProtoSelect->currentText());
     macSourceNegSelect->checkForDisable(macSourceEdit->text());
     macDestNegSelect->checkForDisable(macDestEdit->text());
     ipProtoNegSelect->checkForDisable(ipProtoSelect->currentText());
@@ -720,10 +711,19 @@ void RuleEditWidget::ruleChangedSlot() {
 }
 
 void RuleEditWidget::packetsTypeChanged() {
-    if (bridgeChoice->isChecked()) {
+    packetTypeChange(bridgeChoice->isChecked(), ebProtoSelect->currentText());
+
+    /* finally emit signal, that rule has been changed */
+    emit ruleChanged();
+}
+
+void RuleEditWidget::packetTypeChange(bool bridged, QString protocol) {
+    
+    if (bridged) {
 
         ebProtoSelect->clear();
         ebProtoSelect->addItems(ebProtocols);
+        ebProtoSelect->setCurrentIndex(ebProtocols.indexOf(protocol));
         ebProtoNegSelect->setEnabled(true);
         ebProtoNegSelect->checkForDisable(ebProtoSelect->currentText());
         macSourceEdit->setEnabled(true);
@@ -736,6 +736,7 @@ void RuleEditWidget::packetsTypeChanged() {
 
         ebProtoSelect->clear();
         ebProtoSelect->addItems(ebProtocolsNonBridge);
+        ebProtoSelect->setCurrentIndex(ebProtocolsNonBridge.indexOf(protocol));
         ebProtoNegSelect->setCurrentIndex(NegationComboBox::NORMAL_INDEX);
         ebProtoNegSelect->setEnabled(false);
         macSourceEdit->setEnabled(false);
@@ -745,7 +746,4 @@ void RuleEditWidget::packetsTypeChanged() {
         macDestMaskEdit->setEnabled(false);
         macDestNegSelect->setEnabled(false);
     }
-
-    /* finally emit signal, that rule has been changed */
-    emit ruleChanged();
 }

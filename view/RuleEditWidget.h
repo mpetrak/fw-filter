@@ -82,6 +82,12 @@ private:
      * @return pointer to created combobox
      */
     NegationComboBox *makeNegationSelect(QWidget *parent);
+    
+    /**
+     * Change gui in case of packet type.
+     * @param bridge true if type is bridged packet
+     */
+    void packetTypeChange(bool bridge, QString protocol);
 
     /** List of rule actions */
     QStringList actions;
