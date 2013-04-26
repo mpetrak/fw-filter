@@ -22,6 +22,7 @@ public:
 
     static const char* EB_OUTPUT_FILE;
     static const char* IP_OUTPUT_FILE;
+    static const char* IP6_OUTPUT_FILE;
 
     static const char* EB_NEGATION;
     static const char* EB_MASK_DELIMITER;
@@ -40,10 +41,15 @@ public:
     static const char* EB_COMMAND_IP_DEST_ADDR;
     static const char* EB_COMMAND_IP_PROTOCOL;
 
+    static const char* EB_COMMAND_IP6_SOURCE_ADDR;
+    static const char* EB_COMMAND_IP6_DEST_ADDR;
+    static const char* EB_COMMAND_IP6_PROTOCOL;
+
     static const char* IP_NEGATION;
-    static const char*IP_MASK_DELIMITER;
+    static const char* IP_MASK_DELIMITER;
 
     static const char* IP_COMMAND;
+    static const char* IP6_COMMAND;
     static const char* IP_COMMAND_APPEND;
     static const char* IP_COMMAND_CHAIN;
     static const char* IP_COMMAND_INPUT_IFACE;
@@ -78,13 +84,14 @@ public:
     QString getEbOutput(QList<FilterRule> rules);
 
     /**
-     * Get output for given list to system kernel - Netfilter iptables part.
+     * Get output for given list to system kernel - Netfilter iptables or ip6tables part.
      * Using output files and system call of command Xtables-restore.
      * @param rules ordered list of rules by priority
+     * @param protocol type of ip protocol for output (IPv4 / IPv6)
      * @return output for Xtables-restore.
      */
-    QString getIpOutput(QList<FilterRule> rules);
-    
+    QString getIpOutput(QList<FilterRule> rules, QString protocol);
+
     void setLog(bool log);
 private:
     /**
@@ -171,10 +178,12 @@ private:
     ofstream ebFile;
     /** Output file stream for iptables */
     ofstream ipFile;
+    /** Output file stream for ip6tables */
+    ofstream ip6File;
 
     /** Application configuration with default actions */
     Configuration *configuration;
-    
+
     /** log enable */
     bool log;
 

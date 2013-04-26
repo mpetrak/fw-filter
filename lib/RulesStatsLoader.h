@@ -18,6 +18,8 @@ public:
 
     static const char* IP_COMMAND;
     static const char* IP_FILE;
+    static const char* IP6_COMMAND;
+    static const char* IP6_FILE;
     static const char* EB_COMMAND;
     static const char* EB_FILE;
 
@@ -26,7 +28,7 @@ public:
 
     bool loadStatistics(QList<FilterRule> *rules);
 private:
-    void loadIpStats(FilterRule *rule);
+    void loadIpStats(FilterRule *rule, const char* ipFilename);
 
 };
 

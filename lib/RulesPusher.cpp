@@ -23,12 +23,18 @@ const char* RulesPusher::EB_COMMAND_IP_SOURCE_ADDR = "--ip-source";
 const char* RulesPusher::EB_COMMAND_IP_DEST_ADDR = "--ip-destination";
 const char* RulesPusher::EB_COMMAND_IP_PROTOCOL = "--ip-protocol";
 
+const char* RulesPusher::EB_COMMAND_IP6_SOURCE_ADDR = "--ip6-source";
+const char* RulesPusher::EB_COMMAND_IP6_DEST_ADDR = "--ip6-destination";
+const char* RulesPusher::EB_COMMAND_IP6_PROTOCOL = "--ip6-protocol";
+
 const char* RulesPusher::IP_OUTPUT_FILE = "data/ipfile";
+const char* RulesPusher::IP6_OUTPUT_FILE = "data/ip6file";
 
 const char* RulesPusher::IP_NEGATION = "!";
 const char* RulesPusher::IP_MASK_DELIMITER = "/";
 
 const char* RulesPusher::IP_COMMAND = "iptables-restore < %1";
+const char* RulesPusher::IP6_COMMAND = "ip6tables-restore < %1";
 const char* RulesPusher::IP_COMMAND_APPEND = "-A";
 const char* RulesPusher::IP_COMMAND_CHAIN = "";
 const char* RulesPusher::IP_COMMAND_INPUT_IFACE = "-i";
@@ -52,21 +58,26 @@ bool RulesPusher::writeRules(QList<FilterRule> rules) {
 
     ebFile.open(EB_OUTPUT_FILE, fstream::out);
     ipFile.open(IP_OUTPUT_FILE, fstream::out);
+    ip6File.open(IP6_OUTPUT_FILE, fstream::out);
 
     ebFile << getEbOutput(rules).toAscii().data();
-    ipFile << getIpOutput(rules).toAscii().data();
+    ipFile << getIpOutput(rules, FilterRule::EB_PROTO_VALUE_IPV4).toAscii().data();
+    ip6File << getIpOutput(rules, FilterRule::EB_PROTO_VALUE_IPV6).toAscii().data();
 
     ebFile.close();
     ipFile.close();
+    ip6File.close();
 
     /* write to netfilter */
     int ebReturn = -1;
     int ipReturn = -1;
+    int ip6Return = -1;
     ebReturn = system(QString(EB_COMMAND).arg(EB_OUTPUT_FILE).toAscii().data());
     ipReturn = system(QString(IP_COMMAND).arg(IP_OUTPUT_FILE).toAscii().data());
+    ip6Return = system(QString(IP6_COMMAND).arg(IP6_OUTPUT_FILE).toAscii().data());
 
     /* control return state */
-    if (ebReturn != 0 || ipReturn != 0) {
+    if (ebReturn != 0 || ipReturn != 0 || ip6Return != 0) {
 
         Logger::getInstance()->debug("Rules pushing failed");
         return false;
@@ -75,6 +86,7 @@ bool RulesPusher::writeRules(QList<FilterRule> rules) {
         /* remove files */
         remove(EB_OUTPUT_FILE);
         remove(IP_OUTPUT_FILE);
+        remove(IP6_OUTPUT_FILE);
         Logger::getInstance()->debug("Rules successfully pushed");
         return true;
     }
@@ -109,7 +121,7 @@ QString RulesPusher::getEbOutput(QList<FilterRule> rules) {
     return ebOut;
 }
 
-QString RulesPusher::getIpOutput(QList<FilterRule> rules) {
+QString RulesPusher::getIpOutput(QList<FilterRule> rules, QString protocol) {
     QString ipOut;
 
     ipOut.append(this->ipFileHeader());
@@ -119,7 +131,7 @@ QString RulesPusher::getIpOutput(QList<FilterRule> rules) {
 
     foreach(rule, rules) {
 
-        if (!rule.isOnlyBridged()) {
+        if (!rule.isOnlyBridged() && rule.getEbProtocol() == protocol) {
 
             /* write to input only if it is possible */
             if (rule.isInputPossible()) {
@@ -186,7 +198,6 @@ QString RulesPusher::rule2EbString(FilterRule *rule, const char *chain) {
     out.append(QString("%1 %2 ").arg(RulesPusher::EB_COMMAND_CHAIN, chain));
 
     /* input interface if it is set */
-
     if (rule->getInInterface() != FilterRule::OPTION_VALUE_UNSPECIFIED) {
         out.append(value2EbString(RulesPusher::EB_COMMAND_INPUT_IFACE,
                 rule->getInInterface(), rule->isInInterfaceNeg()));
@@ -220,13 +231,17 @@ QString RulesPusher::rule2EbString(FilterRule *rule, const char *chain) {
 
     /* ip protocol */
     if (rule->getIpProtocol() != FilterRule::IP_PROTO_VALUE_UNSPECIFIED) {
-        out.append(value2EbString(RulesPusher::EB_COMMAND_IP_PROTOCOL,
+        out.append(value2EbString(
+                rule->getEbProtocol() == FilterRule::EB_PROTO_VALUE_IPV6 ?
+                RulesPusher::EB_COMMAND_IP6_PROTOCOL : RulesPusher::EB_COMMAND_IP_PROTOCOL,
                 rule->getIpProtocol(), rule->isIpProtocolNeg()));
     }
 
     /* ip source address */
     if (!rule->getIpSource().isEmpty()) {
-        out.append(address2EbString(RulesPusher::EB_COMMAND_IP_SOURCE_ADDR,
+        out.append(address2EbString(
+                rule->getEbProtocol() == FilterRule::EB_PROTO_VALUE_IPV6 ?
+                RulesPusher::EB_COMMAND_IP6_SOURCE_ADDR : RulesPusher::EB_COMMAND_IP_SOURCE_ADDR,
                 rule->getIpSource(), QString::number(rule->getIpSourceMask()),
                 rule->isIpSourceNeg(),
                 rule->getIpSourceMask() != FilterRule::INT_VALUE_UNSPECIFIED));
@@ -234,7 +249,9 @@ QString RulesPusher::rule2EbString(FilterRule *rule, const char *chain) {
 
     /* ip destination address */
     if (!rule->getIpDest().isEmpty()) {
-        out.append(address2EbString(RulesPusher::EB_COMMAND_IP_DEST_ADDR,
+        out.append(address2EbString(
+                rule->getEbProtocol() == FilterRule::EB_PROTO_VALUE_IPV6 ?
+                RulesPusher::EB_COMMAND_IP6_DEST_ADDR : RulesPusher::EB_COMMAND_IP_DEST_ADDR,
                 rule->getIpDest(), QString::number(rule->getIpDestMask()),
                 rule->isIpDestNeg(),
                 rule->getIpDestMask() != FilterRule::INT_VALUE_UNSPECIFIED));

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'RuleEditWidget.h'
 **
-** Created: Fri Apr 26 13:13:25 2013
+** Created: Fri Apr 26 13:59:47 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!

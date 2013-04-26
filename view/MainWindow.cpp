@@ -267,9 +267,12 @@ void MainWindow::on_actionNetfilter_output_triggered() {
     RulesPusher *pusher = new RulesPusher(configuration);
     /* turn out logging */
     pusher->setLog(false);
-    QString out = pusher->getEbOutput(rulesModel->getRulesList());
-    out.append(QString::fromUtf8("\n---------------------------------\n"));
-    out.append(pusher->getIpOutput(rulesModel->getRulesList()));
+    QString out = QString::fromUtf8("---EBTABLES module-----------------------------\n");
+    out.append(pusher->getEbOutput(rulesModel->getRulesList()));
+    out.append(QString::fromUtf8("\n---IPTABLES module---------------------------\n"));
+    out.append(pusher->getIpOutput(rulesModel->getRulesList(), FilterRule::EB_PROTO_VALUE_IPV4));
+    out.append(QString::fromUtf8("\n---IP6TABLES module--------------------------\n"));
+    out.append(pusher->getIpOutput(rulesModel->getRulesList(), FilterRule::EB_PROTO_VALUE_IPV6));
     free(pusher);
 
     NfOutputDialog *nfOutput = new NfOutputDialog(this, out);
