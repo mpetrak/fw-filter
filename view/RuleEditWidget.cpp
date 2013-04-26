@@ -478,11 +478,13 @@ void RuleEditWidget::setupEbWidget() {
     macSourceMaskLabel->setText(QString::fromUtf8("/"));
     gridLayout->addWidget(macSourceMaskLabel, 4, 3, 1, 1);
 
-    this->macSourceMaskEdit = new QLineEdit(this->tabEb);
+    this->macSourceMaskEdit = new MaskLineEdit(this->tabEb);
     this->macSourceMaskEdit->setObjectName(QString::fromUtf8("macSourceMaskEdit"));
     this->macSourceMaskEdit->setValidator(addrValidator);
     connect(macSourceMaskEdit, SIGNAL(textEdited(const QString)),
             this, SLOT(ruleChangedSlot()));
+    connect(macSourceEdit, SIGNAL(textChanged(const QString)),
+            macSourceMaskEdit, SLOT(checkForDisable(QString)));
     gridLayout->addWidget(this->macSourceMaskEdit, 4, 4, 1, 1);
 
     /* destination address */
@@ -511,11 +513,13 @@ void RuleEditWidget::setupEbWidget() {
     macDestMaskLabel->setText(QString::fromUtf8("/"));
     gridLayout->addWidget(macDestMaskLabel, 5, 3, 1, 1);
 
-    this->macDestMaskEdit = new QLineEdit(this->tabEb);
+    this->macDestMaskEdit = new MaskLineEdit(this->tabEb);
     this->macDestMaskEdit->setObjectName(QString::fromUtf8("macDestMaskEdit"));
     this->macDestMaskEdit->setValidator(addrValidator);
     connect(macDestMaskEdit, SIGNAL(textEdited(const QString)),
             this, SLOT(ruleChangedSlot()));
+    connect(macDestEdit, SIGNAL(textChanged(const QString)),
+            macDestMaskEdit, SLOT(checkForDisable(QString)));
     gridLayout->addWidget(this->macDestMaskEdit, 5, 4, 1, 1);
 
     /* Vertical spacer to the end */
@@ -596,12 +600,14 @@ void RuleEditWidget::setupIpWidget() {
     ipSourceMaskLabel->setText(QString::fromUtf8("/"));
     gridLayout->addWidget(ipSourceMaskLabel, 2, 3, 1, 1);
 
-    this->ipSourceMaskEdit = new QLineEdit(this->tabIp);
+    this->ipSourceMaskEdit = new MaskLineEdit(this->tabIp);
     this->ipSourceMaskEdit->setObjectName(QString::fromUtf8("ipSourceMaskEdit"));
     this->ipSourceMaskEdit->setValidator(maskValidator);
     this->ipSourceMaskEdit->setFixedWidth(MASK_EDIT_WIDTH);
     connect(ipSourceMaskEdit, SIGNAL(textEdited(const QString)),
             this, SLOT(ruleChangedSlot()));
+    connect(ipSourceEdit, SIGNAL(textChanged(const QString)),
+            ipSourceMaskEdit, SLOT(checkForDisable(QString)));
     gridLayout->addWidget(this->ipSourceMaskEdit, 2, 4, 1, 1);
 
     /* destination address */
@@ -630,12 +636,14 @@ void RuleEditWidget::setupIpWidget() {
     ipDestMaskLabel->setText(QString::fromUtf8("/"));
     gridLayout->addWidget(ipDestMaskLabel, 3, 3, 1, 1);
 
-    this->ipDestMaskEdit = new QLineEdit(this->tabIp);
+    this->ipDestMaskEdit = new MaskLineEdit(this->tabIp);
     this->ipDestMaskEdit->setObjectName(QString::fromUtf8("ipDestMaskEdit"));
     this->ipDestMaskEdit->setValidator(maskValidator);
     this->ipDestMaskEdit->setFixedWidth(MASK_EDIT_WIDTH);
     connect(ipDestMaskEdit, SIGNAL(textEdited(const QString)),
             this, SLOT(ruleChangedSlot()));
+    connect(ipDestEdit, SIGNAL(textChanged(const QString)),
+            ipDestMaskEdit, SLOT(checkForDisable(QString)));
     gridLayout->addWidget(this->ipDestMaskEdit, 3, 4, 1, 1);
 
     /* Vertical spacer to the end */

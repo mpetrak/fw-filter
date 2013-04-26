@@ -11,6 +11,7 @@
 #include <QRegExpValidator>
 
 #include "NegationComboBox.h"
+#include "MaskLineEdit.h"
 #include "../model/FilterRulesModel.h"
 #include "../lib/NetInterfaces.h"
 #include "../lib/OptionsLoader.h"
@@ -129,10 +130,10 @@ private:
     /* EB edits */
     NegationComboBox *macSourceNegSelect;
     QLineEdit *macSourceEdit;
-    QLineEdit *macSourceMaskEdit;
+    MaskLineEdit *macSourceMaskEdit;
     NegationComboBox *macDestNegSelect;
     QLineEdit *macDestEdit;
-    QLineEdit *macDestMaskEdit;
+    MaskLineEdit *macDestMaskEdit;
     NegationComboBox *inInterfaceNegSelect;
     QComboBox *inInterfaceSelect;
     NegationComboBox *outInterfaceNegSelect;
@@ -143,10 +144,10 @@ private:
     /* IP edits */
     NegationComboBox *ipSourceNegSelect;
     QLineEdit *ipSourceEdit;
-    QLineEdit *ipSourceMaskEdit;
+    MaskLineEdit *ipSourceMaskEdit;
     NegationComboBox *ipDestNegSelect;
     QLineEdit *ipDestEdit;
-    QLineEdit *ipDestMaskEdit;
+    MaskLineEdit *ipDestMaskEdit;
     NegationComboBox *ipProtoNegSelect;
     QComboBox *ipProtoSelect;
 

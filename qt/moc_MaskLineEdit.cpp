@@ -1,15 +1,15 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'NegationComboBox.h'
+** Meta object code from reading C++ file 'MaskLineEdit.h'
 **
-** Created: Fri Apr 26 16:15:01 2013
+** Created: Fri Apr 26 16:15:04 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../view/NegationComboBox.h"
+#include "../view/MaskLineEdit.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'NegationComboBox.h' doesn't include <QObject>."
+#error "The header file 'MaskLineEdit.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 62
 #error "This file was generated using the moc from 4.6.3. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -17,7 +17,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_NegationComboBox[] = {
+static const uint qt_meta_data_MaskLineEdit[] = {
 
  // content:
        4,       // revision
@@ -31,41 +31,41 @@ static const uint qt_meta_data_NegationComboBox[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      30,   18,   17,   17, 0x0a,
+      24,   14,   13,   13, 0x0a,
 
        0        // eod
 };
 
-static const char qt_meta_stringdata_NegationComboBox[] = {
-    "NegationComboBox\0\0optionValue\0"
+static const char qt_meta_stringdata_MaskLineEdit[] = {
+    "MaskLineEdit\0\0addrValue\0"
     "checkForDisable(QString)\0"
 };
 
-const QMetaObject NegationComboBox::staticMetaObject = {
-    { &QComboBox::staticMetaObject, qt_meta_stringdata_NegationComboBox,
-      qt_meta_data_NegationComboBox, 0 }
+const QMetaObject MaskLineEdit::staticMetaObject = {
+    { &QLineEdit::staticMetaObject, qt_meta_stringdata_MaskLineEdit,
+      qt_meta_data_MaskLineEdit, 0 }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &NegationComboBox::getStaticMetaObject() { return staticMetaObject; }
+const QMetaObject &MaskLineEdit::getStaticMetaObject() { return staticMetaObject; }
 #endif //Q_NO_DATA_RELOCATION
 
-const QMetaObject *NegationComboBox::metaObject() const
+const QMetaObject *MaskLineEdit::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *NegationComboBox::qt_metacast(const char *_clname)
+void *MaskLineEdit::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_NegationComboBox))
-        return static_cast<void*>(const_cast< NegationComboBox*>(this));
-    return QComboBox::qt_metacast(_clname);
+    if (!strcmp(_clname, qt_meta_stringdata_MaskLineEdit))
+        return static_cast<void*>(const_cast< MaskLineEdit*>(this));
+    return QLineEdit::qt_metacast(_clname);
 }
 
-int NegationComboBox::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int MaskLineEdit::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QComboBox::qt_metacall(_c, _id, _a);
+    _id = QLineEdit::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

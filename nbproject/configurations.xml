@@ -10,6 +10,7 @@
       <itemPath>view/LogView.h</itemPath>
       <itemPath>lib/Logger.h</itemPath>
       <itemPath>view/MainWindow.h</itemPath>
+      <itemPath>view/MaskLineEdit.h</itemPath>
       <itemPath>view/NegationComboBox.h</itemPath>
       <itemPath>lib/NetInterfaces.h</itemPath>
       <itemPath>view/NfOutputDialog.h</itemPath>
@@ -35,6 +36,7 @@
       <itemPath>view/LogView.cpp</itemPath>
       <itemPath>lib/Logger.cpp</itemPath>
       <itemPath>view/MainWindow.cpp</itemPath>
+      <itemPath>view/MaskLineEdit.cpp</itemPath>
       <itemPath>view/NegationComboBox.cpp</itemPath>
       <itemPath>lib/NetInterfaces.cpp</itemPath>
       <itemPath>view/NfOutputDialog.cpp</itemPath>
