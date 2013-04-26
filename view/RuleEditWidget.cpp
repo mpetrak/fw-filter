@@ -81,8 +81,6 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->outInterfaceSelect->setCurrentIndex(interfaces.indexOf(rule.getOutInterface()));
         this->outInterfaceNegSelect->setCurrentIndex(rule.isOutInterfaceNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
 
-        packetTypeChange(rule.isOnlyBridged(), rule.getEbProtocol());
-
         this->macSourceEdit->setText(rule.getEbSource());
         this->macSourceMaskEdit->setText(rule.getEbSourceMask());
         this->macSourceNegSelect->setCurrentIndex(rule.isEbSourceNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
@@ -90,6 +88,8 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->macDestEdit->setText(rule.getEbDest());
         this->macDestMaskEdit->setText(rule.getEbDestMask());
         this->macDestNegSelect->setCurrentIndex(rule.isEbDestNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
+        
+        packetsTypeChange(rule.isOnlyBridged(), rule.getEbProtocol());
 
         this->ipProtoSelect->setCurrentIndex(ipProtocols.indexOf(!rule.getIpProtocol().isEmpty() ? rule.getIpProtocol() : FilterRule::IP_PROTO_VALUE_UNSPECIFIED));
         this->ipProtoNegSelect->setCurrentIndex(rule.isIpProtocolNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
@@ -711,13 +711,13 @@ void RuleEditWidget::ruleChangedSlot() {
 }
 
 void RuleEditWidget::packetsTypeChanged() {
-    packetTypeChange(bridgeChoice->isChecked(), ebProtoSelect->currentText());
+    packetsTypeChange(bridgeChoice->isChecked(), ebProtoSelect->currentText());
 
     /* finally emit signal, that rule has been changed */
     emit ruleChanged();
 }
 
-void RuleEditWidget::packetTypeChange(bool bridged, QString protocol) {
+void RuleEditWidget::packetsTypeChange(bool bridged, QString protocol) {
     
     if (bridged) {
 
@@ -741,9 +741,11 @@ void RuleEditWidget::packetTypeChange(bool bridged, QString protocol) {
         ebProtoNegSelect->setEnabled(false);
         macSourceEdit->setEnabled(false);
         macSourceMaskEdit->setEnabled(false);
+        macSourceNegSelect->setCurrentIndex(NegationComboBox::NORMAL_INDEX);
         macSourceNegSelect->setEnabled(false);
         macDestEdit->setEnabled(false);
         macDestMaskEdit->setEnabled(false);
+        macDestNegSelect->setCurrentIndex(NegationComboBox::NORMAL_INDEX);
         macDestNegSelect->setEnabled(false);
     }
 }
