@@ -7,3 +7,6 @@
 /data/ipstats
 /data/ip6file
 /data/ip6stats
+/data/ebstats_output
+/data/ebstats_input
+/data/ebstats_forward
