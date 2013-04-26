@@ -200,6 +200,7 @@ void MainWindow::on_actionApply_modifications_triggered() {
 
         /* write to state variable, if there is unsave changes */
         unsavedChanges = !(XMLSuccess && systemSuccess);
+        setupActions();
     } else {
         QMessageBox::critical(this, QString::fromUtf8("Internal error"),
                 QString::fromUtf8("NULL rulesModel"), QMessageBox::Ok, QMessageBox::Ok);
