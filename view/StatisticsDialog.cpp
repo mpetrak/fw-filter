@@ -1,4 +1,6 @@
 
+#include <qt4/QtCore/qcoreevent.h>
+
 #include "StatisticsDialog.h"
 
 int StatisticsDialog::COL_DESC = 0;
@@ -88,7 +90,7 @@ StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : Q
     /* dialog buttons */
     QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Ok, Qt::Horizontal, centralWidget);
     buttons->setObjectName(QString::fromUtf8("buttons"));
-    connect(buttons, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttons, SIGNAL(accepted()), this, SLOT(close()));
     centralLayout->addWidget(buttons, rules.count() + 2, COL_BYTES, 1, 1);
 
     /* add scroll area to dialog using layout */
@@ -107,8 +109,6 @@ StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : Q
 
 StatisticsDialog::~StatisticsDialog() {
 
-    free(loader);
-    free(timer);
 }
 
 void StatisticsDialog::loadStatistics() {
@@ -137,7 +137,7 @@ QString StatisticsDialog::formatBytes(long bytes) {
     suffix << "B" << "KB" << "MB" << "GB" << "TB";
     double doubleBytes = bytes;
     int i = 0;
-    
+
     if (bytes > 1024) {
         for (i = 0; (bytes / 1024) > 0; i++, bytes /= 1024) {
             doubleBytes = bytes / 1024.0;
@@ -145,4 +145,11 @@ QString StatisticsDialog::formatBytes(long bytes) {
     }
 
     return QString::fromUtf8("%1 %2").arg(QString::number(doubleBytes, 'f', 2), suffix[i]);
+}
+
+void StatisticsDialog::closeEvent(QCloseEvent* event) {
+    disconnect(timer, SIGNAL(timeout()), this, SLOT(loadStatistics()));
+    timer->stop();
+    free(loader);
+    event->accept();
 }

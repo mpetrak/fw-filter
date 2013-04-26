@@ -10,6 +10,7 @@
 #include <QScrollArea>
 #include <QMessageBox>
 #include <QTimer>
+#include <QCloseEvent>
 #include "../model/FilterRule.h"
 #include "../lib/RulesStatsLoader.h"
 
@@ -24,6 +25,8 @@ private:
     static int COL_PACKETS;
     static int COL_BYTES;
     static int REFRESH;
+
+    void closeEvent(QCloseEvent* event);
 
     /** List of filter rules */
     QList<FilterRule> rules;
@@ -43,7 +46,7 @@ private:
 
     /** Internal timer for reloading statistics */
     QTimer *timer;
-    
+
     /**
      * Formating given bytes to KB, MB, TB if possible
      * @param bytes
