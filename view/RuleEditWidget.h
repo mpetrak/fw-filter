@@ -8,6 +8,7 @@
 #include <QtGui/QComboBox>
 #include <QtGui/QTextEdit>
 #include <QtGui/QRadioButton>
+#include <QRegExpValidator>
 
 #include "NegationComboBox.h"
 #include "../model/FilterRulesModel.h"
@@ -96,6 +97,9 @@ private:
 
     /** List of possible net protocols */
     QStringList ipProtocols;
+
+    /** IP address validator */
+    QRegExpValidator *ipAddrValidator;
 
     /** Rules list model pointer */
     FilterRulesModel *rulesModel;

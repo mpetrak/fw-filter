@@ -19,6 +19,7 @@ public:
     static const int INT_VALUE_UNSPECIFIED;
     static const QString IP_PROTO_VALUE_UNSPECIFIED;
     static const QString EB_PROTO_VALUE_IPV4;
+    static const QString EB_PROTO_VALUE_IPV6;
     static const QString ACTION_ACCEPT;
     static const QString ACTION_DROP;
 

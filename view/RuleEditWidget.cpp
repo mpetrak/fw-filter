@@ -10,6 +10,7 @@
 
 const char* RuleEditWidget::MAC_ADDRESS_REGEX = "^([0-9|A-F]{2}:){5}[0-9|A-F]{2}$";
 const char* RuleEditWidget::IPV4_ADDRESS_REGEX = "^((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])$";
+const char* RuleEditWidget::IPV6_ADDRESS_REGEX = "^((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?$";
 const int RuleEditWidget::NORMAL_OPTION_INDEX = NegationComboBox::NORMAL_INDEX;
 const int RuleEditWidget::NEGATION_OPTION_INDEX = NegationComboBox::NEGATION_INDEX;
 const int RuleEditWidget::TAB_GENERAL_INDEX = 0;
@@ -551,7 +552,7 @@ void RuleEditWidget::setupIpWidget() {
 
     /* validator for addresses */
     QRegExp rx(RuleEditWidget::IPV4_ADDRESS_REGEX);
-    QRegExpValidator *addrValidator = new QRegExpValidator(rx, this->tabIp);
+    ipAddrValidator = new QRegExpValidator(rx, this->tabIp);
 
     /* validator for mask fields */
     QIntValidator *maskValidator = new QIntValidator(this->tabIp);
@@ -591,7 +592,7 @@ void RuleEditWidget::setupIpWidget() {
 
     this->ipSourceEdit = new QLineEdit(this->tabIp);
     this->ipSourceEdit->setObjectName(QString::fromUtf8("ipSourceEdit"));
-    this->ipSourceEdit->setValidator(addrValidator);
+    this->ipSourceEdit->setValidator(ipAddrValidator);
     connect(ipSourceEdit, SIGNAL(textEdited(const QString)),
             this, SLOT(ruleChangedSlot()));
     connect(ipSourceEdit, SIGNAL(textEdited(const QString)),
@@ -625,7 +626,7 @@ void RuleEditWidget::setupIpWidget() {
 
     this->ipDestEdit = new QLineEdit(this->tabIp);
     this->ipDestEdit->setObjectName(QString::fromUtf8("ipDestEdit"));
-    this->ipDestEdit->setValidator(addrValidator);
+    this->ipDestEdit->setValidator(ipAddrValidator);
     connect(ipDestEdit, SIGNAL(textEdited(const QString)),
             this, SLOT(ruleChangedSlot()));
     connect(ipDestEdit, SIGNAL(textEdited(const QString)),
@@ -662,25 +663,50 @@ NegationComboBox *RuleEditWidget::makeNegationSelect(QWidget *parent) {
 }
 
 void RuleEditWidget::netProtocolChanged() {
-    if (ebProtoSelect->currentText() == FilterRule::EB_PROTO_VALUE_IPV4
-            && ebProtoNegSelect->currentIndex() != NEGATION_OPTION_INDEX) {
+
+    if ((ebProtoNegSelect->currentIndex() != NEGATION_OPTION_INDEX)
+            && (ebProtoSelect->currentText() == FilterRule::EB_PROTO_VALUE_IPV4
+            || ebProtoSelect->currentText() == FilterRule::EB_PROTO_VALUE_IPV6)) {
 
 
         if (!tabIp->isEnabled()) {
             this->tabIp->setEnabled(true);
             this->setTabEnabled(TAB_NET_INDEX, true);
-
-            /* again we must check for disable negation selects - depends on values */
-            ipProtoNegSelect->checkForDisable(ipProtoSelect->currentText());
-            ipSourceNegSelect->checkForDisable(ipSourceEdit->text());
-            ipDestNegSelect->checkForDisable(ipDestEdit->text());
-
-            Logger::getInstance()->debug(std::string("Enabled net options for protocol: ") +
-                    ebProtoSelect->currentText().toStdString());
         }
+
+        if (ebProtoSelect->currentText() == FilterRule::EB_PROTO_VALUE_IPV4) {
+            QRegExp rx(RuleEditWidget::IPV4_ADDRESS_REGEX);
+            ipAddrValidator->setRegExp(rx);
+        }
+
+        if (ebProtoSelect->currentText() == FilterRule::EB_PROTO_VALUE_IPV6) {
+            QRegExp rx(RuleEditWidget::IPV6_ADDRESS_REGEX);
+            ipAddrValidator->setRegExp(rx);
+        }
+
+        /* because of different formats, we must clear addresses */
+        int p = 0;
+        QString text = ipSourceEdit->text();
+        if (ipAddrValidator->validate(text, p) != QValidator::Acceptable) {
+            ipSourceEdit->clear();
+        }
+        text = ipDestEdit->text();
+        if (ipAddrValidator->validate(text, p) != QValidator::Acceptable) {
+            ipDestEdit->clear();
+        }
+
+        /* again we must check for disable negation selects - depends on values */
+        ipProtoNegSelect->checkForDisable(ipProtoSelect->currentText());
+        ipSourceNegSelect->checkForDisable(ipSourceEdit->text());
+        ipDestNegSelect->checkForDisable(ipDestEdit->text());
+
+        Logger::getInstance()->debug(std::string("Enabled net options for protocol: ") +
+                ebProtoSelect->currentText().toStdString());
+
     } else {
 
         if (tabIp->isEnabled()) {
+
             this->tabIp->setEnabled(false);
             this->setTabEnabled(TAB_NET_INDEX, false);
             Logger::getInstance()->debug("Disabled net options");
@@ -689,6 +715,7 @@ void RuleEditWidget::netProtocolChanged() {
 }
 
 void RuleEditWidget::ruleChangedSlot() {
+
     emit ruleChanged();
 }
 

@@ -17,6 +17,7 @@ const QString FilterRule::OPTION_VALUE_UNSPECIFIED = QString::fromUtf8("<any>");
 const int FilterRule::INT_VALUE_UNSPECIFIED = -1;
 const QString FilterRule::IP_PROTO_VALUE_UNSPECIFIED = QString::fromUtf8("all");
 const QString FilterRule::EB_PROTO_VALUE_IPV4 = QString::fromUtf8("IPv4");
+const QString FilterRule::EB_PROTO_VALUE_IPV6 = QString::fromUtf8("IPv6");
 const QString FilterRule::ACTION_ACCEPT = QString::fromUtf8("ACCEPT");
 const QString FilterRule::ACTION_DROP = QString::fromUtf8("DROP");
 
