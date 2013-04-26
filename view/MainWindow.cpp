@@ -284,8 +284,8 @@ void MainWindow::on_actionNetfilter_output_triggered() {
 }
 
 void MainWindow::newSettings() {
-    
-    if(oldDefaultAction != this->configuration->getDefaultAction()) {
+
+    if (oldDefaultAction != this->configuration->getDefaultAction()) {
         this->unsavedChanges = true;
         setupActions();
     }
@@ -313,7 +313,6 @@ void MainWindow::actualRuleChanged() {
 void MainWindow::clearRuleSelection() {
     /* clear edit widget */
     this->ruleEditWidget->ruleSelected(QModelIndex());
-    // widget.rulesView->clearSelection();
 
     /* change order - change state of unsaved changes */
     unsavedChanges = true;

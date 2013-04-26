@@ -15,10 +15,9 @@ LogView::~LogView() {
 void LogView::addMessage(const char* message) {
     if (this->isEnabled()) {
         this->append(QString::fromUtf8(message));
-        
+
         /* scroll to the end of view */
         QScrollBar *scroll = this->verticalScrollBar();
         scroll->setValue(scroll->maximum());
     }
 }
-

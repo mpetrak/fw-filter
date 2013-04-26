@@ -42,9 +42,11 @@ public:
 
 private:
 
+    /** debug mode */
     bool debugMode;
-    QString defaultAction;
 
+    /** default action */
+    QString defaultAction;
 };
 
 #endif	/* CONFIGURATION_H */

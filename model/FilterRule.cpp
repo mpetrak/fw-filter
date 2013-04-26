@@ -1,9 +1,3 @@
-/* 
- * File:   FilterRule.cpp
- * Author: petris
- * 
- * Created on 28. listopad 2012, 17:26
- */
 
 #include <qt4/QtCore/qdatastream.h>
 #include <QString>

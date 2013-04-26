@@ -1,9 +1,3 @@
-/* 
- * File:   FilterRulesModel.h
- * Author: petris
- *
- * Created on 28. listopad 2012, 19:10
- */
 
 #ifndef FILTERRULESMODEL_H
 #define	FILTERRULESMODEL_H

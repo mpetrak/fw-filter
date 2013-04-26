@@ -24,7 +24,7 @@ RulesStatsLoader::~RulesStatsLoader() {
 }
 
 bool RulesStatsLoader::loadStatistics(QList<FilterRule> *rules) {
-    
+
     int ebInputCounter = 1;
     int ebForwardCounter = 1;
     int ebOutputCounter = 1;
@@ -52,14 +52,14 @@ bool RulesStatsLoader::loadStatistics(QList<FilterRule> *rules) {
             /* set previous result to zero */
             rule.setBytesCount(0);
             rule.setPacketsCount(0);
-            
-            if(rule.isInputPossible()) {
+
+            if (rule.isInputPossible()) {
                 loadEbStats(&rule, EB_FILE_INPUT, ebInputCounter++);
             }
-            
+
             loadEbStats(&rule, EB_FILE_FORWARD, ebForwardCounter++);
-            
-            if(rule.isOutputPossible()) {
+
+            if (rule.isOutputPossible()) {
                 loadEbStats(&rule, EB_FILE_OUTPUT, ebOutputCounter++);
             }
 
@@ -134,7 +134,7 @@ void RulesStatsLoader::loadEbStats(FilterRule* rule, const char *ebFilename, int
         if (match > 0 && lineNumber == ruleNumber) {
             /* get statistics separate by comma from end of line */
             string numbers = line.substr(line.find(","));
-            
+
             /* find names in line */
             unsigned ppos = numbers.find("pcnt");
             unsigned delimiter = numbers.find("--");

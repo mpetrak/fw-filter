@@ -1,10 +1,3 @@
-/* 
- * File:   FilterRulesModel.cpp
- * Author: petris
- * 
- * Created on 28. listopad 2012, 19:10
- */
-
 
 #include "FilterRulesModel.h"
 

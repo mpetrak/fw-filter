@@ -1,9 +1,3 @@
-/* 
- * File:   FilterRule.h
- * Author: petris
- *
- * Created on 28. listopad 2012, 17:26
- */
 
 #ifndef FILTERRULE_H
 #define	FILTERRULE_H
@@ -14,7 +8,7 @@
 
 class FilterRule {
 public:
-    /* Constants */
+    /* Public constants */
     static const QString OPTION_VALUE_UNSPECIFIED;
     static const int INT_VALUE_UNSPECIFIED;
     static const QString IP_PROTO_VALUE_UNSPECIFIED;
@@ -28,7 +22,6 @@ public:
     FilterRule(FilterRule *copy);
     virtual ~FilterRule();
 
-    /* Other methods */
     /**
      * Write all rules parameters to given data stream.
      * Using in model with manipulation.

@@ -16,17 +16,24 @@ public:
 
 private:
 
+    /** Configuration object reference */
     Configuration *configuration;
+
+    /** List of possible default actions */
     QStringList actions;
 
+    /** Debug mode */
     QCheckBox *debugBox;
+    /** Default action */
     QComboBox *defaultActionSelect;
-    QComboBox *forwardActionSelect;
-    QComboBox *outputActionSelect;
-    
+
+    /** Dialog buttons */
     QDialogButtonBox *buttons;
 
 private slots:
+    /** 
+     * Slot for accepting dialog 
+     */
     void accept();
 };
 

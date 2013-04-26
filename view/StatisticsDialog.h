@@ -26,6 +26,10 @@ private:
     static int COL_BYTES;
     static int REFRESH;
 
+    /**
+     * Close handler executing while dialog window is closing.
+     * @param event close event
+     */
     void closeEvent(QCloseEvent* event);
 
     /** List of filter rules */

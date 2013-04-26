@@ -55,6 +55,10 @@ private:
     const char *logfile;
 
 signals:
+    /**
+     * Signals emmiting by new message in log.
+     * @param message message
+     */
     void newMessage(const char *message);
 
 };

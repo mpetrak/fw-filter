@@ -88,7 +88,7 @@ void RuleEditWidget::ruleSelected(QModelIndex index) {
         this->macDestEdit->setText(rule.getEbDest());
         this->macDestMaskEdit->setText(rule.getEbDestMask());
         this->macDestNegSelect->setCurrentIndex(rule.isEbDestNeg() ? NEGATION_OPTION_INDEX : NORMAL_OPTION_INDEX);
-        
+
         packetsTypeChange(rule.isOnlyBridged(), rule.getEbProtocol());
 
         this->ipProtoSelect->setCurrentIndex(ipProtocols.indexOf(!rule.getIpProtocol().isEmpty() ? rule.getIpProtocol() : FilterRule::IP_PROTO_VALUE_UNSPECIFIED));
@@ -726,7 +726,7 @@ void RuleEditWidget::packetsTypeChanged() {
 }
 
 void RuleEditWidget::packetsTypeChange(bool bridged, QString protocol) {
-    
+
     if (bridged) {
 
         ebProtoSelect->clear();

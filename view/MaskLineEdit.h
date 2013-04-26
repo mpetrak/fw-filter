@@ -1,11 +1,13 @@
-#include <QLineEdit>
 
 #ifndef MASKLINEEDIT_H
 #define	MASKLINEEDIT_H
 
+#include <QLineEdit>
+
 class MaskLineEdit : public QLineEdit {
     Q_OBJECT
 public:
+    /* Constructor and destructor */
     MaskLineEdit(QWidget *parent);
     virtual ~MaskLineEdit();
 

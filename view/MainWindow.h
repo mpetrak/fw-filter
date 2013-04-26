@@ -42,8 +42,13 @@ private:
      */
     void setupActions();\
 
+    /**
+     * Closing handler executed, if window is closing.
+     * @param event close event
+     */
     void closeEvent(QCloseEvent* event);
 
+    /** Main widget */
     Ui::MainWindow widget;
 
     /** Configuration */
@@ -60,13 +65,15 @@ private:
 
     /** Actualy editing rule is changed or not */
     bool ruleChanged;
+
     /** If some rule has been changed and changes have not been written to system yet */
     bool unsavedChanges;
-    
+
     /** Contains default action before settings dialgo execution */
     QString oldDefaultAction;
 
 private slots:
+    /* Menu actions and buttons click slots */
     void on_newRuleButton_clicked();
     void on_deleteRuleButton_clicked();
     void on_duplicateRuleButton_clicked();

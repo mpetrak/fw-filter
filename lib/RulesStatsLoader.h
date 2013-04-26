@@ -19,16 +19,16 @@ public:
 
     static const char* IP_COMMAND;
     static const char* IP_FILE;
-    
+
     static const char* IP6_COMMAND;
     static const char* IP6_FILE;
-    
+
     static const char* EB_COMMAND_INPUT;
     static const char* EB_FILE_INPUT;
-    
+
     static const char* EB_COMMAND_FORWARD;
     static const char* EB_FILE_FORWARD;
-    
+
     static const char* EB_COMMAND_OUTPUT;
     static const char* EB_FILE_OUTPUT;
 

@@ -13,7 +13,7 @@ public:
 
     NegationComboBox(QWidget *parent);
     virtual ~NegationComboBox();
-    
+
     /**
      * Setting value, that means disable itself
      * @param disableOption disable itself value
