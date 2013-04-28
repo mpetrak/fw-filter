@@ -47,7 +47,7 @@
       <itemPath>lib/RulesXML.cpp</itemPath>
       <itemPath>view/SettingsDialog.cpp</itemPath>
       <itemPath>view/StatisticsDialog.cpp</itemPath>
-      <itemPath>controller/main.cpp</itemPath>
+      <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
