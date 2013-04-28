@@ -6,7 +6,7 @@
 int StatisticsDialog::COL_DESC = 0;
 int StatisticsDialog::COL_PACKETS = 2;
 int StatisticsDialog::COL_BYTES = 4;
-int StatisticsDialog::REFRESH = 10000;
+int StatisticsDialog::REFRESH = 60000;
 
 StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : QDialog(parent) {
 
