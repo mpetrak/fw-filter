@@ -6,7 +6,7 @@
 int StatisticsDialog::COL_DESC = 0;
 int StatisticsDialog::COL_PACKETS = 2;
 int StatisticsDialog::COL_BYTES = 4;
-int StatisticsDialog::REFRESH = 60000;
+int StatisticsDialog::REFRESH = 30000;
 
 StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : QDialog(parent) {
 
@@ -103,7 +103,6 @@ StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : Q
 
     /* first load and start timer */
     loadStatistics();
-    timer->start(REFRESH);
 
 }
 
@@ -112,6 +111,8 @@ StatisticsDialog::~StatisticsDialog() {
 }
 
 void StatisticsDialog::loadStatistics() {
+
+    timer->stop();
 
     if (!loader->loadStatistics(&rules)) {
         QMessageBox::critical(NULL, QString::fromUtf8("Loading error"),
@@ -130,6 +131,8 @@ void StatisticsDialog::loadStatistics() {
         packetsList[i]->setText(QString::number(rule.getPacketsCount()));
         bytesList[i]->setText(formatBytes(rule.getBytesCount()));
     }
+
+    timer->start(REFRESH);
 }
 
 QString StatisticsDialog::formatBytes(long bytes) {
