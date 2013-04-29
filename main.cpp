@@ -39,6 +39,17 @@ int main(int argc, char *argv[]) {
                 QMessageBox::Ok, QMessageBox::Ok);
     }
 
+    /* Write rules to system on start if option is set */
+    if (config->isWriteOnStart()) {
+        RulesPusher *pusher = new RulesPusher(config);
+        bool systemSuccess = pusher->writeRules(rulesModel->getRulesList());
+        if (!systemSuccess) {
+            QMessageBox::critical(NULL, QString::fromUtf8("Save error"),
+                    QString::fromUtf8("Error during saving rules to system!"), QMessageBox::Ok, QMessageBox::Ok);
+        }
+        free(pusher);
+    }
+
     main.show();
 
     return app.exec();

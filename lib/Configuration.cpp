@@ -7,7 +7,11 @@ const char* Configuration::XML_ENCODING = "UTF-8";
 
 const char* Configuration::NODE_ROOT = "configuration";
 const char* Configuration::NODE_DEBUG = "debug";
+const char* Configuration::NODE_WRITE_ON_START = "write_on_start";
 const char* Configuration::NODE_DEFAULT_ACTION = "default_action";
+
+const char* Configuration::VALUE_DISABLE = "disable";
+const char* Configuration::VALUE_ENABLE = "enable";
 
 Configuration::Configuration() {
     setDebugMode(true);
@@ -24,9 +28,8 @@ bool Configuration::saveToXML() {
     Logger::getInstance()->debug(std::string("Saving configuration to file: ") + std::string(XML_FILE));
     rootNode = xmlNewNode(NULL, BAD_CAST NODE_ROOT);
 
-    if (this->debugMode)
-        xmlNewChild(rootNode, NULL, BAD_CAST NODE_DEBUG, NULL);
-
+    xmlNewChild(rootNode, NULL, BAD_CAST NODE_DEBUG, debugMode ? BAD_CAST VALUE_ENABLE : BAD_CAST VALUE_DISABLE);
+    xmlNewChild(rootNode, NULL, BAD_CAST NODE_WRITE_ON_START, writeOnStart ? BAD_CAST VALUE_ENABLE : BAD_CAST VALUE_DISABLE);
     xmlNewChild(rootNode, NULL, BAD_CAST NODE_DEFAULT_ACTION, BAD_CAST defaultAction.toAscii().data());
 
     doc = xmlNewDoc(BAD_CAST XML_VERSION);
@@ -56,21 +59,29 @@ bool Configuration::loadFromXML() {
     } else {
 
         rootNode = xmlDocGetRootElement(doc);
-        bool debugMode = false;
         for (node = rootNode->children; node; node = node->next) {
             /* skip not XML elements */
             if (node->type != XML_ELEMENT_NODE)
                 continue;
 
             if (!strcmp((char *) node->name, NODE_DEBUG)) {
-                debugMode = true;
+                if (!strcmp((char *) xmlNodeGetContent(node), VALUE_ENABLE)) {
+                    this->debugMode = true;
+                } else {
+                    this->debugMode = false;
+                }
+
+            } else if (!strcmp((char *) node->name, NODE_WRITE_ON_START)) {
+                if (!strcmp((char *) xmlNodeGetContent(node), VALUE_ENABLE)) {
+                    this->writeOnStart = true;
+                } else {
+                    this->writeOnStart = false;
+                }
 
             } else if (!strcmp((char *) node->name, NODE_DEFAULT_ACTION)) {
                 this->defaultAction = (char *) xmlNodeGetContent(node);
             }
         }
-
-        this->debugMode = debugMode;
 
         xmlFreeDoc(doc);
         xmlCleanupParser();
@@ -90,6 +101,14 @@ void Configuration::setDebugMode(bool debugMode) {
 
 QString Configuration::getDefaultAction() const {
     return defaultAction;
+}
+
+bool Configuration::isWriteOnStart() const {
+    return writeOnStart;
+}
+
+void Configuration::setWriteOnStart(bool writeOnStart) {
+    this->writeOnStart = writeOnStart;
 }
 
 void Configuration::setDefaultAction(QString defaultAction) {

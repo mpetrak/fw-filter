@@ -24,13 +24,16 @@ private:
 
     /** Debug mode */
     QCheckBox *debugBox;
+    /** Write rules to system at start */
+    QCheckBox *writeOnStartBox;
     /** Default action */
     QComboBox *defaultActionSelect;
 
     /** Dialog buttons */
     QDialogButtonBox *buttons;
 
-private slots:
+    private 
+slots:
     /** 
      * Slot for accepting dialog 
      */

@@ -18,6 +18,9 @@ public:
     static const char* NODE_ROOT;
     static const char* NODE_DEBUG;
     static const char* NODE_DEFAULT_ACTION;
+    static const char* NODE_WRITE_ON_START;
+    static const char* VALUE_ENABLE;
+    static const char* VALUE_DISABLE;
 
     Configuration();
     virtual ~Configuration();
@@ -37,15 +40,20 @@ public:
     /* getters and setters */
     bool isDebugMode() const;
     void setDebugMode(bool debugMode);
+    bool isWriteOnStart() const;
+    void setWriteOnStart(bool writeOnStart);
     QString getDefaultAction() const;
     void setDefaultAction(QString defaultAction);
 
 private:
 
-    /** debug mode */
+    /** Debug mode */
     bool debugMode;
 
-    /** default action */
+    /** Write rules on start */
+    bool writeOnStart;
+
+    /** Default action */
     QString defaultAction;
 };
 

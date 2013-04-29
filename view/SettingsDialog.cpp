@@ -20,11 +20,11 @@ SettingsDialog::SettingsDialog(QWidget* parent, Configuration *configuration) : 
         this->setObjectName(QString::fromUtf8("SettingsDialog"));
     }
     this->setWindowTitle(QString::fromUtf8("Settings"));
-    this->resize(400, 300);
+    this->setFixedSize(400, 300);
 
     QFrame *appFrame = new QFrame(this);
     appFrame->setObjectName(QString::fromUtf8("debugFrame"));
-    appFrame->setGeometry(QRect(10, 10, 380, 105));
+    appFrame->setGeometry(QRect(10, 10, 380, 160));
     appFrame->setFrameShape(QFrame::StyledPanel);
     appFrame->setFrameShadow(QFrame::Raised);
 
@@ -46,21 +46,34 @@ SettingsDialog::SettingsDialog(QWidget* parent, Configuration *configuration) : 
     this->debugBox->setChecked(configuration->isDebugMode());
     appLayout->addWidget(this->debugBox, 1, 2, 1, 1);
 
+    QLabel *writeOnStartLabel = new QLabel(appFrame);
+    writeOnStartLabel->setText(QString::fromUtf8("Write rules at start: "));
+    appLayout->addWidget(writeOnStartLabel, 2, 1, 1, 1);
+    QLabel *writeOnStartLabel2 = new QLabel(appFrame);
+    writeOnStartLabel2->setText(QString::fromUtf8("(recommended)"));
+    appLayout->addWidget(writeOnStartLabel2, 3, 1, 1, 1);
+
+    this->writeOnStartBox = new QCheckBox(appFrame);
+    this->writeOnStartBox->setObjectName(QString::fromUtf8("writeOnStartBox"));
+    this->writeOnStartBox->setText(QString::fromUtf8(""));
+    this->writeOnStartBox->setChecked(configuration->isWriteOnStart());
+    appLayout->addWidget(this->writeOnStartBox, 2, 2, 2, 1);
+
     /* default action */
     QLabel *defaultActionLabel = new QLabel(appFrame);
     defaultActionLabel->setObjectName(QString::fromUtf8("defaultActionLabel"));
     defaultActionLabel->setText(QString::fromUtf8("Default action: "));
-    appLayout->addWidget(defaultActionLabel, 2, 1, 1, 1);
+    appLayout->addWidget(defaultActionLabel, 4, 1, 1, 1);
 
     this->defaultActionSelect = new QComboBox(appFrame);
     this->defaultActionSelect->setObjectName(QString::fromUtf8("defaultActionSelect"));
     this->defaultActionSelect->addItems(this->actions);
     this->defaultActionSelect->setCurrentIndex(actions.indexOf(configuration->getDefaultAction()));
-    appLayout->addWidget(this->defaultActionSelect, 2, 2, 1, 1);
+    appLayout->addWidget(this->defaultActionSelect, 4, 2, 1, 1);
 
     /* vertical spacer */
     QSpacerItem *appSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    appLayout->addItem(appSpacer, 2, 0, 1, 1);
+    appLayout->addItem(appSpacer, 5, 0, 1, 1);
 
     /* dialog buttons */
     this->buttons = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok,
@@ -78,6 +91,7 @@ void SettingsDialog::accept() {
 
     /* write changes to configuration */
     configuration->setDebugMode(debugBox->isChecked());
+    configuration->setWriteOnStart(writeOnStartBox->isChecked());
     configuration->setDefaultAction(defaultActionSelect->currentText());
 
     /* save configuration */
