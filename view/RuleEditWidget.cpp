@@ -731,28 +731,44 @@ void RuleEditWidget::packetsTypeChange(bool bridged, QString protocol) {
 
         ebProtoSelect->clear();
         ebProtoSelect->addItems(ebProtocols);
-        ebProtoSelect->setCurrentIndex(ebProtocols.indexOf(protocol));
+        int i = ebProtocols.indexOf(protocol);
+        ebProtoSelect->setCurrentIndex(i != -1 ? i : 0);
         ebProtoNegSelect->setEnabled(true);
         ebProtoNegSelect->checkForDisable(ebProtoSelect->currentText());
+
+        /* connect back signal for negation disable checking */
+        connect(ebProtoSelect, SIGNAL(currentIndexChanged(const QString)),
+                ebProtoNegSelect, SLOT(checkForDisable(QString)));
+
         macSourceEdit->setEnabled(true);
-        macSourceMaskEdit->setEnabled(true);
-        macSourceNegSelect->setEnabled(true);
+        macSourceMaskEdit->checkForDisable(macSourceEdit->text());
+        macSourceNegSelect->checkForDisable(macSourceEdit->text());
         macDestEdit->setEnabled(true);
-        macDestMaskEdit->setEnabled(true);
-        macDestNegSelect->setEnabled(true);
+        macDestMaskEdit->checkForDisable(macDestEdit->text());
+        macDestNegSelect->checkForDisable(macDestEdit->text());
     } else {
 
         ebProtoSelect->clear();
         ebProtoSelect->addItems(ebProtocolsNonBridge);
-        ebProtoSelect->setCurrentIndex(ebProtocolsNonBridge.indexOf(protocol));
+        int i = ebProtocolsNonBridge.indexOf(protocol);
+        ebProtoSelect->setCurrentIndex(i != -1 ? i : 0);
         ebProtoNegSelect->setCurrentIndex(NegationComboBox::NORMAL_INDEX);
         ebProtoNegSelect->setEnabled(false);
+
+        /* disconnect signal for negation disable checking - always disable */
+        disconnect(ebProtoSelect, SIGNAL(currentIndexChanged(const QString)),
+                ebProtoNegSelect, SLOT(checkForDisable(QString)));
+
         macSourceEdit->setEnabled(false);
+        macSourceEdit->clear();
         macSourceMaskEdit->setEnabled(false);
+        macSourceMaskEdit->clear();
         macSourceNegSelect->setCurrentIndex(NegationComboBox::NORMAL_INDEX);
         macSourceNegSelect->setEnabled(false);
         macDestEdit->setEnabled(false);
+        macDestEdit->clear();
         macDestMaskEdit->setEnabled(false);
+        macDestMaskEdit->clear();
         macDestNegSelect->setCurrentIndex(NegationComboBox::NORMAL_INDEX);
         macDestNegSelect->setEnabled(false);
     }
