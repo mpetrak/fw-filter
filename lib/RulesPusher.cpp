@@ -45,6 +45,9 @@ const char* RulesPusher::IP_COMMAND_PROTOCOL = "-p";
 const char* RulesPusher::IP_COMMAND_ACTION = "-j";
 const char* RulesPusher::IP_COMMAND_COMMENT = "-m comment --comment";
 
+const char* RulesPusher::BRIDGE_NF_CALL_IPTABLES_DISABLE = "echo 0 > /proc/sys/net/bridge/bridge-nf-call-iptables";
+const char* RulesPusher::BRIDGE_NF_CALL_IP6TABLES_DISABLE = "echo 0 > /proc/sys/net/bridge/bridge-nf-call-ip6tables";
+
 RulesPusher::RulesPusher(Configuration *configuration) {
     this->configuration = configuration;
 }
@@ -68,6 +71,14 @@ bool RulesPusher::writeRules(QList<FilterRule> rules) {
     ipFile.close();
     ip6File.close();
 
+    /* disable calling net layer tables on linux bridge code */
+    int brNfIpReturn = -1;
+    int brNfIp6Return = -1;
+//    Logger::getInstance()->debug(BRIDGE_NF_CALL_IPTABLES_DISABLE);
+    brNfIpReturn = system(BRIDGE_NF_CALL_IPTABLES_DISABLE);
+//    Logger::getInstance()->debug(BRIDGE_NF_CALL_IP6TABLES_DISABLE);
+    brNfIp6Return = system(BRIDGE_NF_CALL_IP6TABLES_DISABLE);
+
     /* write to netfilter */
     int ebReturn = -1;
     int ipReturn = -1;
@@ -77,7 +88,7 @@ bool RulesPusher::writeRules(QList<FilterRule> rules) {
     ip6Return = system(QString(IP6_COMMAND).arg(IP6_OUTPUT_FILE).toAscii().data());
 
     /* control return state */
-    if (ebReturn != 0 || ipReturn != 0 || ip6Return != 0) {
+    if (ebReturn != 0 || ipReturn != 0 || ip6Return != 0 || brNfIpReturn != 0 || brNfIp6Return != 0) {
 
         Logger::getInstance()->debug("Rules pushing failed");
         return false;

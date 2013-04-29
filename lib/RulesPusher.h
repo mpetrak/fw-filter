@@ -59,6 +59,9 @@ public:
     static const char* IP_COMMAND_PROTOCOL;
     static const char* IP_COMMAND_ACTION;
     static const char* IP_COMMAND_COMMENT;
+    
+    static const char* BRIDGE_NF_CALL_IPTABLES_DISABLE;
+    static const char* BRIDGE_NF_CALL_IP6TABLES_DISABLE;
 
     /**
      * Constructor with configuration parameter.
