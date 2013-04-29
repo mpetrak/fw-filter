@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-  <debug/>
+  <debug>enable</debug>
+  <write_on_start>enable</write_on_start>
   <default_action>ACCEPT</default_action>
 </configuration>
