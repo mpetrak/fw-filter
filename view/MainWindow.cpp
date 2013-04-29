@@ -6,6 +6,7 @@
 
 MainWindow::MainWindow() {
     widget.setupUi(this);
+    this->setFixedSize(750, 712);
 
     /* enable drag and drop for rules view */
     widget.rulesView->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -293,11 +294,11 @@ void MainWindow::newSettings() {
     if (this->configuration->isDebugMode()) {
         this->logView->setEnabled(true);
         this->logView->setVisible(true);
-        this->resize(750, 712);
+        this->setFixedSize(750, 712);
     } else {
         this->logView->setEnabled(false);
         this->logView->setVisible(false);
-        this->resize(750, 628);
+        this->setFixedSize(750, 628);
     }
 
     this->repaint();

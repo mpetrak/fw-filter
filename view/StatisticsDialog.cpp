@@ -21,6 +21,7 @@ StatisticsDialog::StatisticsDialog(QWidget *parent, QList<FilterRule> rules) : Q
         this->setObjectName(QString::fromUtf8("StatisticsDialog"));
     }
     this->setWindowTitle(QString::fromUtf8("Statistics"));
+    this->setFixedWidth(400);
     this->resize(400, 300);
 
     /* central widget and layout */

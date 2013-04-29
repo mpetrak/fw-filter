@@ -103,6 +103,8 @@
         <destdir>${CND_DISTDIR}</destdir>
         <buildMode>1</buildMode>
         <modules>core gui</modules>
+        <mocDir>qt</mocDir>
+        <uiDir>qt</uiDir>
       </qt>
       <compileType>
         <cTool>
