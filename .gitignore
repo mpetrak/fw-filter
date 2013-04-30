@@ -1,7 +1,6 @@
 /fw-filter
 /data/ebfile
 /data/ipfile
-/data/rules.xml
 /test/
 /data/debug.log
 /data/ipstats
@@ -10,3 +9,5 @@
 /data/ebstats_output
 /data/ebstats_input
 /data/ebstats_forward
+/nbproject/
+/qt/
