@@ -73,6 +73,9 @@
         <modules>core gui</modules>
         <mocDir>qt</mocDir>
         <uiDir>qt</uiDir>
+        <defs>
+          <Elem>OBJECTS_DIR = build</Elem>
+        </defs>
       </qt>
       <compileType>
         <linkerTool>
@@ -104,6 +107,9 @@
         <modules>core gui</modules>
         <mocDir>qt</mocDir>
         <uiDir>qt</uiDir>
+        <defs>
+          <Elem>OBJECTS_DIR = build</Elem>
+        </defs>
       </qt>
       <compileType>
         <cTool>

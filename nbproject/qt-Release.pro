@@ -22,3 +22,4 @@ QMAKE_CXX = g++
 DEFINES += 
 INCLUDEPATH += 
 LIBS += -Wl,-rpath,/usr/lib /usr/lib/libxml2.so  
+OBJECTS_DIR = build
