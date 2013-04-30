@@ -32,7 +32,7 @@ CND_BUILDDIR=build
 include Makefile
 
 # Object Directory
-OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
+OBJECTDIR=${CND_BUILDDIR}
 
 # Object Files
 OBJECTFILES=
@@ -62,7 +62,7 @@ FORCE:
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS} nbproject/qt-${CND_CONF}.mk
-	"${MAKE}" -f nbproject/qt-${CND_CONF}.mk ${CND_DISTDIR}/fw-filter
+	"${MAKE}" -f nbproject/qt-${CND_CONF}.mk ./fw-filter
 
 ${CND_BUILDDIR}/Release/%.o: nbproject/qt-${CND_CONF}.mk
 	${MAKE} -f nbproject/qt-${CND_CONF}.mk "$@"

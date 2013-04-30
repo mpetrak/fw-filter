@@ -16,9 +16,9 @@ CND_PACKAGE_NAME_Debug=fw-filter.tar
 CND_PACKAGE_PATH_Debug=package/fw-filter.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux-x86
-CND_ARTIFACT_DIR_Release=dist
+CND_ARTIFACT_DIR_Release=.
 CND_ARTIFACT_NAME_Release=fw-filter
-CND_ARTIFACT_PATH_Release=dist/fw-filter
+CND_ARTIFACT_PATH_Release=./fw-filter
 CND_PACKAGE_DIR_Release=package
 CND_PACKAGE_NAME_Release=fw-filter.tar
 CND_PACKAGE_PATH_Release=package/fw-filter.tar

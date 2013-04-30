@@ -32,7 +32,7 @@ CND_BUILDDIR=build
 include Makefile
 
 # Object Directory
-OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
+OBJECTDIR=${CND_BUILDDIR}
 
 # Object Files
 OBJECTFILES=

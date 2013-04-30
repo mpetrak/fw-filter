@@ -100,8 +100,7 @@
         <compilerSet>default</compilerSet>
       </toolsSet>
       <qt>
-        <destdir>${CND_DISTDIR}</destdir>
-        <buildMode>1</buildMode>
+        <destdir>.</destdir>
         <modules>core gui</modules>
         <mocDir>qt</mocDir>
         <uiDir>qt</uiDir>
