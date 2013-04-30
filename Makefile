@@ -47,7 +47,7 @@
 # Environment 
 QTDIR = qt/
 
-MKDIR=mkdir
+MKDIR=mkdir -p
 DEL=rm -rf
 CP=cp
 CCADMIN=CCadmin
