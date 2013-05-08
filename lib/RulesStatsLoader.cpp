@@ -11,10 +11,10 @@ const char* RulesStatsLoader::EB_FILE_FORWARD = "data/ebstats_forward";
 const char* RulesStatsLoader::EB_COMMAND_OUTPUT = "ebtables -L OUTPUT --Lc --Ln";
 const char* RulesStatsLoader::EB_FILE_OUTPUT = "data/ebstats_output";
 
-const char* RulesStatsLoader::IP_COMMAND = "iptables -L -v";
+const char* RulesStatsLoader::IP_COMMAND = "iptables -L -v -n";
 const char* RulesStatsLoader::IP_FILE = "data/ipstats";
 
-const char* RulesStatsLoader::IP6_COMMAND = "ip6tables -L -v";
+const char* RulesStatsLoader::IP6_COMMAND = "ip6tables -L -v -n";
 const char* RulesStatsLoader::IP6_FILE = "data/ip6stats";
 
 RulesStatsLoader::RulesStatsLoader() {
